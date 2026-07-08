@@ -8,5 +8,35 @@
     "name":"Jonas Vingegaard",
     "team":"Visma | Lease a Bike",
     "price":28
+  },
+  {
+    "name":"Richard Carapaz",
+    "team":"UAE Team Emirates",
+    "price":30
+  },
+  {
+    "name":"Tim Merlier",
+    "team":"Visma | Lease a Bike",
+    "price":28
+  },
+  {
+    "name":"Quinn Simmons",
+    "team":"UAE Team Emirates",
+    "price":30
+  },
+  {
+    "name":"Mads Pedersen",
+    "team":"Visma | Lease a Bike",
+    "price":28
+  },
+  {
+    "name":"Jonas",
+    "team":"UAE Team Emirates",
+    "price":30
+  },
+  {
+    "name":"Mathieu",
+    "team":"Visma | Lease a Bike",
+    "price":28
   }
 ]
