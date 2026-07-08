@@ -1,36 +1,120 @@
-body{
-    font-family:Arial,sans-serif;
-    margin:0;
-    background:#f5f5f5;
+/* ---------- Global ---------- */
+
+* {
+    box-sizing: border-box;
 }
 
-header{
-    background:#0d47a1;
-    color:white;
-    padding:20px;
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f9;
+    color: #333;
+    line-height: 1.6;
 }
 
-nav{
-    margin-top:15px;
+/* ---------- Header ---------- */
+
+header {
+    background: #0b5ed7;
+    color: white;
+    padding: 20px;
 }
 
-nav a{
-    color:white;
-    text-decoration:none;
-    margin-right:20px;
+header h1 {
+    margin: 0;
 }
 
-main{
-    max-width:1000px;
-    margin:auto;
-    padding:40px;
+/* ---------- Navigation ---------- */
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 15px;
 }
 
-.button{
-    display:inline-block;
-    padding:12px 20px;
-    background:#0d47a1;
-    color:white;
-    text-decoration:none;
-    border-radius:6px;
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* ---------- Main Content ---------- */
+
+main {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+}
+
+/* ---------- Buttons ---------- */
+
+.button {
+    display: inline-block;
+    background: #0b5ed7;
+    color: white;
+    padding: 12px 22px;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+.button:hover {
+    background: #084298;
+}
+
+/* ---------- Tables ---------- */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: #0b5ed7;
+    color: white;
+}
+
+th,
+td {
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+/* ---------- Footer ---------- */
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #666;
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width:700px) {
+
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    main {
+        padding: 15px;
+    }
+
 }
