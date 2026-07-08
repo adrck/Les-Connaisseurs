@@ -150,4 +150,6 @@ function submitForm(event) {
     );
 }
 
-initForm();
+window.requestAnimationFrame(() => {
+    initForm();
+});
