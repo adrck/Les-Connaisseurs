@@ -34,33 +34,6 @@ async function initForm() {
     }
 }
 
-function updateAvailableRiders() {
-
-    const selects = document.querySelectorAll(".rider-select");
-
-    const selected = [...selects]
-        .map(select => select.value)
-        .filter(value => value !== "");
-
-    selects.forEach(currentSelect => {
-
-        [...currentSelect.options].forEach(option => {
-
-            if (option.value === "") {
-                option.disabled = false;
-                return;
-            }
-
-            option.disabled =
-                selected.includes(option.value) &&
-                option.value !== currentSelect.value;
-
-        });
-
-    });
-
-}
-
 function buildSelectors() {
 
     const container = document.getElementById("rider-selectors");
@@ -110,6 +83,33 @@ function buildSelectors() {
 
     updateAvailableRiders();
     validateForm();
+}
+
+function updateAvailableRiders() {
+
+    const selects = document.querySelectorAll(".rider-select");
+
+    const selected = [...selects]
+        .map(select => select.value)
+        .filter(value => value !== "");
+
+    selects.forEach(currentSelect => {
+
+        [...currentSelect.options].forEach(option => {
+
+            if (option.value === "") {
+                option.disabled = false;
+                return;
+            }
+
+            option.disabled =
+                selected.includes(option.value) &&
+                option.value !== currentSelect.value;
+
+        });
+
+    });
+
 }
 
 function validateForm() {
