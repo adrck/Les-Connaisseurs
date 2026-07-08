@@ -53,36 +53,38 @@ function buildSelectors() {
 
         const placeholder = document.createElement("option");
         placeholder.value = "";
-        placeholder.textContent = "-- Select a rider --";
+        placeholder.textContent = "Select a rider...";
+        placeholder.selected = true;
 
         select.appendChild(placeholder);
 
         riders.forEach(rider => {
 
-            const placeholder = document.createElement("option");
-            placeholder.value = "";
-            placeholder.textContent = "Select a rider...";
-            placeholder.selected = true;
-            placeholder.disabled = true;
+            const option = document.createElement("option");
+            option.value = rider.name;
+            option.textContent = rider.name;
 
             select.appendChild(option);
 
         });
 
-            select.addEventListener("change", () => {
+        select.addEventListener("change", () => {
 
-    updateAvailableRiders();
-    validateForm();
+            updateAvailableRiders();
+            validateForm();
 
-});
+        });
+
         group.appendChild(label);
         group.appendChild(select);
 
         container.appendChild(group);
+
     }
 
     updateAvailableRiders();
     validateForm();
+
 }
 
 function updateAvailableRiders() {
