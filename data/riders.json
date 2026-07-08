@@ -1,0 +1,12 @@
+[
+  {
+    "name":"Tadej Pogačar",
+    "team":"UAE Team Emirates",
+    "price":30
+  },
+  {
+    "name":"Jonas Vingegaard",
+    "team":"Visma | Lease a Bike",
+    "price":28
+  }
+]
