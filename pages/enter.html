@@ -2,10 +2,34 @@
 
 <h2>Enter Your Team</h2>
 
-<div id="teamForm">
+<form id="teamForm">
 
-Loading form...
+<label>Your Name</label>
+<input type="text" id="playerName" required>
 
-</div>
+<label>Your Email (optional)</label>
+<input type="email" id="email">
+
+<h3>
+Budget Remaining:
+<span id="remainingBudget">120</span>
+</h3>
+
+<div id="riderSelections"></div>
+
+<p>
+
+Total Cost:
+<strong><span id="totalCost">0</span></strong>
+
+</p>
+
+<button id="submitButton" disabled>
+
+Submit Team
+
+</button>
+
+</form>
 
 </div>
