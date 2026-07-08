@@ -1,2 +1,1 @@
-# drck.github.io
-Les connaisseurs
+# Les connaisseurs
