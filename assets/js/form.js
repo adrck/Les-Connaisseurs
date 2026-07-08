@@ -59,9 +59,11 @@ function buildSelectors() {
 
         riders.forEach(rider => {
 
-            const option = document.createElement("option");
-            option.value = rider.name;
-            option.textContent = rider.name;
+            const placeholder = document.createElement("option");
+            placeholder.value = "";
+            placeholder.textContent = "Select a rider...";
+            placeholder.selected = true;
+            placeholder.disabled = true;
 
             select.appendChild(option);
 
