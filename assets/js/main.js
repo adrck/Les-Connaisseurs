@@ -25,6 +25,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
             loadPage(link.dataset.page);
 
+            if(page==="enter"){
+
+    const script=document.createElement("script");
+
+    script.src="assets/js/form.js";
+
+    document.body.appendChild(script);
+
+}
         });
 
     });
