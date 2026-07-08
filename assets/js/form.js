@@ -130,7 +130,7 @@ function validateForm() {
     submitButton.disabled = !valid;
 }
 
-function submitForm(event) {
+async function submitForm(event) {
 
     event.preventDefault();
 
@@ -138,11 +138,7 @@ function submitForm(event) {
 
     document
         .querySelectorAll(".rider-select")
-        .forEach(select => {
-
-            team.push(select.value);
-
-        });
+        .forEach(select => team.push(select.value));
 
     const submission = {
         playerName: document.getElementById("player-name").value.trim(),
@@ -150,11 +146,49 @@ function submitForm(event) {
         riders: team
     };
 
-    console.log(submission);
+    const submitButton = document.getElementById("submit-btn");
+    submitButton.disabled = true;
+    submitButton.textContent = "Submitting...";
 
-    alert(
-        "Form validation successful.\n\nNext step: send this data to Google Sheets."
-    );
+    try {
+
+        const response = await fetch(
+            "https://script.google.com/macros/s/AKfycbw389djdf27sw6uPJaIzZROgydiK5lC9kf2tBJYdrIPN7ujDna-9IZppaheXWshRefa/exec",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                },
+                body: JSON.stringify(submission)
+            }
+        );
+
+        const result = await response.json();
+
+        if (result.success) {
+
+            alert("Your team has been submitted successfully!");
+
+            document.getElementById("team-form").reset();
+
+            validateForm();
+
+        } else {
+
+            alert("Submission failed.");
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+        alert("Unable to submit your team.");
+
+    }
+
+    submitButton.textContent = "Submit Team";
+    validateForm();
+
 }
 
 window.requestAnimationFrame(() => {
