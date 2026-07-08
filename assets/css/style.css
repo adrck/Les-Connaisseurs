@@ -154,3 +154,13 @@ button:disabled{
     cursor:not-allowed;
 
 }
+
+hr{
+    margin:30px 0;
+}
+
+.riderInput{
+
+    margin-bottom:15px;
+
+}
