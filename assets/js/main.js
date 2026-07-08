@@ -1,4 +1,3 @@
-// Load a page into the main content area
 async function loadPage(page) {
 
     try {
@@ -13,34 +12,35 @@ async function loadPage(page) {
 
         document.getElementById("content").innerHTML = html;
 
-        // Run page-specific code
-        switch (page) {
+        // Load page-specific scripts
+        if (page === "enter") {
 
-            case "enter":
-                await loadScript("assets/js/form.js");
-                break;
+            // Remove previous copy if it exists
+            const existing = document.getElementById("formScript");
 
-            case "standings":
-                // We'll add standings.js later
-                break;
+            if (existing) {
+                existing.remove();
+            }
 
-            case "riders":
-                // We'll add riders.js later
-                break;
+            const script = document.createElement("script");
 
-            case "teams":
-                // We'll add teams.js later
-                break;
+            script.id = "formScript";
+
+            script.src = "assets/js/form.js";
+
+            document.body.appendChild(script);
+
         }
 
-    } catch (error) {
+    }
 
-        document.getElementById("content").innerHTML = `
-            <div class="card">
+    catch (error) {
+
+        document.getElementById("content").innerHTML =
+            `<div class="card">
                 <h2>Error</h2>
                 <p>${error.message}</p>
-            </div>
-        `;
+            </div>`;
 
         console.error(error);
 
@@ -48,48 +48,9 @@ async function loadPage(page) {
 
 }
 
-// Dynamically load a JavaScript file
-function loadScript(src) {
+// Load the home page when the site opens
+window.onload = function () {
 
-    return new Promise((resolve, reject) => {
-
-        // Remove any previous copy of the script
-        const existing = document.querySelector(`script[src="${src}"]`);
-
-        if (existing) {
-            existing.remove();
-        }
-
-        const script = document.createElement("script");
-
-        script.src = src;
-
-        script.onload = resolve;
-
-        script.onerror = reject;
-
-        document.body.appendChild(script);
-
-    });
-
-}
-
-// Navigation
-document.addEventListener("DOMContentLoaded", () => {
-
-    document.querySelectorAll("nav a").forEach(link => {
-
-        link.addEventListener("click", function (e) {
-
-            e.preventDefault();
-
-            loadPage(this.dataset.page);
-
-        });
-
-    });
-
-    // Load the home page by default
     loadPage("home");
 
-});
+};
