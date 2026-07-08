@@ -1,115 +1,153 @@
 const TEAM_SIZE = 8;
-const BUDGET = 120;
 
 let riders = [];
 
 async function initForm() {
+    const form = document.getElementById("team-form");
 
-    const response = await fetch("data/riders.json");
+    if (!form) return;
 
-    riders = await response.json();
+    try {
+        const response = await fetch("data/riders.json");
 
-    buildSelectors();
+        if (!response.ok) {
+            throw new Error("Unable to load riders.json");
+        }
 
-    document
-        .getElementById("teamForm")
-        .addEventListener("submit", submitForm);
+        riders = await response.json();
 
+        riders.sort((a, b) => a.name.localeCompare(b.name));
+
+        buildSelectors();
+
+        document
+            .getElementById("player-name")
+            .addEventListener("input", validateForm);
+
+        form.addEventListener("submit", submitForm);
+
+    } catch (error) {
+        document.getElementById("rider-selectors").innerHTML =
+            `<p>Unable to load rider list.</p>`;
+
+        console.error(error);
+    }
 }
 
 function buildSelectors() {
 
-    const container = document.getElementById("riderSelections");
+    const container = document.getElementById("rider-selectors");
 
     container.innerHTML = "";
 
-    for (let i = 1; i <= TEAM_SIZE; i++) {
+    for (let i = 0; i < TEAM_SIZE; i++) {
+
+        const group = document.createElement("div");
+        group.className = "form-group";
 
         const label = document.createElement("label");
+        label.textContent = `Rider ${i + 1}`;
 
-        label.textContent = `Rider ${i}`;
+        const select = document.createElement("select");
+        select.className = "rider-select";
 
-        const input = document.createElement("input");
+        const placeholder = document.createElement("option");
+        placeholder.value = "";
+        placeholder.textContent = "-- Select a rider --";
 
-        input.type = "text";
-
-        input.setAttribute("list", `riders${i}`);
-
-        input.className = "riderInput";
-
-        input.placeholder = "Start typing a rider...";
-
-        input.addEventListener("input", updateBudget);
-
-        const datalist = document.createElement("datalist");
-
-        datalist.id = `riders${i}`;
+        select.appendChild(placeholder);
 
         riders.forEach(rider => {
 
             const option = document.createElement("option");
-
             option.value = rider.name;
+            option.textContent = rider.name;
 
-            datalist.appendChild(option);
+            select.appendChild(option);
 
         });
 
-        container.appendChild(label);
-        container.appendChild(input);
-        container.appendChild(datalist);
+        select.addEventListener("change", validateForm);
 
+        group.appendChild(label);
+        group.appendChild(select);
+
+        container.appendChild(group);
     }
 
+    validateForm();
 }
 
-function updateBudget() {
+function validateForm() {
 
-    let total = 0;
+    const submitButton = document.getElementById("submit-btn");
 
-    let selected = [];
+    const playerName =
+        document.getElementById("player-name").value.trim();
 
-    document.querySelectorAll(".riderInput").forEach(input => {
+    const selects =
+        document.querySelectorAll(".rider-select");
 
-        const rider = riders.find(r => r.name === input.value);
+    const selected = [];
 
-        if (!rider)
-            return;
+    selects.forEach(select => {
 
-        total += rider.price;
+        select.classList.remove("duplicate");
 
-        selected.push(rider.name);
+        if (select.value !== "") {
+            selected.push(select.value);
+        }
 
     });
 
-    document.getElementById("totalCost").textContent = total;
+    let duplicates = false;
 
-    document.getElementById("remainingBudget").textContent = BUDGET - total;
+    selects.forEach(select => {
 
-    validate(selected, total);
+        if (!select.value) return;
 
-}
+        const count = selected.filter(name => name === select.value).length;
 
-function validate(selected, total) {
+        if (count > 1) {
+            duplicates = true;
+            select.classList.add("duplicate");
+        }
 
-    const unique = new Set(selected);
+    });
 
     const valid =
-        document.getElementById("playerName").value.trim() !== "" &&
+        playerName !== "" &&
         selected.length === TEAM_SIZE &&
-        unique.size === TEAM_SIZE &&
-        total <= BUDGET;
+        !duplicates;
 
-    document.getElementById("submitButton").disabled = !valid;
-
+    submitButton.disabled = !valid;
 }
 
 function submitForm(event) {
 
     event.preventDefault();
 
-    alert("Perfect! Next step we'll send this to Google Sheets.");
+    const team = [];
 
+    document
+        .querySelectorAll(".rider-select")
+        .forEach(select => {
+
+            team.push(select.value);
+
+        });
+
+    const submission = {
+        playerName: document.getElementById("player-name").value.trim(),
+        email: document.getElementById("email").value.trim(),
+        riders: team
+    };
+
+    console.log(submission);
+
+    alert(
+        "Form validation successful.\n\nNext step: send this data to Google Sheets."
+    );
 }
 
 initForm();
