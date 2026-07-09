@@ -26,6 +26,16 @@ async function initTeams() {
 
     try {
 
+        const settingsResponse = await fetch("data/settings.json");
+        const settings = settingsResponse.ok ? await settingsResponse.json() : {};
+
+        if (settings.entriesOpen !== false) {
+            container.innerHTML = `
+                <p>Teams will be revealed once entries close.</p>
+            `;
+            return;
+        }
+
         const stateResponse = await fetch("data/state.json");
         const state = stateResponse.ok ? await stateResponse.json() : {};
         const riderPoints = state.rider_points || {};
