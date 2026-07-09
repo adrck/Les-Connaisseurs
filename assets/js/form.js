@@ -1,4 +1,4 @@
-const TEAM_SIZE = 8;
+const TEAM_SIZE = 6;
 
 let riders = [];
 
