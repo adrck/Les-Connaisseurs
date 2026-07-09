@@ -1,0 +1,101 @@
+{
+  "rider_points": {
+    "rider/jonas-vingegaard": 43,
+    "rider/filippo-ganna": 16,
+    "rider/tadej-pogacar": 32,
+    "rider/juan-ayuso": 12,
+    "rider/remco-evenepoel": 20,
+    "rider/isaac-del-toro": 35,
+    "rider/davide-piganzoli": 4,
+    "rider/tobias-foss": 3,
+    "rider/florian-lipowitz": 2,
+    "rider/paul-seixas": 3,
+    "rider/egan-bernal": 2,
+    "rider/mattias-skjelmose": 8,
+    "rider/tobias-halland-johannessen": 5,
+    "rider/romain-gregoire": 4,
+    "rider/lenny-martinez": 3,
+    "rider/tom-pidcock": 1,
+    "rider/richard-carapaz": 1,
+    "rider/matteo-jorgenson": 1,
+    "rider/alex-molenaar": 6
+  },
+  "stages_processed": [
+    1,
+    2
+  ],
+  "stage_history": {
+    "1": {
+      "rider/jonas-vingegaard": 25,
+      "rider/filippo-ganna": 16,
+      "rider/tadej-pogacar": 15,
+      "rider/juan-ayuso": 12,
+      "rider/remco-evenepoel": 8,
+      "rider/isaac-del-toro": 5,
+      "rider/davide-piganzoli": 4,
+      "rider/tobias-foss": 3,
+      "rider/florian-lipowitz": 2,
+      "rider/paul-seixas": 1,
+      "rider/egan-bernal": 2
+    },
+    "2": {
+      "rider/isaac-del-toro": 30,
+      "rider/tadej-pogacar": 17,
+      "rider/remco-evenepoel": 12,
+      "rider/jonas-vingegaard": 18,
+      "rider/mattias-skjelmose": 8,
+      "rider/tobias-halland-johannessen": 5,
+      "rider/romain-gregoire": 4,
+      "rider/lenny-martinez": 3,
+      "rider/paul-seixas": 2,
+      "rider/tom-pidcock": 1,
+      "rider/richard-carapaz": 1,
+      "rider/matteo-jorgenson": 1,
+      "rider/alex-molenaar": 6
+    }
+  },
+  "team_stage_history": {
+    "1": {
+      "Monique": 50,
+      "Angelo": 43,
+      "Maarten": 68,
+      "Peter": 48,
+      "Erwin": 51,
+      "Bent": 51,
+      "Jeroen": 68,
+      "Jaap": 68
+    },
+    "2": {
+      "Monique": 51,
+      "Angelo": 40,
+      "Maarten": 80,
+      "Peter": 68,
+      "Erwin": 51,
+      "Bent": 51,
+      "Jeroen": 82,
+      "Jaap": 79
+    }
+  },
+  "leaderboard_history": {
+    "1": {
+      "Monique": 50,
+      "Angelo": 43,
+      "Maarten": 68,
+      "Peter": 48,
+      "Erwin": 51,
+      "Bent": 51,
+      "Jeroen": 68,
+      "Jaap": 68
+    },
+    "2": {
+      "Monique": 101,
+      "Angelo": 83,
+      "Maarten": 148,
+      "Peter": 116,
+      "Erwin": 102,
+      "Bent": 102,
+      "Jeroen": 150,
+      "Jaap": 147
+    }
+  }
+}
