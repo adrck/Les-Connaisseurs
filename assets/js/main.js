@@ -12,25 +12,33 @@ async function loadPage(page) {
 
         document.getElementById("content").innerHTML = html;
 
-        // Load page-specific scripts
-        if (page === "enter") {
+       // Remove any previous page script
+const existing = document.getElementById("pageScript");
 
-            // Remove previous copy if it exists
-            const existing = document.getElementById("formScript");
+if (existing) {
+    existing.remove();
+}
 
-            if (existing) {
-                existing.remove();
-            }
+let script = null;
 
-            const script = document.createElement("script");
+if (page === "enter") {
 
-            script.id = "formScript";
+    script = document.createElement("script");
+    script.src = "assets/js/form.js";
 
-            script.src = "assets/js/form.js";
+}
 
-            document.body.appendChild(script);
+if (page === "standings") {
 
-        }
+    script = document.createElement("script");
+    script.src = "assets/js/standings.js";
+
+}
+
+if (script) {
+    script.id = "pageScript";
+    document.body.appendChild(script);
+}
 
     }
 
