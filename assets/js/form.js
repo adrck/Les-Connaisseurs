@@ -136,19 +136,26 @@ function validateForm() {
     });
 
     let duplicates = false;
+const duplicateNames = [];
 
-    selects.forEach(select => {
+selects.forEach(select => {
 
-        if (!select.value) return;
+    if (!select.value) return;
 
-        const count = selected.filter(name => name === select.value).length;
+    const count = selected.filter(name => name === select.value).length;
 
-        if (count > 1) {
-            duplicates = true;
-            select.classList.add("duplicate");
+    if (count > 1) {
+
+        duplicates = true;
+        select.classList.add("duplicate");
+
+        if (!duplicateNames.includes(select.value)) {
+            duplicateNames.push(select.value);
         }
 
-    });
+    }
+
+});
 
     const valid =
         playerName !== "" &&
@@ -156,6 +163,20 @@ function validateForm() {
         !duplicates;
 
     submitButton.disabled = !valid;
+
+if (duplicates) {
+
+    formMessage.textContent =
+        "Duplicate rider" +
+        (duplicateNames.length > 1 ? "s" : "") +
+        ": " +
+        duplicateNames.join(", ");
+
+} else {
+
+    formMessage.textContent = "";
+
+}
 }
 
 async function submitForm(event) {
@@ -175,6 +196,7 @@ async function submitForm(event) {
     };
 
     const submitButton = document.getElementById("submit-btn");
+    const formMessage = document.getElementById("form-message");
     submitButton.disabled = true;
     submitButton.textContent = "Submitting...";
 
