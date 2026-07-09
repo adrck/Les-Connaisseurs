@@ -1,28 +1,36 @@
 {
   "rider_points": {
-    "rider/jonas-vingegaard": 43,
+    "rider/jonas-vingegaard": 60,
     "rider/filippo-ganna": 16,
-    "rider/tadej-pogacar": 32,
-    "rider/juan-ayuso": 12,
-    "rider/remco-evenepoel": 20,
-    "rider/isaac-del-toro": 35,
+    "rider/tadej-pogacar": 67,
+    "rider/juan-ayuso": 13,
+    "rider/remco-evenepoel": 23,
+    "rider/isaac-del-toro": 39,
     "rider/davide-piganzoli": 4,
     "rider/tobias-foss": 3,
-    "rider/florian-lipowitz": 2,
-    "rider/paul-seixas": 3,
+    "rider/florian-lipowitz": 6,
+    "rider/paul-seixas": 13,
     "rider/egan-bernal": 2,
     "rider/mattias-skjelmose": 8,
-    "rider/tobias-halland-johannessen": 5,
+    "rider/tobias-halland-johannessen": 13,
     "rider/romain-gregoire": 4,
     "rider/lenny-martinez": 3,
     "rider/tom-pidcock": 1,
-    "rider/richard-carapaz": 1,
+    "rider/richard-carapaz": 13,
     "rider/matteo-jorgenson": 1,
-    "rider/alex-molenaar": 6
+    "rider/alex-molenaar": 6,
+    "rider/lennart-van-eetvelt": 5,
+    "rider/mads-pedersen": 31,
+    "rider/alex-baudin": 3,
+    "rider/quinn-simmons": 16,
+    "rider/biniam-girmay": 5,
+    "rider/jasper-philipsen": 3
   },
   "stages_processed": [
     1,
-    2
+    2,
+    3,
+    4
   ],
   "stage_history": {
     "1": {
@@ -52,6 +60,26 @@
       "rider/richard-carapaz": 1,
       "rider/matteo-jorgenson": 1,
       "rider/alex-molenaar": 6
+    },
+    "3": {
+      "rider/tadej-pogacar": 35,
+      "rider/jonas-vingegaard": 17,
+      "rider/richard-carapaz": 12,
+      "rider/paul-seixas": 10,
+      "rider/tobias-halland-johannessen": 8,
+      "rider/lennart-van-eetvelt": 5,
+      "rider/florian-lipowitz": 4,
+      "rider/remco-evenepoel": 3,
+      "rider/isaac-del-toro": 4,
+      "rider/juan-ayuso": 1,
+      "rider/mads-pedersen": 5,
+      "rider/alex-baudin": 3
+    },
+    "4": {
+      "rider/mads-pedersen": 26,
+      "rider/quinn-simmons": 16,
+      "rider/biniam-girmay": 5,
+      "rider/jasper-philipsen": 3
     }
   },
   "team_stage_history": {
@@ -74,6 +102,26 @@
       "Bent": 51,
       "Jeroen": 82,
       "Jaap": 79
+    },
+    "3": {
+      "Monique": 76,
+      "Angelo": 71,
+      "Maarten": 91,
+      "Peter": 75,
+      "Erwin": 81,
+      "Bent": 69,
+      "Jeroen": 79,
+      "Jaap": 79
+    },
+    "4": {
+      "Monique": 47,
+      "Angelo": 29,
+      "Maarten": 29,
+      "Peter": 29,
+      "Erwin": 3,
+      "Bent": 8,
+      "Jeroen": 34,
+      "Jaap": 29
     }
   },
   "leaderboard_history": {
@@ -96,6 +144,26 @@
       "Bent": 102,
       "Jeroen": 150,
       "Jaap": 147
+    },
+    "3": {
+      "Monique": 177,
+      "Angelo": 154,
+      "Maarten": 239,
+      "Peter": 191,
+      "Erwin": 183,
+      "Bent": 171,
+      "Jeroen": 229,
+      "Jaap": 226
+    },
+    "4": {
+      "Monique": 224,
+      "Angelo": 183,
+      "Maarten": 268,
+      "Peter": 220,
+      "Erwin": 186,
+      "Bent": 179,
+      "Jeroen": 263,
+      "Jaap": 255
     }
   }
 }
