@@ -164,3 +164,10 @@ hr{
     margin-bottom:15px;
 
 }
+
+.form-message {
+    color: #c62828;
+    font-weight: bold;
+    margin: 10px 0;
+    min-height: 1.2em;
+}
