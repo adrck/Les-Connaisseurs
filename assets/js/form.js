@@ -80,7 +80,7 @@ Object.keys(teams)
         optgroup.label = teamName;
 
         teams[teamName]
-            .sort((a, b) => a.name.localeCompare(b.name))
+            .sort((a, b) => a.bib - b.bib)
             .forEach(rider => {
 
                 const option = document.createElement("option");
