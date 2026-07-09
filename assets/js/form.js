@@ -116,6 +116,7 @@ Object.keys(teams)
 function validateForm() {
 
     const submitButton = document.getElementById("submit-btn");
+    const formMessage = document.getElementById("form-message");
 
     const playerName =
         document.getElementById("player-name").value.trim();
