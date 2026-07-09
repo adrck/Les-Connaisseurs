@@ -1,9 +1,10 @@
 (function () {
 "use strict";
 
-let TEAM_SIZE = 8;
+let TEAM_SIZE = 20;
 
 let riders = [];
+let selectedRiders = []; // array of rider names, in the order picked
 
 async function initForm() {
     const form = document.getElementById("team-form");
@@ -24,7 +25,7 @@ async function initForm() {
             }
 
             if (settings.entriesOpen === false) {
-                document.getElementById("rider-selectors").innerHTML =
+                document.querySelector(".rider-picker").innerHTML =
                     "<p>Entries are currently closed.</p>";
                 document.getElementById("player-name").disabled = true;
                 document.getElementById("submit-btn").disabled = true;
@@ -40,98 +41,151 @@ async function initForm() {
 
         riders.sort((a, b) => a.name.localeCompare(b.name));
 
-        buildSelectors();
+        const headingCount = document.getElementById("riders-heading-count");
+        if (headingCount) {
+            headingCount.textContent = TEAM_SIZE;
+        }
+
+        renderAvailableList();
+        renderSelectedList();
+        validateForm();
 
         document
             .getElementById("player-name")
             .addEventListener("input", validateForm);
 
+        document
+            .getElementById("rider-search-input")
+            .addEventListener("input", renderAvailableList);
+
         form.addEventListener("submit", submitForm);
 
     } catch (error) {
-        document.getElementById("rider-selectors").innerHTML =
+        document.querySelector(".rider-picker").innerHTML =
             `<p>Unable to load rider list.</p>`;
 
         console.error(error);
     }
 }
 
-function buildSelectors() {
+function addRider(name) {
 
-    const container = document.getElementById("rider-selectors");
+    if (selectedRiders.includes(name)) return;
 
-    container.innerHTML = "";
-
-    for (let i = 0; i < TEAM_SIZE; i++) {
-
-        const group = document.createElement("div");
-        group.className = "form-group";
-
-        const label = document.createElement("label");
-        label.textContent = `Rider ${i + 1}`;
-
-        const select = document.createElement("select");
-        select.className = "rider-select";
-
-        const placeholder = document.createElement("option");
-        placeholder.value = "";
-        placeholder.textContent = "Select a rider...";
-        placeholder.selected = true;
-
-        select.appendChild(placeholder);
-
-        // Group riders by team
-const teams = {};
-
-riders.forEach(rider => {
-
-    if (!teams[rider.team]) {
-        teams[rider.team] = [];
+    if (selectedRiders.length >= TEAM_SIZE) {
+        const formMessage = document.getElementById("form-message");
+        formMessage.textContent =
+            `Your team is already full (${TEAM_SIZE} riders). Remove one to swap.`;
+        return;
     }
 
-    teams[rider.team].push(rider);
+    selectedRiders.push(name);
 
-});
+    renderAvailableList();
+    renderSelectedList();
+    validateForm();
 
-// Create an optgroup for each team
-Object.keys(teams)
-    .sort()
-    .forEach(teamName => {
+}
 
-        const optgroup = document.createElement("optgroup");
-        optgroup.label = teamName;
+function removeRider(name) {
 
-        teams[teamName]
-            .sort((a, b) => a.bib - b.bib)
-            .forEach(rider => {
+    selectedRiders = selectedRiders.filter(riderName => riderName !== name);
 
-                const option = document.createElement("option");
+    renderAvailableList();
+    renderSelectedList();
+    validateForm();
 
-                option.value = rider.name;
-                option.textContent = rider.name;
+}
 
-                optgroup.appendChild(option);
+function renderAvailableList() {
 
-            });
+    const container = document.getElementById("rider-available-list");
+    const searchInput = document.getElementById("rider-search-input");
+    const query = searchInput ? searchInput.value.trim().toLowerCase() : "";
 
-        select.appendChild(optgroup);
+    const available = riders.filter(rider =>
+        !selectedRiders.includes(rider.name) &&
+        (rider.name.toLowerCase().includes(query) ||
+         rider.team.toLowerCase().includes(query))
+    );
 
+    if (available.length === 0) {
+        container.innerHTML = query
+            ? "<p class='rider-list-empty'>No riders match your search.</p>"
+            : "<p class='rider-list-empty'>All riders have been added.</p>";
+        return;
+    }
+
+    // Group remaining matches by team, same as before
+    const teams = {};
+
+    available.forEach(rider => {
+        if (!teams[rider.team]) {
+            teams[rider.team] = [];
+        }
+        teams[rider.team].push(rider);
     });
 
-        select.addEventListener("change", () => {
+    container.innerHTML = Object.keys(teams)
+        .sort()
+        .map(teamName => {
 
-            validateForm();
+            const rows = teams[teamName]
+                .sort((a, b) => a.bib - b.bib)
+                .map(rider => `
+                    <button
+                        type="button"
+                        class="rider-option"
+                        data-rider-name="${rider.name.replace(/"/g, "&quot;")}"
+                    >
+                        ${rider.name}
+                    </button>
+                `)
+                .join("");
 
-        });
+            return `
+                <div class="rider-team-group">
+                    <div class="rider-team-heading">${teamName}</div>
+                    ${rows}
+                </div>
+            `;
 
-        group.appendChild(label);
-        group.appendChild(select);
+        })
+        .join("");
 
-        container.appendChild(group);
+    container.querySelectorAll(".rider-option").forEach(button => {
+        button.addEventListener("click", () => addRider(button.dataset.riderName));
+    });
 
+}
+
+function renderSelectedList() {
+
+    const container = document.getElementById("rider-selected-list");
+
+    if (selectedRiders.length === 0) {
+        container.innerHTML = "<p class='rider-list-empty'>No riders selected yet.</p>";
+        return;
     }
 
-    validateForm();
+    container.innerHTML = selectedRiders.map((name, index) => `
+        <div class="rider-chip">
+            <span class="rider-chip-index">${index + 1}</span>
+            <span class="rider-chip-name">${name}</span>
+            <button
+                type="button"
+                class="rider-chip-remove"
+                data-rider-name="${name.replace(/"/g, "&quot;")}"
+                aria-label="Remove ${name}"
+            >
+                &times;
+            </button>
+        </div>
+    `).join("");
+
+    container.querySelectorAll(".rider-chip-remove").forEach(button => {
+        button.addEventListener("click", () => removeRider(button.dataset.riderName));
+    });
 
 }
 
@@ -139,83 +193,36 @@ function validateForm() {
 
     const submitButton = document.getElementById("submit-btn");
     const formMessage = document.getElementById("form-message");
+    const counterEl = document.getElementById("selection-counter");
 
     const playerName =
         document.getElementById("player-name").value.trim();
 
-    const selects =
-        document.querySelectorAll(".rider-select");
-
-    const selected = [];
-
-    selects.forEach(select => {
-
-        select.classList.remove("duplicate");
-
-        if (select.value !== "") {
-            selected.push(select.value);
-        }
-
-    });
-
-    let duplicates = false;
-const duplicateNames = [];
-
-selects.forEach(select => {
-
-    if (!select.value) return;
-
-    const count = selected.filter(name => name === select.value).length;
-
-    if (count > 1) {
-
-        duplicates = true;
-        select.classList.add("duplicate");
-
-        if (!duplicateNames.includes(select.value)) {
-            duplicateNames.push(select.value);
-        }
-
-    }
-
-});
-
     const valid =
         playerName !== "" &&
-        selected.length === TEAM_SIZE &&
-        !duplicates;
+        selectedRiders.length === TEAM_SIZE;
 
     submitButton.disabled = !valid;
 
-if (duplicates) {
+    if (counterEl) {
+        counterEl.textContent = `${selectedRiders.length} of ${TEAM_SIZE} riders selected`;
+        counterEl.style.color = selectedRiders.length === TEAM_SIZE ? "#2e7d32" : "#0b5ed7";
+    }
 
-    formMessage.textContent =
-        "Duplicate rider" +
-        (duplicateNames.length > 1 ? "s" : "") +
-        ": " +
-        duplicateNames.join(", ");
+    if (selectedRiders.length < TEAM_SIZE || playerName !== "") {
+        formMessage.textContent = "";
+    }
 
-} else {
-
-    formMessage.textContent = "";
-
-}
 }
 
 async function submitForm(event) {
 
     event.preventDefault();
 
-    const team = [];
-
-    document
-        .querySelectorAll(".rider-select")
-        .forEach(select => team.push(select.value));
-
     const submission = {
         playerName: document.getElementById("player-name").value.trim(),
         email: document.getElementById("email").value.trim(),
-        riders: team
+        riders: selectedRiders
     };
 
     const submitButton = document.getElementById("submit-btn");
@@ -243,7 +250,9 @@ async function submitForm(event) {
             alert("Your team has been submitted successfully!");
 
             document.getElementById("team-form").reset();
-
+            selectedRiders = [];
+            renderAvailableList();
+            renderSelectedList();
             validateForm();
 
         } else {

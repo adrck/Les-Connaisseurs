@@ -172,6 +172,123 @@ hr{
     min-height: 1.2em;
 }
 
+/* ---------- Enter Team: rider picker ---------- */
+
+#selection-counter {
+    font-weight: bold;
+    color: #0b5ed7;
+    margin: 10px 0;
+}
+
+.rider-picker {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 10px;
+}
+
+.rider-picker-column label {
+    margin-top: 0;
+}
+
+#rider-search-input {
+    margin-bottom: 10px;
+}
+
+.rider-list {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    height: 420px;
+    overflow-y: auto;
+    background: #fafbfc;
+    padding: 6px;
+}
+
+.rider-list-empty {
+    color: #888;
+    text-align: center;
+    margin-top: 40px;
+    padding: 0 10px;
+}
+
+.rider-team-group {
+    margin-bottom: 8px;
+}
+
+.rider-team-heading {
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #888;
+    padding: 6px 8px 2px;
+}
+
+.rider-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    padding: 8px 10px;
+    margin: 3px 0;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.rider-option:hover {
+    background: #eaf1fd;
+    border-color: #0b5ed7;
+}
+
+.rider-selected-list {
+    padding: 10px;
+}
+
+.rider-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    padding: 8px 10px;
+    margin: 4px 0;
+}
+
+.rider-chip-index {
+    color: #888;
+    font-size: 0.85em;
+    min-width: 18px;
+}
+
+.rider-chip-name {
+    flex: 1;
+}
+
+.rider-chip-remove {
+    background: none;
+    border: none;
+    color: #c62828;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+
+    .rider-picker {
+        grid-template-columns: 1fr;
+    }
+
+    .rider-list {
+        height: 300px;
+    }
+
+}
+
 /* ---------- Riders table ---------- */
 
 th.sortable {

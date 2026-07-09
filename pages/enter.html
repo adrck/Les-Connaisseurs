@@ -21,18 +21,38 @@
         >
     </div>
 
-    <h3>Select Your 8 Riders</h3>
+    <h3>Select Your <span id="riders-heading-count">20</span> Riders</h3>
 
-    <div id="rider-selectors"></div>
+    <p id="selection-counter"></p>
 
-<p id="form-message" class="form-message"></p>
+    <div class="rider-picker">
 
-<button
-    id="submit-btn"
-    type="submit"
-    disabled
->
-    Submit Team
-</button>
+        <div class="rider-picker-column">
+            <label for="rider-search-input">Search riders</label>
+            <input
+                type="text"
+                id="rider-search-input"
+                placeholder="Search by name or team..."
+                autocomplete="off"
+            >
+            <div id="rider-available-list" class="rider-list"></div>
+        </div>
+
+        <div class="rider-picker-column">
+            <label>Your Team</label>
+            <div id="rider-selected-list" class="rider-list rider-selected-list"></div>
+        </div>
+
+    </div>
+
+    <p id="form-message" class="form-message"></p>
+
+    <button
+        id="submit-btn"
+        type="submit"
+        disabled
+    >
+        Submit Team
+    </button>
 
 </form>
