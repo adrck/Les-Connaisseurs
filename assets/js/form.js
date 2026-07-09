@@ -58,15 +58,43 @@ function buildSelectors() {
 
         select.appendChild(placeholder);
 
-        riders.forEach(rider => {
+        // Group riders by team
+const teams = {};
 
-            const option = document.createElement("option");
-            option.value = rider.name;
-            option.textContent = rider.name;
+riders.forEach(rider => {
 
-            select.appendChild(option);
+    if (!teams[rider.team]) {
+        teams[rider.team] = [];
+    }
 
-        });
+    teams[rider.team].push(rider);
+
+});
+
+// Create an optgroup for each team
+Object.keys(teams)
+    .sort()
+    .forEach(teamName => {
+
+        const optgroup = document.createElement("optgroup");
+        optgroup.label = teamName;
+
+        teams[teamName]
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .forEach(rider => {
+
+                const option = document.createElement("option");
+
+                option.value = rider.name;
+                option.textContent = rider.name;
+
+                optgroup.appendChild(option);
+
+            });
+
+        select.appendChild(optgroup);
+
+    });
 
         select.addEventListener("change", () => {
 
