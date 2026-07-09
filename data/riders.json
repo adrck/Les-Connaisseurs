@@ -2,41 +2,41 @@
   {
     "name":"Tadej Pogačar",
     "team":"UAE Team Emirates",
-    "price":30
+    "bib":1
   },
   {
     "name":"Jonas Vingegaard",
     "team":"Visma | Lease a Bike",
-    "price":28
+    "bib":11
   },
   {
     "name":"Richard Carapaz",
     "team":"UAE Team Emirates",
-    "price":30
+    "bib":2
   },
   {
     "name":"Tim Merlier",
     "team":"Visma | Lease a Bike",
-    "price":28
+    "bib":14
   },
   {
     "name":"Quinn Simmons",
     "team":"UAE Team Emirates",
-    "price":30
+    "bib":3
   },
   {
     "name":"Mads Pedersen",
     "team":"Visma | Lease a Bike",
-    "price":28
+    "bib":12
   },
   {
     "name":"Jonas",
     "team":"UAE Team Emirates",
-    "price":30
+    "bib":4
   },
   {
     "name":"Mathieu",
     "team":"Visma | Lease a Bike",
-    "price":28
+    "bib":16
   }
 ]
