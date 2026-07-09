@@ -1,3 +1,6 @@
+(function () {
+"use strict";
+
 let TEAM_SIZE = 8;
 
 let riders = [];
@@ -264,3 +267,5 @@ async function submitForm(event) {
 window.requestAnimationFrame(() => {
     initForm();
 });
+
+})();

@@ -1,3 +1,6 @@
+(function () {
+"use strict";
+
 let allRiders = [];
 let riderSort = { key: "points", direction: "desc" };
 
@@ -110,10 +113,10 @@ function renderRiders() {
         <table>
             <thead>
                 <tr>
-                    <th class="sortable" onclick="sortRiders('name')">Name${arrow("name")}</th>
-                    <th class="sortable" onclick="sortRiders('team')">Team${arrow("team")}</th>
-                    <th class="sortable" onclick="sortRiders('bib')">Bib${arrow("bib")}</th>
-                    <th class="sortable" onclick="sortRiders('points')">Points${arrow("points")}</th>
+                    <th class="sortable" data-sort-key="name">Name${arrow("name")}</th>
+                    <th class="sortable" data-sort-key="team">Team${arrow("team")}</th>
+                    <th class="sortable" data-sort-key="bib">Bib${arrow("bib")}</th>
+                    <th class="sortable" data-sort-key="points">Points${arrow("points")}</th>
                 </tr>
             </thead>
             <tbody>
@@ -122,6 +125,12 @@ function renderRiders() {
         </table>
     `;
 
+    container.querySelectorAll("th.sortable").forEach(th => {
+        th.addEventListener("click", () => sortRiders(th.dataset.sortKey));
+    });
+
 }
 
 initRiders();
+
+})();

@@ -1,3 +1,6 @@
+(function () {
+"use strict";
+
 let leaderboardHistory = {};
 let stageOrder = [];
 
@@ -95,3 +98,5 @@ function displayLeaderboard(stage) {
 }
 
 loadResults();
+
+})();

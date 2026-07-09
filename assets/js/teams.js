@@ -1,3 +1,6 @@
+(function () {
+"use strict";
+
 // Same Apps Script deployment used by the entry form (form.js).
 // It needs a doGet() handler that returns the submitted teams as JSON:
 // [{ "playerName": "Monique", "riders": ["Tadej Pogačar", "Jonas Vingegaard", ...] }, ...]
@@ -95,3 +98,5 @@ function renderTeams(teams, riderPoints, teamTotals) {
 }
 
 initTeams();
+
+})();
