@@ -1,27 +1,81 @@
 /* ---------- Global ---------- */
 
+:root {
+    --rojo: #C8102E;        /* La Roja — leader's jersey */
+    --rojo-oscuro: #94081F;
+    --oro: #E3A100;         /* sun-baked hills / Spanish gold */
+    --verde: #2F6F4E;       /* points jersey */
+    --azul-lunares: #1C3F94;/* King of the Mountains polka dot */
+    --tinta: #221B17;       /* warm ink, not pure black */
+    --papel: #F5EFE0;       /* route-map paper */
+    --papel-oscuro: #EAE0C8;
+    --font-display: 'Oswald', 'Arial Narrow', sans-serif;
+    --font-body: 'Inter', Arial, Helvetica, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+}
+
 * {
     box-sizing: border-box;
 }
 
 body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f4f6f9;
-    color: #333;
+    font-family: var(--font-body);
+    background: var(--papel);
+    color: var(--tinta);
     line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
+    color: var(--tinta);
 }
 
 /* ---------- Header ---------- */
 
 header {
-    background: #0b5ed7;
+    background: var(--tinta);
     color: white;
-    padding: 20px;
+    padding: 20px 25px;
 }
 
-header h1 {
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.brand-badge {
+    font-family: var(--font-display);
+    font-weight: 700;
+    background: var(--rojo);
+    color: white;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    letter-spacing: 0.03em;
+}
+
+.brand-text h1 {
     margin: 0;
+    color: white;
+    font-size: 26px;
+    text-transform: uppercase;
+}
+
+.brand-subtitle {
+    margin: 0;
+    color: var(--oro);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
 }
 
 /* ---------- Navigation ---------- */
@@ -29,18 +83,24 @@ header h1 {
 nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 15px;
+    gap: 20px;
+    margin-top: 18px;
 }
 
 nav a {
     color: white;
     text-decoration: none;
-    font-weight: bold;
+    font-family: var(--font-display);
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    padding-bottom: 3px;
+    border-bottom: 2px solid transparent;
 }
 
 nav a:hover {
-    text-decoration: underline;
+    border-bottom-color: var(--rojo);
 }
 
 /* ---------- Main Content ---------- */
@@ -55,23 +115,37 @@ main {
     background: white;
     border-radius: 10px;
     padding: 25px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
 }
 
 /* ---------- Buttons ---------- */
 
 .button {
     display: inline-block;
-    background: #0b5ed7;
+    background: var(--rojo);
     color: white;
-    padding: 12px 22px;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 13px 26px;
     border-radius: 6px;
     text-decoration: none;
     margin-top: 20px;
 }
 
 .button:hover {
-    background: #084298;
+    background: var(--rojo-oscuro);
+}
+
+.button.secondary {
+    background: transparent;
+    color: var(--tinta);
+    border: 2px solid var(--tinta);
+}
+
+.button.secondary:hover {
+    background: var(--tinta);
+    color: white;
 }
 
 /* ---------- Tables ---------- */
@@ -82,14 +156,28 @@ table {
 }
 
 th {
-    background: #0b5ed7;
+    background: var(--tinta);
     color: white;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.03em;
 }
 
 th,
 td {
     padding: 12px;
     border: 1px solid #ddd;
+}
+
+td {
+    font-family: var(--font-mono);
+    font-size: 14px;
+}
+
+td:first-child,
+td:nth-child(2) {
+    font-family: var(--font-body);
 }
 
 tr:nth-child(even) {
@@ -101,7 +189,11 @@ tr:nth-child(even) {
 footer {
     text-align: center;
     padding: 25px;
-    color: #666;
+    color: #8a8072;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
 /* ---------- Mobile ---------- */
@@ -140,7 +232,7 @@ button{
 
     margin-top:30px;
     padding:12px 20px;
-    background:#0b5ed7;
+    background: var(--rojo);
     color:white;
     border:none;
     border-radius:6px;
@@ -176,7 +268,7 @@ hr{
 
 #selection-counter {
     font-weight: bold;
-    color: #0b5ed7;
+    color: var(--rojo);
     margin: 10px 0;
 }
 
@@ -238,8 +330,8 @@ hr{
 }
 
 .rider-option:hover {
-    background: #eaf1fd;
-    border-color: #0b5ed7;
+    background: #FCEBEA;
+    border-color: var(--rojo);
 }
 
 .rider-selected-list {
@@ -298,7 +390,7 @@ th.sortable {
 }
 
 th.sortable:hover {
-    background: #084298;
+    background: var(--rojo-oscuro);
 }
 
 #rider-search {
@@ -323,7 +415,7 @@ th.sortable:hover {
 }
 
 .team-total {
-    color: #0b5ed7;
+    color: var(--rojo);
     font-size: 0.9em;
 }
 
@@ -354,4 +446,323 @@ th.sortable:hover {
 #stage-select {
     max-width: 250px;
     margin-bottom: 20px;
+}
+
+/* ---------- Homepage: hero ---------- */
+
+.hero {
+    position: relative;
+    background: var(--tinta);
+    color: white;
+    border-radius: 14px;
+    overflow: hidden;
+    padding: 50px 40px 0;
+}
+
+.hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    padding-bottom: 40px;
+}
+
+.hero-eyebrow {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 13px;
+    color: var(--oro);
+    margin: 0 0 14px;
+}
+
+.hero-title {
+    margin: 0 0 18px;
+    font-size: 42px;
+    line-height: 1.15;
+    color: white;
+    text-transform: uppercase;
+}
+
+.hero-sub {
+    font-size: 16px;
+    color: #E7E2D8;
+    max-width: 520px;
+    margin: 0 0 10px;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
+}
+
+.hero-actions .button.secondary {
+    border-color: white;
+    color: white;
+}
+
+.hero-actions .button.secondary:hover {
+    background: white;
+    color: var(--tinta);
+}
+
+.hero-status {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--oro);
+    margin-top: 16px;
+    min-height: 1.2em;
+}
+
+.hero-profile {
+    display: block;
+    width: 100%;
+    height: 140px;
+    margin-top: 20px;
+}
+
+/* ---------- Homepage: how it works ---------- */
+
+.section-label {
+    text-transform: uppercase;
+    font-size: 15px;
+    letter-spacing: 0.1em;
+    color: var(--rojo);
+    margin: 46px 0 18px;
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.step {
+    background: white;
+    border-radius: 10px;
+    padding: 22px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.step-number {
+    display: block;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--oro);
+    margin-bottom: 8px;
+}
+
+.step h4 {
+    margin: 0 0 8px;
+}
+
+.step p {
+    margin: 0;
+    font-size: 14.5px;
+    color: #4b463e;
+}
+
+/* ---------- Homepage: quick links ---------- */
+
+.link-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.link-card {
+    display: block;
+    background: white;
+    border-radius: 10px;
+    padding: 20px 20px 22px;
+    text-decoration: none;
+    color: var(--tinta);
+    border-top: 5px solid #ccc;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    transition: transform 0.12s ease;
+}
+
+.link-card:hover {
+    transform: translateY(-3px);
+}
+
+.link-card-tag {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #8a8072;
+    margin-bottom: 10px;
+}
+
+.link-card h4 {
+    margin: 0 0 6px;
+}
+
+.link-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #4b463e;
+}
+
+.link-card--rojo {
+    border-top-color: var(--rojo);
+}
+
+.link-card--lunares {
+    border-top-color: var(--azul-lunares);
+}
+
+.link-card--verde {
+    border-top-color: var(--verde);
+}
+
+.link-card--oro {
+    border-top-color: var(--oro);
+}
+
+.link-card--neutral {
+    border-top-color: #ccc;
+}
+
+@media (max-width: 900px) {
+
+    .hero-title {
+        font-size: 32px;
+    }
+
+    .steps,
+    .link-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 700px) {
+
+    .hero {
+        padding: 35px 22px 0;
+    }
+
+}
+
+/* ---------- Rules: stage scoring ---------- */
+
+.scoring-card h2 {
+    margin-top: 0;
+}
+
+.scoring-intro {
+    color: #4b463e;
+    max-width: 640px;
+}
+
+.scoring-subhead {
+    margin: 34px 0 6px;
+    padding-top: 18px;
+    border-top: 1px solid #eee;
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: 0.03em;
+    color: var(--rojo);
+}
+
+.scoring-card h3.scoring-subhead:first-of-type {
+    margin-top: 20px;
+    padding-top: 0;
+    border-top: none;
+}
+
+.scoring-note {
+    color: #4b463e;
+    font-size: 14.5px;
+    margin: 0 0 14px;
+    max-width: 640px;
+}
+
+.scoring-table {
+    max-width: 560px;
+    margin-bottom: 6px;
+}
+
+.scoring-table td:first-child {
+    font-family: var(--font-body);
+    font-weight: 600;
+}
+
+.scoring-table td {
+    font-family: var(--font-mono);
+}
+
+.scoring-table th.col-rojo {
+    background: var(--rojo);
+}
+
+.scoring-table th.col-lunares {
+    background: var(--azul-lunares);
+}
+
+.scoring-table th.col-verde {
+    background: var(--verde);
+}
+
+.scoring-table th.col-oro {
+    background: var(--oro);
+}
+
+.jersey-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    max-width: 640px;
+}
+
+.jersey-chip {
+    border-radius: 8px;
+    padding: 14px 16px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.jersey-chip-name {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    opacity: 0.9;
+}
+
+.jersey-chip-points {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.jersey-chip--rojo {
+    background: var(--rojo);
+}
+
+.jersey-chip--lunares {
+    background: var(--azul-lunares);
+}
+
+.jersey-chip--verde {
+    background: var(--verde);
+}
+
+.jersey-chip--oro {
+    background: var(--oro);
+}
+
+@media (max-width: 700px) {
+
+    .jersey-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
 }
