@@ -55,4 +55,4 @@ function displayLeaderboard(results) {
 
 }
 
-document.addEventListener("DOMContentLoaded", loadResults);
+loadResults();
