@@ -452,22 +452,18 @@ th.sortable:hover {
 
 .hero {
     position: relative;
-    background-image: url('../img/hero-grand-tours.jpg');
-    background-size: cover;
-    background-position: center;
+    background: var(--tinta);
     color: white;
     border-radius: 14px;
     overflow: hidden;
-    padding: 50px 40px;
-    min-height: 420px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+    padding: 50px 40px 0;
 }
 
 .hero-inner {
+    position: relative;
+    z-index: 1;
     max-width: 640px;
+    padding-bottom: 40px;
 }
 
 .hero-eyebrow {
@@ -477,7 +473,6 @@ th.sortable:hover {
     font-size: 13px;
     color: var(--oro);
     margin: 0 0 14px;
-    text-shadow: 0 2px 6px rgba(0,0,0,.7);
 }
 
 .hero-title {
@@ -486,37 +481,151 @@ th.sortable:hover {
     line-height: 1.15;
     color: white;
     text-transform: uppercase;
-    text-shadow: 0 2px 10px rgba(0,0,0,.8);
 }
 
 .hero-sub {
     font-size: 16px;
-    color: #F2EFE8;
+    color: #E7E2D8;
     max-width: 520px;
-    margin: 0 auto;
-    text-shadow: 0 2px 8px rgba(0,0,0,.8);
+    margin: 0 0 10px;
 }
 
-/* ---------- Tri-color heading accent (site-wide) ---------- */
-/* A small callback to the three Grand Tour jerseys, used under every
-   page heading except the homepage hero title (which sits on its own
-   art). Order matches the hero: Giro pink, Tour gold, Vuelta red. */
-
-main h2:not(.hero-title) {
-    position: relative;
-    padding-bottom: 14px;
-    margin-bottom: 20px;
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: center;
 }
 
-main h2:not(.hero-title)::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 72px;
-    height: 4px;
-    border-radius: 2px;
-    background: linear-gradient(to right, #E6399B 0 33.33%, #F0B429 33.33% 66.66%, var(--rojo) 66.66% 100%);
+.hero-actions .button.secondary {
+    border-color: white;
+    color: white;
+}
+
+.hero-actions .button.secondary:hover {
+    background: white;
+    color: var(--tinta);
+}
+
+.hero-status {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--oro);
+    margin-top: 16px;
+    min-height: 1.2em;
+}
+
+.hero-profile {
+    display: block;
+    width: 100%;
+    height: 140px;
+    margin-top: 20px;
+}
+
+/* ---------- Homepage: how it works ---------- */
+
+.section-label {
+    text-transform: uppercase;
+    font-size: 15px;
+    letter-spacing: 0.1em;
+    color: var(--rojo);
+    margin: 46px 0 18px;
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.step {
+    background: white;
+    border-radius: 10px;
+    padding: 22px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.step-number {
+    display: block;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--oro);
+    margin-bottom: 8px;
+}
+
+.step h4 {
+    margin: 0 0 8px;
+}
+
+.step p {
+    margin: 0;
+    font-size: 14.5px;
+    color: #4b463e;
+}
+
+/* ---------- Homepage: quick links ---------- */
+
+.link-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.link-card {
+    display: block;
+    background: white;
+    border-radius: 10px;
+    padding: 20px 20px 22px;
+    text-decoration: none;
+    color: var(--tinta);
+    border-top: 5px solid #ccc;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    transition: transform 0.12s ease;
+}
+
+.link-card:hover {
+    transform: translateY(-3px);
+}
+
+.link-card-tag {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #8a8072;
+    margin-bottom: 10px;
+}
+
+.link-card h4 {
+    margin: 0 0 6px;
+}
+
+.link-card p {
+    margin: 0;
+    font-size: 14px;
+    color: #4b463e;
+}
+
+.link-card--rojo {
+    border-top-color: var(--rojo);
+}
+
+.link-card--lunares {
+    border-top-color: var(--azul-lunares);
+}
+
+.link-card--verde {
+    border-top-color: var(--verde);
+}
+
+.link-card--oro {
+    border-top-color: var(--oro);
+}
+
+.link-card--neutral {
+    border-top-color: #ccc;
 }
 
 @media (max-width: 900px) {
@@ -525,13 +634,17 @@ main h2:not(.hero-title)::after {
         font-size: 32px;
     }
 
+    .steps,
+    .link-grid {
+        grid-template-columns: 1fr;
+    }
+
 }
 
 @media (max-width: 700px) {
 
     .hero {
-        padding: 35px 22px;
-        min-height: 360px;
+        padding: 35px 22px 0;
     }
 
 }
