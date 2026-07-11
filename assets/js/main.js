@@ -22,6 +22,7 @@ if (existing) {
 let script = null;
 
 const pageScripts = {
+    home: "assets/js/home.js",
     enter: "assets/js/form.js",
     standings: "assets/js/standings.js",
     riders: "assets/js/riders.js",

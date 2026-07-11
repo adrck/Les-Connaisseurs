@@ -452,18 +452,28 @@ th.sortable:hover {
 
 .hero {
     position: relative;
-    background: var(--tinta);
+    background: #17120C;
     color: white;
     border-radius: 14px;
     overflow: hidden;
-    padding: 50px 40px 0;
+    padding: 50px 40px;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+}
+
+.hero-art {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
 }
 
 .hero-inner {
     position: relative;
     z-index: 1;
     max-width: 640px;
-    padding-bottom: 40px;
 }
 
 .hero-eyebrow {
@@ -515,11 +525,26 @@ th.sortable:hover {
     min-height: 1.2em;
 }
 
-.hero-profile {
-    display: block;
-    width: 100%;
-    height: 140px;
-    margin-top: 20px;
+/* ---------- Tri-color heading accent (site-wide) ---------- */
+/* A small callback to the three Grand Tour jerseys, used under every
+   page heading except the homepage hero title (which sits on its own
+   art). Order matches the hero: Giro pink, Tour gold, Vuelta red. */
+
+main h2:not(.hero-title) {
+    position: relative;
+    padding-bottom: 14px;
+    margin-bottom: 20px;
+}
+
+main h2:not(.hero-title)::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 72px;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(to right, #E6399B 0 33.33%, #F0B429 33.33% 66.66%, var(--rojo) 66.66% 100%);
 }
 
 /* ---------- Homepage: how it works ---------- */
@@ -644,7 +669,8 @@ th.sortable:hover {
 @media (max-width: 700px) {
 
     .hero {
-        padding: 35px 22px 0;
+        padding: 35px 22px;
+        min-height: 360px;
     }
 
 }

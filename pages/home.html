@@ -1,20 +1,130 @@
-<div class="card">
+<section class="hero">
 
-<h2>Les Connaisseurs</h2>
+    <svg class="hero-art" viewBox="0 0 680 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
 
-<p>
+        <defs>
+            <linearGradient id="heroBgGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#2A2118" />
+                <stop offset="60%" stop-color="#17120C" />
+                <stop offset="100%" stop-color="#0D0A07" />
+            </linearGradient>
+            <radialGradient id="heroGlow" cx="50%" cy="70%" r="60%">
+                <stop offset="0%" stop-color="#F0B429" stop-opacity="0.28" />
+                <stop offset="100%" stop-color="#F0B429" stop-opacity="0" />
+            </radialGradient>
+            <pattern id="heroGrain" width="6" height="6" patternUnits="userSpaceOnUse">
+                <circle cx="1" cy="1" r="0.6" fill="#FFFFFF" opacity="0.10" />
+            </pattern>
+        </defs>
 
-Welkom bij de nieuwe opzet van de poule voor de grote rondes. 
-Ik heb deze site gemaakt omdat de site die we tot nu toe gebruikten naar mijn mening te weinig opties had.
+        <rect x="0" y="0" width="680" height="300" fill="url(#heroBgGrad)" />
+        <ellipse cx="340" cy="215" rx="260" ry="110" fill="url(#heroGlow)" />
 
+        <path d="M0,300 L0,220 C80,200 140,235 220,205 C300,180 360,215 440,195 C520,175 580,210 680,190 L680,300 Z" fill="#4A3C2C" opacity="0.55" />
+        <rect x="0" y="185" width="680" height="45" fill="#FFF6E4" opacity="0.06" />
+        <path d="M0,300 L0,245 C90,225 160,255 240,230 C320,208 380,240 460,220 C540,200 600,232 680,215 L680,300 Z" fill="#2E2216" opacity="0.8" />
+        <path d="M0,300 L0,268 C100,252 180,275 260,258 C340,240 400,265 480,248 C560,232 620,258 680,245 L680,300 Z" fill="#1A130B" opacity="0.92" />
+        <path d="M0,300 L0,285 C120,275 200,292 300,280 C400,268 460,288 560,278 C600,274 640,282 680,276 L680,300 Z" fill="#0E0A05" />
 
+        <rect x="0" y="0" width="680" height="300" fill="url(#heroGrain)" />
 
-</p>
+        <path d="M40,296 C120,270 160,250 220,248 C300,244 340,262 400,250 C470,236 520,255 580,246 C610,240 630,245 650,232" stroke="#EDD9A0" stroke-width="2.5" fill="none" opacity="0.5" stroke-linecap="round" stroke-dasharray="1 7" />
 
-<p>
+        <circle cx="140" cy="252" r="6" fill="#E6399B" stroke="#FFFFFF" stroke-width="1.3" />
+        <text x="140" y="280" text-anchor="middle" font-size="11" font-weight="600" fill="#E6399B" font-family="'Oswald', Arial, sans-serif">Giro d'Italia</text>
 
-Use the navigation above to explore the site.
+        <circle cx="340" cy="250" r="6" fill="#F0B429" stroke="#FFFFFF" stroke-width="1.3" />
+        <text x="340" y="278" text-anchor="middle" font-size="11" font-weight="600" fill="#F0B429" font-family="'Oswald', Arial, sans-serif">Tour de France</text>
 
-</p>
+        <circle cx="560" cy="248" r="6" fill="#C8102E" stroke="#FFFFFF" stroke-width="1.3" />
+        <text x="560" y="276" text-anchor="middle" font-size="11" font-weight="600" fill="#E8746B" font-family="'Oswald', Arial, sans-serif">La Vuelta</text>
 
-</div>
+    </svg>
+
+    <div class="hero-inner">
+
+        <p class="hero-eyebrow" id="hero-eyebrow">Fantasy Cycling</p>
+
+        <h2 class="hero-title">Ficha veinte corredores.<br>Sube a la general.</h2>
+
+        <p class="hero-sub">
+            Elige tu equipo antes de la salida. Cada etapa reparte puntos
+            entre tus corredores. Al final de la carrera, solo manda
+            la clasificación.
+        </p>
+
+        <div class="hero-actions" id="hero-actions"></div>
+
+        <p class="hero-status" id="hero-status"></p>
+
+    </div>
+
+</section>
+
+<section class="how-it-works">
+
+    <h3 class="section-label">Cómo funciona</h3>
+
+    <div class="steps">
+
+        <div class="step">
+            <span class="step-number">01</span>
+            <h4>Ficha tu equipo</h4>
+            <p>Elige veinte corredores del pelotón antes de que arranque la carrera. Sin presupuesto, sin límites — solo tu ojo para el ciclismo.</p>
+        </div>
+
+        <div class="step">
+            <span class="step-number">02</span>
+            <h4>Cada etapa puntúa</h4>
+            <p>Después de cada etapa repartimos puntos según cómo corran tus fichajes. Ataques, sprints, fugas: todo cuenta.</p>
+        </div>
+
+        <div class="step">
+            <span class="step-number">03</span>
+            <h4>Sube en la general</h4>
+            <p>Los puntos se acumulan etapa a etapa. Consulta la clasificación en cualquier momento y compara tu progreso con el resto.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="quick-links">
+
+    <h3 class="section-label">Explora</h3>
+
+    <div class="link-grid">
+
+        <a class="link-card link-card--rojo" href="#" onclick="loadPage('standings')">
+            <span class="link-card-tag">Maillot Rojo</span>
+            <h4>La General</h4>
+            <p>La clasificación completa, etapa a etapa.</p>
+        </a>
+
+        <a class="link-card link-card--lunares" href="#" onclick="loadPage('enter')">
+            <span class="link-card-tag">Maillot de Lunares</span>
+            <h4>Fichar Equipo</h4>
+            <p>El primer puerto de la temporada: elige tus veinte corredores.</p>
+        </a>
+
+        <a class="link-card link-card--verde" href="#" onclick="loadPage('riders')">
+            <span class="link-card-tag">Maillot Verde</span>
+            <h4>Corredores</h4>
+            <p>Todo el pelotón y sus puntos de la temporada.</p>
+        </a>
+
+        <a class="link-card link-card--oro" href="#" onclick="loadPage('teams')">
+            <span class="link-card-tag">Equipos</span>
+            <h4>Todos los Equipos</h4>
+            <p>Descubre qué corredores ha fichado cada participante.</p>
+        </a>
+
+        <a class="link-card link-card--neutral" href="#" onclick="loadPage('rules')">
+            <span class="link-card-tag">Info</span>
+            <h4>Reglamento</h4>
+            <p>Las reglas del juego, en pocas palabras.</p>
+        </a>
+
+    </div>
+
+</section>
