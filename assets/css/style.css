@@ -412,6 +412,7 @@ th.sortable:hover {
 /* ---------- Homepage: hero image ---------- */
 
 .home-hero-wrap {
+    position: relative;
     width: 100%;
     line-height: 0;
     border-radius: 14px;
@@ -422,6 +423,64 @@ th.sortable:hover {
     display: block;
     width: 100%;
     height: auto;
+}
+
+.home-hero-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: min(480px, 80%);
+    padding: 26px 34px;
+    background: rgba(13, 10, 7, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 12px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.home-hero-eyebrow {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 12px;
+    color: var(--oro);
+    margin: 0 0 10px;
+}
+
+.home-hero-title {
+    margin: 0 0 10px;
+    font-size: 28px;
+    line-height: 1.2;
+    color: white;
+    text-transform: uppercase;
+}
+
+.home-hero-sub {
+    font-size: 14px;
+    color: #F2EFE8;
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+
+    .home-hero-message {
+        padding: 18px 22px;
+    }
+
+    .home-hero-title {
+        font-size: 19px;
+    }
+
+    .home-hero-sub {
+        font-size: 12px;
+    }
+
+    .home-hero-eyebrow {
+        font-size: 10px;
+    }
+
 }
 
 /* ---------- Rules: stage scoring ---------- */
