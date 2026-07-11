@@ -63,6 +63,25 @@ header {
     outline: none;
 }
 
+.header-indicator {
+    position: absolute;
+    top: 84%;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--oro);
+    opacity: 0;
+    pointer-events: none;
+}
+
+body.page-home [data-indicator="home"],
+body.page-enter [data-indicator="enter"],
+body.page-standings [data-indicator="standings"],
+body.page-rules [data-indicator="rules"],
+body.page-teams [data-indicator="teams"],
+body.page-riders [data-indicator="riders"] {
+    opacity: 1;
+}
+
 /* ---------- Main Content ---------- */
 
 
@@ -430,8 +449,8 @@ th.sortable:hover {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-width: min(480px, 80%);
-    padding: 26px 34px;
+    max-width: min(640px, 88%);
+    padding: 44px 52px;
     background: rgba(13, 10, 7, 0.55);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
@@ -450,15 +469,15 @@ th.sortable:hover {
 }
 
 .home-hero-title {
-    margin: 0 0 10px;
-    font-size: 28px;
+    margin: 0 0 12px;
+    font-size: 34px;
     line-height: 1.2;
     color: white;
     text-transform: uppercase;
 }
 
 .home-hero-sub {
-    font-size: 14px;
+    font-size: 16px;
     color: #F2EFE8;
     margin: 0;
 }

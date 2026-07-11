@@ -12,6 +12,8 @@ async function loadPage(page) {
 
         document.getElementById("content").innerHTML = html;
 
+        document.body.className = "page-" + page;
+
        // Remove any previous page script
 const existing = document.getElementById("pageScript");
 
