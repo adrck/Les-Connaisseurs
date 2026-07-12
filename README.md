@@ -59,6 +59,58 @@ the extras. The `doGet` snippet below (for the Teams page) already reads
 however many `Rider N` columns exist, so that side doesn't need touching —
 just add the extra header columns and it'll pick them up automatically.
 
+### Editing an existing team (name + PIN)
+
+Players can now update their team after submitting it once, using their
+player name plus a 4-digit PIN they choose on first submission (there's no
+real login system — this is a lightweight "honor system" check suited to a
+small group of friends, not real security. Anyone who knows someone's PIN
+can edit that person's team).
+
+How it works on the frontend (`assets/js/form.js`):
+- The form now has a required **Team PIN** field next to Player Name.
+- As soon as both a name and a valid 4-digit PIN are filled in, it
+  automatically asks the Apps Script backend whether a team already exists
+  under that name+PIN (via a `POST` with `action: "lookup"`, kept as POST
+  rather than a GET query string so the PIN doesn't end up in server logs
+  or browser history).
+  - **Match found** → the picker pre-fills with that player's existing
+    riders, and the button switches to "Update Team".
+  - **Name exists but the PIN is wrong** → a clear error is shown and the
+    form won't submit, so people can't overwrite someone else's team by
+    guessing.
+  - **No match** → treated as a new player; the button stays "Submit Team".
+- On submit, the same `pin` field is sent along with the rest of the entry
+  so the backend can verify it again server-side.
+
+This needs a matching update on the Apps Script side. `docs/apps-script-doPost.gs.txt`
+has the full `doPost` implementation — replace your current `doPost`
+function with it (or merge it in if you've customized yours). It expects a
+**PIN** column in your sheet (any position, found by header name), alongside
+`Timestamp | Player Name | Email | Rider 1 ... Rider 20`. In short, it:
+- Looks up a row by Player Name (case-insensitive)
+- If no `action` is sent (a normal submission): creates a new row if the
+  name doesn't exist yet, or **overwrites** the existing row if the name
+  exists *and* the PIN matches — rejects the write with an error message if
+  the PIN doesn't match
+- If `action: "lookup"` is sent: returns that player's existing riders and
+  email if the name+PIN matches, `{ exists: false }` if the name isn't
+  found yet, or an error if the name exists but the PIN doesn't match
+
+As with the `doGet` change, redeploy the Web App (Deploy → Manage
+deployments → Edit → New version) after adding this so it actually goes
+live. The existing `doGet` used by the Teams page is unaffected and doesn't
+need any changes — it only ever reads Player Name and Rider columns, never
+the PIN, so there's no risk of PINs leaking onto the public Teams page.
+
+**Not enforced:** whether entries are still open. The PIN check happens
+server-side, but `entriesOpen` in `settings.json` is only checked in the
+browser (it just disables the form). Someone could technically still submit
+after "closing" entries by calling the Apps Script URL directly. For a
+small trusted group this is a reasonable trade-off — see the "budget and
+trust model" discussion earlier in the project history if you want to
+revisit this later.
+
 ### Making the Teams page work
 
 The **Teams** page (`pages/teams.html` / `assets/js/teams.js`) shows every

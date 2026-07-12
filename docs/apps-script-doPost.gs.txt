@@ -1,0 +1,142 @@
+// ============================================================
+// doPost handler supporting:
+//  - action "lookup": check for an existing team by name+PIN
+//  - default (no action / "submit"): create a new team, or
+//    update an existing one if the name+PIN already matches
+//
+// Expects your sheet's first row to contain these headers
+// (exact spelling matters):
+//   Timestamp | Player Name | Email | PIN | Rider 1 | Rider 2 | ... | Rider 20
+//
+// If you don't have a "PIN" column yet, add one (anywhere is
+// fine, the code looks it up by header name, not position).
+// ============================================================
+
+function doPost(e) {
+
+  const body = JSON.parse(e.postData.contents);
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+
+  if (body.action === "lookup") {
+    return handleLookup(sheet, body);
+  }
+
+  return handleSubmit(sheet, body);
+
+}
+
+// Finds a row by Player Name (case-insensitive, trimmed).
+// Returns null if not found.
+function findPlayerRow(sheet, playerName) {
+
+  const data = sheet.getDataRange().getValues();
+  const headers = data[0];
+  const nameCol = headers.indexOf("Player Name");
+
+  for (let i = 1; i < data.length; i++) {
+    const cellName = String(data[i][nameCol] || "").trim().toLowerCase();
+    if (cellName === String(playerName || "").trim().toLowerCase()) {
+      return { rowIndex: i + 1, headers: headers, row: data[i] };
+      // rowIndex is 1-based to match Sheet row numbers (row 1 = headers)
+    }
+  }
+
+  return null;
+
+}
+
+function handleLookup(sheet, body) {
+
+  const existing = findPlayerRow(sheet, body.playerName);
+
+  if (!existing) {
+    return jsonResponse({ success: true, exists: false });
+  }
+
+  const pinCol = existing.headers.indexOf("PIN");
+  const storedPin = String(existing.row[pinCol] || "").trim();
+
+  if (storedPin !== String(body.pin || "").trim()) {
+    return jsonResponse({
+      success: false,
+      error: "A team already exists under this name. Check your PIN, or use a different name."
+    });
+  }
+
+  const riderCols = existing.headers
+    .map(function (h, i) { return { h: h, i: i }; })
+    .filter(function (c) { return c.h.toString().indexOf("Rider ") === 0; })
+    .map(function (c) { return c.i; });
+
+  const riders = riderCols
+    .map(function (i) { return existing.row[i]; })
+    .filter(function (v) { return v; });
+
+  const emailCol = existing.headers.indexOf("Email");
+
+  return jsonResponse({
+    success: true,
+    exists: true,
+    riders: riders,
+    email: existing.row[emailCol] || ""
+  });
+
+}
+
+function handleSubmit(sheet, body) {
+
+  const headers = sheet.getDataRange().getValues()[0];
+  const existing = findPlayerRow(sheet, body.playerName);
+
+  if (existing) {
+
+    const pinCol = headers.indexOf("PIN");
+    const storedPin = String(existing.row[pinCol] || "").trim();
+
+    if (storedPin !== String(body.pin || "").trim()) {
+      return jsonResponse({
+        success: false,
+        error: "A team already exists under this name. Check your PIN, or use a different name."
+      });
+    }
+
+    writeRow(sheet, existing.rowIndex, headers, body);
+
+  } else {
+
+    const newRowIndex = sheet.getLastRow() + 1;
+    writeRow(sheet, newRowIndex, headers, body);
+
+  }
+
+  return jsonResponse({ success: true });
+
+}
+
+function writeRow(sheet, rowIndex, headers, body) {
+
+  const nameCol = headers.indexOf("Player Name") + 1;
+  const emailCol = headers.indexOf("Email") + 1;
+  const pinCol = headers.indexOf("PIN") + 1;
+  const timestampCol = headers.indexOf("Timestamp") + 1;
+
+  if (timestampCol > 0) sheet.getRange(rowIndex, timestampCol).setValue(new Date());
+  if (nameCol > 0) sheet.getRange(rowIndex, nameCol).setValue(body.playerName);
+  if (emailCol > 0) sheet.getRange(rowIndex, emailCol).setValue(body.email || "");
+  if (pinCol > 0) sheet.getRange(rowIndex, pinCol).setValue(body.pin);
+
+  const riderCols = headers
+    .map(function (h, i) { return { h: h, i: i }; })
+    .filter(function (c) { return c.h.toString().indexOf("Rider ") === 0; });
+
+  riderCols.forEach(function (col, idx) {
+    sheet.getRange(rowIndex, col.i + 1).setValue((body.riders && body.riders[idx]) || "");
+  });
+
+}
+
+function jsonResponse(obj) {
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}

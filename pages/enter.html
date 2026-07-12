@@ -13,6 +13,22 @@
     </div>
 
     <div class="form-group">
+        <label for="player-pin">Team PIN * <span class="field-hint">(4 digits — choose one the first time, use the same one to make changes later)</span></label>
+        <input
+            type="text"
+            id="player-pin"
+            name="pin"
+            inputmode="numeric"
+            pattern="[0-9]{4}"
+            maxlength="4"
+            autocomplete="off"
+            required
+        >
+    </div>
+
+    <p id="lookup-message" class="form-message"></p>
+
+    <div class="form-group">
         <label for="email">Email (optional)</label>
         <input
             type="email"
