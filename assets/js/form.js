@@ -302,7 +302,7 @@ function validateForm() {
         selectedRiders.length === TEAM_SIZE;
 
     submitButton.disabled = !valid;
-    submitButton.textContent = isExistingTeam ? "Update Team" : "Submit Team";
+    submitButton.textContent = isExistingTeam ? "Update Team" : "Bevestig Team";
 
     if (counterEl) {
         counterEl.textContent = `${selectedRiders.length} of ${TEAM_SIZE} riders selected`;
