@@ -209,8 +209,8 @@ function renderAvailableList() {
 
     if (available.length === 0) {
         container.innerHTML = query
-            ? "<p class='rider-list-empty'>No riders match your search.</p>"
-            : "<p class='rider-list-empty'>All riders have been added.</p>";
+            ? "<p class='rider-list-empty'>Geen renners met deze zoekterm.</p>"
+            : "<p class='rider-list-empty'>Alle renners zijn toegevoegd.</p>";
         return;
     }
 
@@ -262,7 +262,7 @@ function renderSelectedList() {
     const container = document.getElementById("rider-selected-list");
 
     if (selectedRiders.length === 0) {
-        container.innerHTML = "<p class='rider-list-empty'>No riders selected yet.</p>";
+        container.innerHTML = "<p class='rider-list-empty'>Nog geen renners geselecteerd.</p>";
         return;
     }
 
