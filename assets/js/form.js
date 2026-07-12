@@ -31,7 +31,7 @@ async function initForm() {
 
             if (settings.entriesOpen === false) {
                 document.querySelector(".rider-picker").innerHTML =
-                    "<p>Entries are currently closed.</p>";
+                    "<p>Inschrijvingen zijn momenteel gesloten.</p>";
                 document.getElementById("player-name").disabled = true;
                 document.getElementById("player-pin").disabled = true;
                 document.getElementById("submit-btn").disabled = true;
@@ -110,7 +110,7 @@ async function maybeLookupTeam() {
 
     lookupMessage.style.color = "#555";
     lookupMessage.style.fontWeight = "normal";
-    lookupMessage.textContent = "Checking for an existing team...";
+    lookupMessage.textContent = "Controleer of er al een team bestaat...";
 
     try {
 
@@ -129,7 +129,7 @@ async function maybeLookupTeam() {
             lookupMessage.style.color = "#c62828";
             lookupMessage.style.fontWeight = "bold";
             lookupMessage.textContent = result.error ||
-                "A team already exists under this name. Check your PIN, or use a different name.";
+                "Er bestaat al een team met deze naam. Controleer de PIN, of gebruik een andere naam.";
 
         } else if (result.exists) {
 
@@ -173,7 +173,7 @@ function addRider(name) {
     if (selectedRiders.length >= TEAM_SIZE) {
         const formMessage = document.getElementById("form-message");
         formMessage.textContent =
-            `Your team is already full (${TEAM_SIZE} riders). Remove one to swap.`;
+            `Jouw team is al volledig (${TEAM_SIZE} renners). Verwijder er een om te wisselen.`;
         return;
     }
 
@@ -305,7 +305,7 @@ function validateForm() {
     submitButton.textContent = isExistingTeam ? "Update Team" : "Bevestig Team";
 
     if (counterEl) {
-        counterEl.textContent = `${selectedRiders.length} of ${TEAM_SIZE} riders selected`;
+        counterEl.textContent = `${selectedRiders.length} of ${TEAM_SIZE} renners geselecteerd`;
         counterEl.style.color = selectedRiders.length === TEAM_SIZE ? "#2e7d32" : "#0b5ed7";
     }
 
@@ -346,8 +346,8 @@ async function submitForm(event) {
         if (result.success) {
 
             alert(wasUpdate
-                ? "Your team has been updated successfully!"
-                : "Your team has been submitted successfully!");
+                ? "Jouw team is succesvol bijgewerkt!"
+                : "Jouw team is succesvol ingediend!");
 
             document.getElementById("team-form").reset();
             selectedRiders = [];
@@ -359,7 +359,7 @@ async function submitForm(event) {
 
         } else {
 
-            alert(result.error || "Submission failed.");
+            alert(result.error || "Indienen mislukt.");
 
         }
 
