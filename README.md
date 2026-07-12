@@ -13,10 +13,11 @@ index.html            Shell page — loads pages/*.html into #content via main.j
 assets/css/style.css   All styling
 assets/js/main.js      Client-side "router" that loads page fragments + their script
 assets/js/form.js      Entry form (pages/enter.html)
-assets/js/riders.js    Rider list (pages/riders.html)
+assets/js/riders.js    Rider list (pages/riders.html) — no longer linked from the header nav, page still works if visited directly
 assets/js/teams.js     Team rosters (pages/teams.html)
 assets/js/standings.js Leaderboard (pages/standings.html)
 assets/js/rules.js     Fills in dynamic values on pages/rules.html
+assets/js/contact.js   Feedback/questions form (pages/contact.html)
 pages/*.html           Page fragments (not full HTML documents)
 data/settings.json     Competition-wide settings (name, team size, entries open/closed)
 data/riders.json       The full startlist (name, team, bib)
@@ -87,15 +88,15 @@ This needs a matching update on the Apps Script side. `docs/apps-script-doPost.g
 has the full `doPost` implementation — replace your current `doPost`
 function with it (or merge it in if you've customized yours). It expects a
 **PIN** column in your sheet (any position, found by header name), alongside
-`Timestamp | Player Name | Email | Rider 1 ... Rider 20`. In short, it:
+`Timestamp | Player Name | PIN | Rider 1 ... Rider 20`. In short, it:
 - Looks up a row by Player Name (case-insensitive)
 - If no `action` is sent (a normal submission): creates a new row if the
   name doesn't exist yet, or **overwrites** the existing row if the name
   exists *and* the PIN matches — rejects the write with an error message if
   the PIN doesn't match
-- If `action: "lookup"` is sent: returns that player's existing riders and
-  email if the name+PIN matches, `{ exists: false }` if the name isn't
-  found yet, or an error if the name exists but the PIN doesn't match
+- If `action: "lookup"` is sent: returns that player's existing riders if
+  the name+PIN matches, `{ exists: false }` if the name isn't found yet, or
+  an error if the name exists but the PIN doesn't match
 
 As with the `doGet` change, redeploy the Web App (Deploy → Manage
 deployments → Edit → New version) after adding this so it actually goes
@@ -110,6 +111,17 @@ after "closing" entries by calling the Apps Script URL directly. For a
 small trusted group this is a reasonable trade-off — see the "budget and
 trust model" discussion earlier in the project history if you want to
 revisit this later.
+
+### Contact page
+
+`pages/contact.html` / `assets/js/contact.js` is a basic feedback/questions
+form (name and email optional, message required). It posts to the same
+Apps Script deployment with `action: "contact"`.
+
+The `doPost` code in `docs/apps-script-doPost.gs.txt` handles this by
+writing each message to a **"Contact"** sheet tab — it creates that tab
+automatically the first time someone submits the form, so there's no extra
+setup needed in the Sheet itself beyond having the updated `doPost` deployed.
 
 ### Making the Teams page work
 
@@ -155,8 +167,8 @@ function doGet(e) {
 }
 ```
 
-This matches a sheet with columns `Timestamp | Player Name | Email | Rider 1
-| Rider 2 | ... | Rider 8`. If your columns differ, adjust the header names
+This matches a sheet with columns `Timestamp | Player Name | Rider 1
+| Rider 2 | ... | Rider 20`. If your columns differ, adjust the header names
 above accordingly, then redeploy the Web App (Deploy → Manage deployments →
 Edit → New version) so the new `doGet` goes live. `teams.js` calls the same
 deployment URL as `form.js`, with `?action=teams` appended — the parameter
