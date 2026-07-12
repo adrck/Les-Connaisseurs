@@ -1,9 +1,9 @@
-<h2>Enter Your Team</h2>
+<h2>Stel hier je team samen</h2>
 
 <form id="team-form">
 
     <div class="form-group">
-        <label for="player-name">Player Name *</label>
+        <label for="player-name">Teamnaam *</label>
         <input
             type="text"
             id="player-name"
@@ -13,7 +13,8 @@
     </div>
 
     <div class="form-group">
-        <label for="player-pin">Team PIN * <span class="field-hint">(4 digits — choose one the first time, use the same one to make changes later)</span></label>
+        <label for="player-pin">Team PIN * <span class="field-hint">(4 cijfers — kies de 1e keer een PIN. Voer deze later 
+            weer in om een bestaand team aan te passen.</span></label>
         <input
             type="text"
             id="player-pin"
@@ -28,25 +29,25 @@
 
     <p id="lookup-message" class="form-message"></p>
 
-    <h3>Select Your <span id="riders-heading-count">20</span> Riders</h3>
+    <h3>Kies je <span id="riders-heading-count">20</span> renners</h3>
 
     <p id="selection-counter"></p>
 
     <div class="rider-picker">
 
         <div class="rider-picker-column">
-            <label for="rider-search-input">Search riders</label>
+            <label for="rider-search-input">Zoek renner</label>
             <input
                 type="text"
                 id="rider-search-input"
-                placeholder="Search by name or team..."
+                placeholder="Zoek op naam of team..."
                 autocomplete="off"
             >
             <div id="rider-available-list" class="rider-list"></div>
         </div>
 
         <div class="rider-picker-column">
-            <label>Your Team</label>
+            <label>Jouw team</label>
             <div id="rider-selected-list" class="rider-list rider-selected-list"></div>
         </div>
 
@@ -59,7 +60,7 @@
         type="submit"
         disabled
     >
-        Submit Team
+        Bevestig team
     </button>
 
 </form>
