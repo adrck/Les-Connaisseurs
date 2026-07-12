@@ -78,8 +78,113 @@ body.page-enter [data-indicator="enter"],
 body.page-standings [data-indicator="standings"],
 body.page-rules [data-indicator="rules"],
 body.page-teams [data-indicator="teams"],
-body.page-riders [data-indicator="riders"] {
+body.page-contact [data-indicator="contact"] {
     opacity: 1;
+}
+
+/* ---------- Mobile header + menu ---------- */
+
+.mobile-header {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+}
+
+.mobile-header-logo {
+    height: 40px;
+    width: auto;
+    cursor: pointer;
+}
+
+.mobile-menu-toggle {
+    background: none;
+    border: none;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.mobile-menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: white;
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.mobile-menu-toggle.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-menu-toggle.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    max-height: 0;
+    overflow: hidden;
+    background: #17120C;
+    transition: max-height 0.25s ease;
+}
+
+.mobile-menu.open {
+    max-height: 400px;
+}
+
+.mobile-menu a {
+    display: block;
+    padding: 16px 20px;
+    color: white;
+    text-decoration: none;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 17px;
+    letter-spacing: 0.03em;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.mobile-menu a:active {
+    background: rgba(255,255,255,0.06);
+}
+
+body.page-home .mobile-menu a[data-page-link="home"],
+body.page-enter .mobile-menu a[data-page-link="enter"],
+body.page-standings .mobile-menu a[data-page-link="standings"],
+body.page-rules .mobile-menu a[data-page-link="rules"],
+body.page-teams .mobile-menu a[data-page-link="teams"],
+body.page-contact .mobile-menu a[data-page-link="contact"] {
+    color: var(--oro);
+}
+
+@media (max-width: 700px) {
+
+    .site-header-wrap {
+        display: none;
+    }
+
+    .mobile-header {
+        display: flex;
+    }
+
+    .mobile-menu {
+        display: flex;
+    }
+
 }
 
 /* ---------- Main Content ---------- */

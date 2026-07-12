@@ -42,6 +42,29 @@
 
 </div>
 
+<div class="mobile-header">
+
+    <img class="mobile-header-logo" src="assets/img/header-logo.jpg" alt="Les Connaisseurs" onclick="loadPage('home'); closeMobileMenu();">
+
+    <button class="mobile-menu-toggle" onclick="toggleMobileMenu()" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+</div>
+
+<nav class="mobile-menu" id="mobile-menu">
+
+    <a href="#" data-page-link="home" onclick="loadPage('home'); closeMobileMenu(); return false;">Home</a>
+    <a href="#" data-page-link="rules" onclick="loadPage('rules'); closeMobileMenu(); return false;">Uitleg</a>
+    <a href="#" data-page-link="enter" onclick="loadPage('enter'); closeMobileMenu(); return false;">Mijn Team</a>
+    <a href="#" data-page-link="standings" onclick="loadPage('standings'); closeMobileMenu(); return false;">Stand</a>
+    <a href="#" data-page-link="teams" onclick="loadPage('teams'); closeMobileMenu(); return false;">Teams</a>
+    <a href="#" data-page-link="contact" onclick="loadPage('contact'); closeMobileMenu(); return false;">Contact</a>
+
+</nav>
+
 </header>
 
 <main id="content">

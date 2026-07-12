@@ -64,3 +64,17 @@ window.onload = function () {
     loadPage("home");
 
 };
+
+function toggleMobileMenu() {
+
+    document.getElementById("mobile-menu").classList.toggle("open");
+    document.querySelector(".mobile-menu-toggle").classList.toggle("open");
+
+}
+
+function closeMobileMenu() {
+
+    document.getElementById("mobile-menu").classList.remove("open");
+    document.querySelector(".mobile-menu-toggle").classList.remove("open");
+
+}
