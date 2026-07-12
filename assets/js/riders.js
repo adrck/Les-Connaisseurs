@@ -2,17 +2,7 @@
 "use strict";
 
 let allRiders = [];
-let riderSort = { key: "points", direction: "desc" };
-
-function slugifyRiderName(name) {
-    return "rider/" + name
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "") // strip accents
-        .toLowerCase()
-        .trim()
-        .replace(/[^a-z0-9\s-]/g, "")
-        .replace(/\s+/g, "-");
-}
+let riderSort = { key: "name", direction: "asc" };
 
 async function initRiders() {
 
@@ -23,27 +13,13 @@ async function initRiders() {
 
     try {
 
-        const [ridersResponse, stateResponse] = await Promise.all([
-            fetch("data/riders.json"),
-            fetch("data/state.json")
-        ]);
+        const ridersResponse = await fetch("data/riders.json");
 
         if (!ridersResponse.ok) {
             throw new Error("Unable to load riders.json");
         }
 
-        const riders = await ridersResponse.json();
-        let riderPoints = {};
-
-        if (stateResponse.ok) {
-            const state = await stateResponse.json();
-            riderPoints = state.rider_points || {};
-        }
-
-        allRiders = riders.map(rider => ({
-            ...rider,
-            points: riderPoints[slugifyRiderName(rider.name)] || 0
-        }));
+        allRiders = await ridersResponse.json();
 
         renderRiders();
 
@@ -64,7 +40,7 @@ function sortRiders(key) {
         riderSort.direction = riderSort.direction === "asc" ? "desc" : "asc";
     } else {
         riderSort.key = key;
-        riderSort.direction = key === "points" ? "desc" : "asc";
+        riderSort.direction = "asc";
     }
 
     renderRiders();
@@ -105,7 +81,6 @@ function renderRiders() {
             <td>${rider.name}</td>
             <td>${rider.team}</td>
             <td>${rider.bib}</td>
-            <td>${rider.points}</td>
         </tr>
     `).join("");
 
@@ -116,7 +91,6 @@ function renderRiders() {
                     <th class="sortable" data-sort-key="name">Name${arrow("name")}</th>
                     <th class="sortable" data-sort-key="team">Team${arrow("team")}</th>
                     <th class="sortable" data-sort-key="bib">Bib${arrow("bib")}</th>
-                    <th class="sortable" data-sort-key="points">Points${arrow("points")}</th>
                 </tr>
             </thead>
             <tbody>

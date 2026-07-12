@@ -136,9 +136,6 @@ async function maybeLookupTeam() {
             isExistingTeam = true;
 
             selectedRiders = Array.isArray(result.riders) ? result.riders.slice(0, TEAM_SIZE) : [];
-            if (result.email) {
-                document.getElementById("email").value = result.email;
-            }
 
             renderAvailableList();
             renderSelectedList();
@@ -325,7 +322,6 @@ async function submitForm(event) {
     const submission = {
         playerName: getNameValue(),
         pin: getPinValue(),
-        email: document.getElementById("email").value.trim(),
         riders: selectedRiders
     };
 
