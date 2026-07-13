@@ -7,14 +7,14 @@
     --verde: #2F6F4E;       /* points jersey */
     --azul-lunares: #1C3F94;/* King of the Mountains polka dot */
     --tinta: #221B17;       /* warm ink, not pure black */
-    --jaune: #FFD100        /* Tdf yellow jersey */
-    --jaune: #00a93c        /* Tdf green jersey */
-    --jaune: #FFFFFF        /* Tdf young riders jersey */
+    --tdflead: #FFD100        /* Tdf yellow jersey */
+    --tdfsprint: #00a93c        /* Tdf green jersey */
+    --tdfyoung: #FFFFFF        /* Tdf young riders jersey */
     /*--jaune: #FFD100         Tdf mountain jersey */
-    --jaune: #FF286E        /* Giro pink jersey */
-    --jaune: #8E1959        /* Giro sprint riders jersey */
-    --jaune: #73BEEF        /* Giro mountain jersey */
-    --jaune: #FFFFFF        /* Giro young riders jersey */
+    --girolead: #FF286E        /* Giro pink jersey */
+    --girosprint: #8E1959        /* Giro sprint riders jersey */
+    --giromont: #73BEEF        /* Giro mountain jersey */
+    --giroyoung: #FFFFFF        /* Giro young riders jersey */
     --papel: #F5EFE0;       /* route-map paper */
     --papel-oscuro: #EAE0C8;
     --font-display: 'Oswald', 'Arial Narrow', sans-serif;
