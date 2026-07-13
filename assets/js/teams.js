@@ -31,7 +31,7 @@ async function initTeams() {
 
         if (settings.entriesOpen !== false) {
             container.innerHTML = `
-                <p>Teams will be revealed once entries close.</p>
+                <p>Teams zijn zichtbaar zodra inschrijvingen zijn gesloten.</p>
             `;
             return;
         }
@@ -51,7 +51,7 @@ async function initTeams() {
         const teamsResponse = await fetch(TEAMS_DATA_URL);
 
         if (!teamsResponse.ok) {
-            throw new Error("Unable to load team submissions");
+            throw new Error("Kan de ingediende teams niet laden");
         }
 
         const teams = await teamsResponse.json();
@@ -74,7 +74,7 @@ function renderTeams(teams, riderPoints, teamTotals) {
     const container = document.getElementById("teamsList");
 
     if (!Array.isArray(teams) || teams.length === 0) {
-        container.innerHTML = "<p>No teams have been submitted yet.</p>";
+        container.innerHTML = "<p>Er zijn nog geen teams ingediend.</p>";
         return;
     }
 
