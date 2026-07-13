@@ -30,12 +30,12 @@ async function submitContact(event) {
 
     if (submission.message === "") {
         statusMessage.style.color = "#c62828";
-        statusMessage.textContent = "Please enter a message before sending.";
+        statusMessage.textContent = "Schrijf eerst een bericht voordat je het indient.";
         return;
     }
 
     submitButton.disabled = true;
-    submitButton.textContent = "Sending...";
+    submitButton.textContent = "Verzenden...";
     statusMessage.textContent = "";
 
     try {
@@ -51,13 +51,13 @@ async function submitContact(event) {
         if (result.success) {
 
             statusMessage.style.color = "#2e7d32";
-            statusMessage.textContent = "Thanks — your message has been sent!";
+            statusMessage.textContent = "Dank je wel — jouw bericht is verstuurd!";
             document.getElementById("contact-form").reset();
 
         } else {
 
             statusMessage.style.color = "#c62828";
-            statusMessage.textContent = result.error || "Something went wrong. Please try again.";
+            statusMessage.textContent = result.error || "Er ging iets mis. Probeer opnieuw.";
 
         }
 
@@ -65,7 +65,7 @@ async function submitContact(event) {
 
         console.error(error);
         statusMessage.style.color = "#c62828";
-        statusMessage.textContent = "Unable to send your message. Please try again.";
+        statusMessage.textContent = "Niet in staat jouw bericht te versturen. Probeer opnieuw.";
 
     }
 
