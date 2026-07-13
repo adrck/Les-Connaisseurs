@@ -11,7 +11,7 @@ async function loadResults() {
         const response = await fetch("data/state.json");
 
         if (!response.ok) {
-            throw new Error("Unable to load results.");
+            throw new Error("Resultaten konden niet geladen worden.");
         }
 
         const results = await response.json();
@@ -29,7 +29,7 @@ async function loadResults() {
     } catch (error) {
         const tbody = document.getElementById("leaderboard-body");
         if (tbody) {
-            tbody.innerHTML = `<tr><td colspan="4">Unable to load standings.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="4">Resultaten konden niet geladen worden.</td></tr>`;
         }
         console.error(error);
     }
@@ -43,7 +43,7 @@ function setupStageSelect() {
     if (!select) return;
 
     select.innerHTML = stageOrder
-        .map(stage => `<option value="${stage}">After stage ${stage}</option>`)
+        .map(stage => `<option value="${stage}">Na etappe ${stage}</option>`)
         .join("");
 
     select.value = stageOrder[stageOrder.length - 1];
