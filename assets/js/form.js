@@ -142,14 +142,14 @@ async function maybeLookupTeam() {
 
             lookupMessage.style.color = "#2e7d32";
             lookupMessage.style.fontWeight = "bold";
-            lookupMessage.textContent = "Loaded your existing team below — make changes and click Update Team.";
+            lookupMessage.textContent = "Bestaand team is geladen — maak je wijziging en kies Update team.";
 
         } else {
 
             isExistingTeam = false;
             lookupMessage.style.color = "#555";
             lookupMessage.style.fontWeight = "normal";
-            lookupMessage.textContent = "New player — pick your riders below.";
+            lookupMessage.textContent = "Nieuw team — Kies hieronder je renners.";
 
         }
 
