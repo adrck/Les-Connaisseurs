@@ -70,7 +70,7 @@ async function submitContact(event) {
     }
 
     submitButton.disabled = false;
-    submitButton.textContent = "Send";
+    submitButton.textContent = "Versturen";
 
 }
 
