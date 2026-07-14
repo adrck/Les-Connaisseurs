@@ -715,7 +715,6 @@ body.gt-tdf .jersey-chip--mountain {
     background-image: radial-gradient(var(--tdfmont) 34%, transparent 36%);
     background-size: 16px 16px;
     color: var(--tinta);
-    border: 1px solid rgba(0,0,0,0.08);
 }
 
 body.gt-tdf .scoring-table th.col-sprint,
@@ -727,6 +726,7 @@ body.gt-tdf .scoring-table th.col-young,
 body.gt-tdf .jersey-chip--young {
     background: var(--tdfyoung);
     color: var(--tinta); /* white jersey needs dark text/points to stay legible */
+    border: 2px solid rgba(0,0,0,0.25); /* thicker so it reliably wins over border-collapse; white would otherwise blend into the page */
 }
 
 body.gt-gdi .scoring-table th.col-leader,
@@ -749,6 +749,7 @@ body.gt-gdi .scoring-table th.col-young,
 body.gt-gdi .jersey-chip--young {
     background: var(--giroyoung);
     color: var(--tinta);
+    border: 2px solid rgba(0,0,0,0.25); /* thicker so it reliably wins over border-collapse; white would otherwise blend into the page */
 }
 
 .jersey-grid {
@@ -765,6 +766,7 @@ body.gt-gdi .jersey-chip--young {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    border: 1px solid rgba(0,0,0,0.15);
 }
 
 .jersey-chip-name {
