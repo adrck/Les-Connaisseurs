@@ -7,14 +7,14 @@
     --verde: #2F6F4E;       /* points jersey */
     --azul-lunares: #1C3F94;/* King of the Mountains polka dot */
     --tinta: #221B17;       /* warm ink, not pure black */
-    --tdflead: #FFD100        /* Tdf yellow jersey */
-    --tdfsprint: #00a93c        /* Tdf green jersey */
-    --tdfyoung: #FFFFFF        /* Tdf young riders jersey */
-    /*--jaune: #FFD100         Tdf mountain jersey */
-    --girolead: #FF286E        /* Giro pink jersey */
-    --girosprint: #8E1959        /* Giro sprint riders jersey */
-    --giromont: #73BEEF        /* Giro mountain jersey */
-    --giroyoung: #FFFFFF        /* Giro young riders jersey */
+    --tdflead: #FFD100;       /* Tdf yellow jersey */
+    --tdfsprint: #00a93c;     /* Tdf green jersey */
+    --tdfyoung: #FFFFFF;      /* Tdf young riders jersey */
+    --tdfmont: #E4002B;       /* Tdf mountain jersey — dot color for the polka-dot pattern (see .jersey-chip--mountain / th.col-mountain under body.gt-tdf). Swap this if you'd like a different dot color. */
+    --girolead: #FF286E;      /* Giro pink jersey */
+    --girosprint: #8E1959;    /* Giro sprint riders jersey */
+    --giromont: #73BEEF;      /* Giro mountain jersey */
+    --giroyoung: #FFFFFF;     /* Giro young riders jersey */
     --papel: #F5EFE0;       /* route-map paper */
     --papel-oscuro: #EAE0C8;
     --font-display: 'Oswald', 'Arial Narrow', sans-serif;
@@ -672,20 +672,83 @@ th.sortable:hover {
     font-family: var(--font-mono);
 }
 
-.scoring-table th.col-rojo {
+/* Jersey colors switch based on data/settings.json's "whichGt" value,
+   applied as a body class (gt-lav / gt-tdf / gt-gdi) by rules.js.
+   Falls back to the Vuelta (lav) colors if no gt-* class is present yet
+   (e.g. briefly, before rules.js finishes fetching settings.json). */
+
+.scoring-table th.col-leader,
+.jersey-chip--leader {
     background: var(--rojo);
 }
 
-.scoring-table th.col-lunares {
+.scoring-table th.col-mountain,
+.jersey-chip--mountain {
     background: var(--azul-lunares);
 }
 
-.scoring-table th.col-verde {
+.scoring-table th.col-sprint,
+.jersey-chip--sprint {
     background: var(--verde);
 }
 
-.scoring-table th.col-oro {
+.scoring-table th.col-young,
+.jersey-chip--young {
     background: var(--oro);
+}
+
+body.gt-tdf .scoring-table th.col-leader,
+body.gt-tdf .jersey-chip--leader {
+    background: var(--tdflead);
+    color: var(--tinta); /* bright yellow needs dark text to stay legible */
+}
+
+body.gt-tdf .scoring-table th.col-mountain {
+    background-color: #FFFFFF;
+    background-image: radial-gradient(var(--tdfmont) 34%, transparent 36%);
+    background-size: 12px 12px;
+    color: var(--tinta);
+}
+
+body.gt-tdf .jersey-chip--mountain {
+    background-color: #FFFFFF;
+    background-image: radial-gradient(var(--tdfmont) 34%, transparent 36%);
+    background-size: 16px 16px;
+    color: var(--tinta);
+    border: 1px solid rgba(0,0,0,0.08);
+}
+
+body.gt-tdf .scoring-table th.col-sprint,
+body.gt-tdf .jersey-chip--sprint {
+    background: var(--tdfsprint);
+}
+
+body.gt-tdf .scoring-table th.col-young,
+body.gt-tdf .jersey-chip--young {
+    background: var(--tdfyoung);
+    color: var(--tinta); /* white jersey needs dark text/points to stay legible */
+}
+
+body.gt-gdi .scoring-table th.col-leader,
+body.gt-gdi .jersey-chip--leader {
+    background: var(--girolead);
+}
+
+body.gt-gdi .scoring-table th.col-mountain,
+body.gt-gdi .jersey-chip--mountain {
+    background: var(--giromont);
+    color: var(--tinta); /* light blue needs dark text to stay legible */
+}
+
+body.gt-gdi .scoring-table th.col-sprint,
+body.gt-gdi .jersey-chip--sprint {
+    background: var(--girosprint);
+}
+
+body.gt-gdi .scoring-table th.col-young,
+body.gt-gdi .jersey-chip--young {
+    background: var(--giroyoung);
+    color: var(--tinta);
 }
 
 .jersey-grid {
@@ -716,22 +779,6 @@ th.sortable:hover {
     font-family: var(--font-mono);
     font-weight: 700;
     font-size: 18px;
-}
-
-.jersey-chip--rojo {
-    background: var(--rojo);
-}
-
-.jersey-chip--lunares {
-    background: var(--azul-lunares);
-}
-
-.jersey-chip--verde {
-    background: var(--verde);
-}
-
-.jersey-chip--oro {
-    background: var(--oro);
 }
 
 @media (max-width: 700px) {
