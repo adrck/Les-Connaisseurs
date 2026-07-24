@@ -1,0 +1,802 @@
+/* ---------- Global ---------- */
+
+:root {
+    --rojo: #C8102E;        /* La Roja — leader's jersey */
+    --rojo-oscuro: #94081F;
+    --oro: #E3A100;         /* sun-baked hills / Spanish gold */
+    --verde: #2F6F4E;       /* points jersey */
+    --azul-lunares: #1C3F94;/* King of the Mountains polka dot */
+    --tinta: #221B17;       /* warm ink, not pure black */
+    --tdflead: #FFD100;       /* Tdf yellow jersey */
+    --tdfsprint: #00a93c;     /* Tdf green jersey */
+    --tdfyoung: #FFFFFF;      /* Tdf young riders jersey */
+    --tdfmont: #E4002B;       /* Tdf mountain jersey — dot color for the polka-dot pattern (see .jersey-chip--mountain / th.col-mountain under body.gt-tdf). Swap this if you'd like a different dot color. */
+    --girolead: #FF286E;      /* Giro pink jersey */
+    --girosprint: #8E1959;    /* Giro sprint riders jersey */
+    --giromont: #73BEEF;      /* Giro mountain jersey */
+    --giroyoung: #FFFFFF;     /* Giro young riders jersey */
+    --papel: #F5EFE0;       /* route-map paper */
+    --papel-oscuro: #EAE0C8;
+    --font-display: 'Oswald', 'Arial Narrow', sans-serif;
+    --font-body: 'Inter', Arial, Helvetica, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-body);
+    background: var(--papel);
+    color: var(--tinta);
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
+    color: var(--tinta);
+}
+
+/* ---------- Header ---------- */
+
+header {
+    background: #000;
+    line-height: 0;
+}
+
+.site-header-wrap {
+    position: relative;
+    width: 100%;
+}
+
+.site-header-image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.header-nav-link {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    display: block;
+}
+
+.header-nav-link:hover,
+.header-nav-link:focus-visible {
+    background: rgba(255,255,255,0.10);
+    outline: none;
+}
+
+.header-indicator {
+    position: absolute;
+    top: 84%;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--oro);
+    opacity: 0;
+    pointer-events: none;
+}
+
+body.page-home [data-indicator="home"],
+body.page-enter [data-indicator="enter"],
+body.page-standings [data-indicator="standings"],
+body.page-rules [data-indicator="rules"],
+body.page-teams [data-indicator="teams"],
+body.page-contact [data-indicator="contact"] {
+    opacity: 1;
+}
+
+/* ---------- Mobile header + menu ---------- */
+
+.mobile-header {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+}
+
+.mobile-header-logo {
+    height: 40px;
+    width: auto;
+    cursor: pointer;
+}
+
+.mobile-menu-toggle {
+    background: none;
+    border: none;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.mobile-menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: white;
+    border-radius: 2px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.mobile-menu-toggle.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.mobile-menu-toggle.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-toggle.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+.mobile-menu {
+    display: none;
+    flex-direction: column;
+    max-height: 0;
+    overflow: hidden;
+    background: #17120C;
+    transition: max-height 0.25s ease;
+}
+
+.mobile-menu.open {
+    max-height: 400px;
+}
+
+.mobile-menu a {
+    display: block;
+    padding: 16px 20px;
+    color: white;
+    text-decoration: none;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 17px;
+    letter-spacing: 0.03em;
+    border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.mobile-menu a:active {
+    background: rgba(255,255,255,0.06);
+}
+
+body.page-home .mobile-menu a[data-page-link="home"],
+body.page-enter .mobile-menu a[data-page-link="enter"],
+body.page-standings .mobile-menu a[data-page-link="standings"],
+body.page-rules .mobile-menu a[data-page-link="rules"],
+body.page-teams .mobile-menu a[data-page-link="teams"],
+body.page-contact .mobile-menu a[data-page-link="contact"] {
+    color: var(--oro);
+}
+
+@media (max-width: 700px) {
+
+    .site-header-wrap {
+        display: none;
+    }
+
+    .mobile-header {
+        display: flex;
+    }
+
+    .mobile-menu {
+        display: flex;
+    }
+
+}
+
+/* ---------- Main Content ---------- */
+
+
+main {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+/* ---------- Buttons ---------- */
+
+.button {
+    display: inline-block;
+    background: var(--rojo);
+    color: white;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 13px 26px;
+    border-radius: 6px;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+.button:hover {
+    background: var(--rojo-oscuro);
+}
+
+.button.secondary {
+    background: transparent;
+    color: var(--tinta);
+    border: 2px solid var(--tinta);
+}
+
+.button.secondary:hover {
+    background: var(--tinta);
+    color: white;
+}
+
+/* ---------- Tables ---------- */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: var(--tinta);
+    color: white;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+}
+
+th,
+td {
+    padding: 12px;
+    border: 1px solid #ddd;
+}
+
+td {
+    font-family: var(--font-mono);
+    font-size: 14px;
+}
+
+td:first-child,
+td:nth-child(2) {
+    font-family: var(--font-body);
+}
+
+tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+/* ---------- Footer ---------- */
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #8a8072;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width:700px) {
+
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    main {
+        padding: 15px;
+    }
+
+}
+
+label{
+    display:block;
+    margin-top:20px;
+    font-weight:bold;
+}
+
+input,select,textarea{
+
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    font-size:16px;
+    font-family: var(--font-body);
+
+}
+
+button{
+
+    margin-top:30px;
+    padding:12px 20px;
+    background: var(--rojo);
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+
+}
+
+button:disabled{
+
+    background:#999;
+    cursor:not-allowed;
+
+}
+
+hr{
+    margin:30px 0;
+}
+
+.riderInput{
+
+    margin-bottom:15px;
+
+}
+
+.form-message {
+    color: #c62828;
+    font-weight: bold;
+    margin: 10px 0;
+    min-height: 1.2em;
+}
+
+.field-hint {
+    font-weight: normal;
+    text-transform: none;
+    letter-spacing: normal;
+    color: #777;
+    font-size: 0.85em;
+}
+
+/* ---------- Enter Team: rider picker ---------- */
+
+#selection-counter {
+    font-weight: bold;
+    color: var(--rojo);
+    margin: 10px 0;
+}
+
+.rider-picker {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-top: 10px;
+}
+
+.rider-picker-column label {
+    margin-top: 0;
+}
+
+#rider-search-input {
+    margin-bottom: 10px;
+}
+
+.rider-list {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    height: 420px;
+    overflow-y: auto;
+    background: #fafbfc;
+    padding: 6px;
+}
+
+.rider-list-empty {
+    color: #888;
+    text-align: center;
+    margin-top: 40px;
+    padding: 0 10px;
+}
+
+.rider-team-group {
+    margin-bottom: 8px;
+}
+
+.rider-team-heading {
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #888;
+    padding: 6px 8px 2px;
+}
+
+.rider-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: white;
+    color: #333;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    padding: 8px 10px;
+    margin: 3px 0;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.rider-option:hover {
+    background: #FCEBEA;
+    border-color: var(--rojo);
+}
+
+.rider-selected-list {
+    padding: 10px;
+}
+
+.rider-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 5px;
+    padding: 8px 10px;
+    margin: 4px 0;
+}
+
+.rider-chip-index {
+    color: #888;
+    font-size: 0.85em;
+    min-width: 18px;
+}
+
+.rider-chip-name {
+    flex: 1;
+}
+
+.rider-chip-remove {
+    background: none;
+    border: none;
+    color: #c62828;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+
+    .rider-picker {
+        grid-template-columns: 1fr;
+    }
+
+    .rider-list {
+        height: 300px;
+    }
+
+}
+
+/* ---------- Riders table ---------- */
+
+th.sortable {
+    cursor: pointer;
+    user-select: none;
+}
+
+th.sortable:hover {
+    background: var(--rojo-oscuro);
+}
+
+#rider-search {
+    max-width: 400px;
+}
+
+/* ---------- Teams page ---------- */
+
+.team-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 18px;
+}
+
+.team-card h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 10px 0;
+}
+
+.team-total {
+    color: var(--rojo);
+    font-size: 0.9em;
+}
+
+.team-riders {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 6px 20px;
+}
+
+.team-riders li {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed #eee;
+    padding: 4px 0;
+}
+
+.points-tag {
+    color: #666;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+
+/* ---------- Standings page ---------- */
+
+#stage-select {
+    max-width: 250px;
+    margin-bottom: 20px;
+}
+
+/* ---------- Homepage: hero image ---------- */
+
+.home-hero-wrap {
+    position: relative;
+    width: 100%;
+    line-height: 0;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.home-hero-image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.home-hero-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: min(640px, 88%);
+    padding: 44px 52px;
+    background: rgba(13, 10, 7, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 12px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.home-hero-eyebrow {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 12px;
+    color: var(--oro);
+    margin: 0 0 10px;
+}
+
+.home-hero-title {
+    margin: 0 0 12px;
+    font-size: 34px;
+    line-height: 1.2;
+    color: white;
+    text-transform: uppercase;
+}
+
+.home-hero-sub {
+    font-size: 16px;
+    color: #F2EFE8;
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+
+    .home-hero-message {
+        padding: 18px 22px;
+    }
+
+    .home-hero-title {
+        font-size: 19px;
+    }
+
+    .home-hero-sub {
+        font-size: 12px;
+    }
+
+    .home-hero-eyebrow {
+        font-size: 10px;
+    }
+
+}
+
+/* ---------- Rules: stage scoring ---------- */
+
+.scoring-card h2 {
+    margin-top: 0;
+}
+
+.scoring-intro {
+    color: #4b463e;
+    max-width: 640px;
+}
+
+.scoring-subhead {
+    margin: 34px 0 6px;
+    padding-top: 18px;
+    border-top: 1px solid #eee;
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: 0.03em;
+    color: var(--rojo);
+}
+
+.scoring-card h3.scoring-subhead:first-of-type {
+    margin-top: 20px;
+    padding-top: 0;
+    border-top: none;
+}
+
+.scoring-note {
+    color: #4b463e;
+    font-size: 14.5px;
+    margin: 0 0 14px;
+    max-width: 640px;
+}
+
+.scoring-table {
+    max-width: 560px;
+    margin-bottom: 6px;
+}
+
+.scoring-table td:first-child {
+    font-family: var(--font-body);
+    font-weight: 600;
+}
+
+.scoring-table td {
+    font-family: var(--font-mono);
+}
+
+.scoring-table td.rider-name {
+    font-family: var(--font-body);
+}
+
+/* Jersey colors switch based on data/settings.json's "whichGt" value,
+   applied as a body class (gt-lav / gt-tdf / gt-gdi) by rules.js.
+   Falls back to the Vuelta (lav) colors if no gt-* class is present yet
+   (e.g. briefly, before rules.js finishes fetching settings.json). */
+
+.scoring-table th.col-leader,
+.jersey-chip--leader {
+    background: var(--rojo);
+}
+
+.scoring-table th.col-mountain,
+.jersey-chip--mountain {
+    background: var(--azul-lunares);
+}
+
+.scoring-table th.col-sprint,
+.jersey-chip--sprint {
+    background: var(--verde);
+}
+
+.scoring-table th.col-young,
+.jersey-chip--young {
+    background: var(--oro);
+}
+
+body.gt-tdf .scoring-table th.col-leader,
+body.gt-tdf .jersey-chip--leader {
+    background: var(--tdflead);
+    color: var(--tinta); /* bright yellow needs dark text to stay legible */
+}
+
+body.gt-tdf .scoring-table th.col-mountain {
+    background-color: #FFFFFF;
+    background-image: radial-gradient(var(--tdfmont) 34%, transparent 36%);
+    background-size: 12px 12px;
+    color: var(--tinta);
+}
+
+body.gt-tdf .jersey-chip--mountain {
+    background-color: #FFFFFF;
+    background-image: radial-gradient(var(--tdfmont) 34%, transparent 36%);
+    background-size: 16px 16px;
+    color: var(--tinta);
+}
+
+body.gt-tdf .scoring-table th.col-sprint,
+body.gt-tdf .jersey-chip--sprint {
+    background: var(--tdfsprint);
+}
+
+body.gt-tdf .scoring-table th.col-young,
+body.gt-tdf .jersey-chip--young {
+    background: var(--tdfyoung);
+    color: var(--tinta); /* white jersey needs dark text/points to stay legible */
+    border: 2px solid rgba(0,0,0,0.25); /* thicker so it reliably wins over border-collapse; white would otherwise blend into the page */
+}
+
+body.gt-gdi .scoring-table th.col-leader,
+body.gt-gdi .jersey-chip--leader {
+    background: var(--girolead);
+}
+
+body.gt-gdi .scoring-table th.col-mountain,
+body.gt-gdi .jersey-chip--mountain {
+    background: var(--giromont);
+    color: var(--tinta); /* light blue needs dark text to stay legible */
+}
+
+body.gt-gdi .scoring-table th.col-sprint,
+body.gt-gdi .jersey-chip--sprint {
+    background: var(--girosprint);
+}
+
+body.gt-gdi .scoring-table th.col-young,
+body.gt-gdi .jersey-chip--young {
+    background: var(--giroyoung);
+    color: var(--tinta);
+    border: 2px solid rgba(0,0,0,0.25); /* thicker so it reliably wins over border-collapse; white would otherwise blend into the page */
+}
+
+.jersey-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    max-width: 640px;
+}
+
+.jersey-chip {
+    border-radius: 8px;
+    padding: 14px 16px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border: 1px solid rgba(0,0,0,0.15);
+}
+
+.jersey-chip-name {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    opacity: 0.9;
+}
+
+.jersey-chip-rider {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.jersey-chip-points {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 18px;
+}
+
+@media (max-width: 700px) {
+
+    .jersey-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
