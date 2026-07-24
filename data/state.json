@@ -2,32 +2,32 @@
   "rider_points": {
     "rider/jonas-vingegaard": 104,
     "rider/filippo-ganna": 24,
-    "rider/tadej-pogacar": 303,
+    "rider/tadej-pogacar": 335,
     "rider/juan-ayuso": 17,
-    "rider/remco-evenepoel": 111,
-    "rider/isaac-del-toro": 116,
+    "rider/remco-evenepoel": 116,
+    "rider/isaac-del-toro": 122,
     "rider/davide-piganzoli": 4,
-    "rider/tobias-foss": 3,
+    "rider/tobias-foss": 5,
     "rider/florian-lipowitz": 36,
-    "rider/paul-seixas": 77,
+    "rider/paul-seixas": 80,
     "rider/egan-bernal": 3,
     "rider/mattias-skjelmose": 11,
-    "rider/tobias-halland-johannessen": 43,
+    "rider/tobias-halland-johannessen": 52,
     "rider/romain-gregoire": 4,
-    "rider/lenny-martinez": 20,
+    "rider/lenny-martinez": 41,
     "rider/tom-pidcock": 53,
-    "rider/richard-carapaz": 84,
+    "rider/richard-carapaz": 122,
     "rider/matteo-jorgenson": 15,
     "rider/alex-molenaar": 9,
     "rider/lennart-van-eetvelt": 5,
-    "rider/mads-pedersen": 123,
+    "rider/mads-pedersen": 130,
     "rider/alex-baudin": 15,
     "rider/quinn-simmons": 33,
     "rider/biniam-girmay": 58,
     "rider/jasper-philipsen": 90,
     "rider/olav-kooij": 76,
     "rider/tim-merlier": 72,
-    "rider/sepp-kuss": 1,
+    "rider/sepp-kuss": 13,
     "rider/pavel-bittner": 8,
     "rider/rick-pluimers": 13,
     "rider/pascal-ackermann": 5,
@@ -38,14 +38,14 @@
     "rider/liam-slock": 5,
     "rider/thibault-guernalec": 1,
     "rider/mathieu-van-der-poel": 23,
-    "rider/michael-matthews": 6,
+    "rider/michael-matthews": 9,
     "rider/nicolas-breuillard": 3,
     "rider/jordan-jegat": 6,
     "rider/sean-quinn": 1,
-    "rider/valentin-paret-peintre": 53,
+    "rider/valentin-paret-peintre": 64,
     "rider/lennert-van-eetvelt": 1,
     "rider/juan-ayuso-pesquera": 27,
-    "rider/mattias-skjelmose-jensen": 23,
+    "rider/mattias-skjelmose-jensen": 25,
     "rider/louis-vervaeke": 1,
     "rider/javier-romo": 9,
     "rider/nicolas-prodhomme": 4,
@@ -60,7 +60,7 @@
     "rider/baptiste-veistroffer": 12,
     "rider/mathias-vacek": 1,
     "rider/mauro-schmid": 64,
-    "rider/harold-tejada": 16,
+    "rider/harold-tejada": 17,
     "rider/maxim-van-gils": 11,
     "rider/brandon-mcnulty": 8,
     "rider/kevin-vauquelin": 5,
@@ -72,15 +72,16 @@
     "rider/adam-yates": 1,
     "rider/yannis-voisard": 1,
     "rider/mattia-cattaneo": 5,
-    "rider/thymen-arensman": 4,
+    "rider/thymen-arensman": 5,
     "rider/pablo-castrillo-zapater": 8,
-    "rider/bruno-armirail": 2,
+    "rider/bruno-armirail": 5,
     "rider/joshua-tarling": 1,
     "rider/lewis-askey": 10,
     "rider/aaron-gate": 1,
     "rider/edward-planckaert": 3,
     "rider/tiesj-benoot": 1,
-    "rider/raul-garcia-pierna": 4
+    "rider/raul-garcia-pierna": 4,
+    "rider/anders-halland-johannessen": 1
   },
   "stages_processed": [
     1,
@@ -100,7 +101,8 @@
     15,
     16,
     17,
-    18
+    18,
+    19
   ],
   "stage_history": {
     "1": {
@@ -378,6 +380,25 @@
       "rider/ben-healy": 1,
       "rider/tadej-pogacar": 8,
       "rider/isaac-del-toro": 2
+    },
+    "19": {
+      "rider/tadej-pogacar": 32,
+      "rider/lenny-martinez": 21,
+      "rider/richard-carapaz": 38,
+      "rider/sepp-kuss": 12,
+      "rider/tobias-halland-johannessen": 9,
+      "rider/remco-evenepoel": 5,
+      "rider/isaac-del-toro": 6,
+      "rider/paul-seixas": 3,
+      "rider/mattias-skjelmose-jensen": 2,
+      "rider/harold-tejada": 1,
+      "rider/mads-pedersen": 7,
+      "rider/michael-matthews": 3,
+      "rider/tobias-foss": 2,
+      "rider/valentin-paret-peintre": 11,
+      "rider/anders-halland-johannessen": 1,
+      "rider/thymen-arensman": 1,
+      "rider/bruno-armirail": 3
     }
   },
   "team_stage_history": {
@@ -560,6 +581,16 @@
       "Bent": 24,
       "Jeroen": 22,
       "Jaap": 19
+    },
+    "19": {
+      "Monique": 104,
+      "Angelo": 64,
+      "Maarten": 91,
+      "Peter": 49,
+      "Erwin": 78,
+      "Bent": 41,
+      "Jeroen": 74,
+      "Jaap": 53
     }
   },
   "leaderboard_history": {
@@ -742,165 +773,16 @@
       "Bent": 946,
       "Jeroen": 1127,
       "Jaap": 1148
-    }
-  },
-  "stage_results": {
-    "18": {
-      "stage_finish": [
-        {
-          "rank": 1,
-          "rider_url": "rider/richard-carapaz"
-        },
-        {
-          "rank": 2,
-          "rider_url": "rider/mauro-schmid"
-        },
-        {
-          "rank": 3,
-          "rider_url": "rider/matteo-jorgenson"
-        },
-        {
-          "rank": 4,
-          "rider_url": "rider/valentin-paret-peintre"
-        },
-        {
-          "rank": 5,
-          "rider_url": "rider/tobias-halland-johannessen"
-        },
-        {
-          "rank": 6,
-          "rider_url": "rider/pablo-castrillo-zapater"
-        },
-        {
-          "rank": 7,
-          "rider_url": "rider/raul-garcia-pierna"
-        },
-        {
-          "rank": 8,
-          "rider_url": "rider/lenny-martinez"
-        },
-        {
-          "rank": 9,
-          "rider_url": "rider/remco-evenepoel"
-        },
-        {
-          "rank": 10,
-          "rider_url": "rider/tom-pidcock"
-        }
-      ],
-      "intermediate_sprint": [
-        {
-          "rank": 1,
-          "rider_url": "rider/mads-pedersen"
-        },
-        {
-          "rank": 2,
-          "rider_url": "rider/mauro-schmid"
-        },
-        {
-          "rank": 3,
-          "rider_url": "rider/tobias-halland-johannessen"
-        }
-      ],
-      "intermediate_sprint_location": {
-        "name": "Corps",
-        "distance_km": 129.0
-      },
-      "climbs": [
-        {
-          "category": "1",
-          "results": [
-            {
-              "rank": 1,
-              "rider_url": "rider/valentin-paret-peintre"
-            },
-            {
-              "rank": 2,
-              "rider_url": "rider/richard-carapaz"
-            },
-            {
-              "rank": 3,
-              "rider_url": "rider/ben-healy"
-            }
-          ],
-          "name": "Côte d'Engins",
-          "distance_km": 36.7
-        },
-        {
-          "category": "2",
-          "results": [
-            {
-              "rank": 1,
-              "rider_url": "rider/valentin-paret-peintre"
-            },
-            {
-              "rank": 2,
-              "rider_url": "rider/richard-carapaz"
-            },
-            {
-              "rank": 3,
-              "rider_url": "rider/mauro-schmid"
-            }
-          ],
-          "name": "Côte de Monteynard",
-          "distance_km": 92.2
-        },
-        {
-          "category": "3",
-          "results": [
-            {
-              "rank": 1,
-              "rider_url": "rider/valentin-paret-peintre"
-            },
-            {
-              "rank": 2,
-              "rider_url": "rider/richard-carapaz"
-            }
-          ],
-          "name": "Côte des Terrasses",
-          "distance_km": 112.8
-        },
-        {
-          "category": "3",
-          "results": [
-            {
-              "rank": 1,
-              "rider_url": "rider/valentin-paret-peintre"
-            },
-            {
-              "rank": 2,
-              "rider_url": "rider/richard-carapaz"
-            }
-          ],
-          "name": "Côte de Saint-Léger-les-Mélèzes",
-          "distance_km": 166.2
-        },
-        {
-          "category": "1",
-          "results": [
-            {
-              "rank": 1,
-              "rider_url": "rider/richard-carapaz"
-            },
-            {
-              "rank": 2,
-              "rider_url": "rider/mauro-schmid"
-            },
-            {
-              "rank": 3,
-              "rider_url": "rider/matteo-jorgenson"
-            }
-          ],
-          "name": "Orcières-Merlette",
-          "distance_km": 185.2
-        }
-      ],
-      "gc_leader": "rider/tadej-pogacar",
-      "kom_leader": "rider/tadej-pogacar",
-      "sprint_leader": "rider/mads-pedersen",
-      "youth_leader": "rider/isaac-del-toro",
-      "most_aggressive_rider": "rider/richard-carapaz",
-      "jersey_takeovers": []
+    },
+    "19": {
+      "Monique": 1006,
+      "Angelo": 919,
+      "Maarten": 1247,
+      "Peter": 1126,
+      "Erwin": 1072,
+      "Bent": 987,
+      "Jeroen": 1201,
+      "Jaap": 1201
     }
   }
 }
