@@ -777,6 +777,12 @@ body.gt-gdi .jersey-chip--young {
     opacity: 0.9;
 }
 
+.jersey-chip-rider {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 14px;
+}
+
 .jersey-chip-points {
     font-family: var(--font-mono);
     font-weight: 700;
