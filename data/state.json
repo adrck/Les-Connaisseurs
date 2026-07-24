@@ -784,5 +784,316 @@
       "Jeroen": 1201,
       "Jaap": 1201
     }
+  },
+  "stage_results": {
+    "18": {
+      "stage_finish": [
+        {
+          "rank": 1,
+          "rider_url": "rider/richard-carapaz"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/mauro-schmid"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/matteo-jorgenson"
+        },
+        {
+          "rank": 4,
+          "rider_url": "rider/valentin-paret-peintre"
+        },
+        {
+          "rank": 5,
+          "rider_url": "rider/tobias-halland-johannessen"
+        },
+        {
+          "rank": 6,
+          "rider_url": "rider/pablo-castrillo-zapater"
+        },
+        {
+          "rank": 7,
+          "rider_url": "rider/raul-garcia-pierna"
+        },
+        {
+          "rank": 8,
+          "rider_url": "rider/lenny-martinez"
+        },
+        {
+          "rank": 9,
+          "rider_url": "rider/remco-evenepoel"
+        },
+        {
+          "rank": 10,
+          "rider_url": "rider/tom-pidcock"
+        }
+      ],
+      "intermediate_sprint": [
+        {
+          "rank": 1,
+          "rider_url": "rider/mads-pedersen"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/mauro-schmid"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/tobias-halland-johannessen"
+        }
+      ],
+      "intermediate_sprint_location": {
+        "name": "Corps",
+        "distance_km": 129.0
+      },
+      "climbs": [
+        {
+          "category": "1",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/valentin-paret-peintre"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/richard-carapaz"
+            },
+            {
+              "rank": 3,
+              "rider_url": "rider/ben-healy"
+            }
+          ],
+          "name": "Côte d'Engins",
+          "distance_km": 36.7
+        },
+        {
+          "category": "2",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/valentin-paret-peintre"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/richard-carapaz"
+            },
+            {
+              "rank": 3,
+              "rider_url": "rider/mauro-schmid"
+            }
+          ],
+          "name": "Côte de Monteynard",
+          "distance_km": 92.2
+        },
+        {
+          "category": "3",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/valentin-paret-peintre"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/richard-carapaz"
+            }
+          ],
+          "name": "Côte des Terrasses",
+          "distance_km": 112.8
+        },
+        {
+          "category": "3",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/valentin-paret-peintre"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/richard-carapaz"
+            }
+          ],
+          "name": "Côte de Saint-Léger-les-Mélèzes",
+          "distance_km": 166.2
+        },
+        {
+          "category": "1",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/richard-carapaz"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/mauro-schmid"
+            },
+            {
+              "rank": 3,
+              "rider_url": "rider/matteo-jorgenson"
+            }
+          ],
+          "name": "Orcières-Merlette",
+          "distance_km": 185.2
+        }
+      ],
+      "gc_leader": "rider/tadej-pogacar",
+      "kom_leader": "rider/tadej-pogacar",
+      "sprint_leader": "rider/mads-pedersen",
+      "youth_leader": "rider/isaac-del-toro",
+      "most_aggressive_rider": "rider/richard-carapaz",
+      "jersey_takeovers": []
+    },
+    "19": {
+      "stage_finish": [
+        {
+          "rank": 1,
+          "rider_url": "rider/tadej-pogacar"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/lenny-martinez"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/richard-carapaz"
+        },
+        {
+          "rank": 4,
+          "rider_url": "rider/sepp-kuss"
+        },
+        {
+          "rank": 5,
+          "rider_url": "rider/tobias-halland-johannessen"
+        },
+        {
+          "rank": 6,
+          "rider_url": "rider/remco-evenepoel"
+        },
+        {
+          "rank": 7,
+          "rider_url": "rider/isaac-del-toro"
+        },
+        {
+          "rank": 8,
+          "rider_url": "rider/paul-seixas"
+        },
+        {
+          "rank": 9,
+          "rider_url": "rider/mattias-skjelmose-jensen"
+        },
+        {
+          "rank": 10,
+          "rider_url": "rider/harold-tejada"
+        }
+      ],
+      "intermediate_sprint": [
+        {
+          "rank": 1,
+          "rider_url": "rider/mads-pedersen"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/michael-matthews"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/tobias-foss"
+        }
+      ],
+      "climbs": [
+        {
+          "category": "2",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/valentin-paret-peintre"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/richard-carapaz"
+            },
+            {
+              "rank": 3,
+              "rider_url": "rider/anders-halland-johannessen"
+            }
+          ],
+          "name": "Col Bayard",
+          "distance_km": 4.8
+        },
+        {
+          "category": "1",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/valentin-paret-peintre"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/richard-carapaz"
+            },
+            {
+              "rank": 3,
+              "rider_url": "rider/thymen-arensman"
+            }
+          ],
+          "name": "Col du Noyer",
+          "distance_km": 25.2
+        },
+        {
+          "category": "2",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/richard-carapaz"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/bruno-armirail"
+            },
+            {
+              "rank": 3,
+              "rider_url": "rider/tobias-foss"
+            }
+          ],
+          "name": "Col d'Ornon",
+          "distance_km": 99.2
+        },
+        {
+          "category": "hc",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/tadej-pogacar"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/lenny-martinez"
+            },
+            {
+              "rank": 3,
+              "rider_url": "rider/richard-carapaz"
+            },
+            {
+              "rank": 4,
+              "rider_url": "rider/sepp-kuss"
+            },
+            {
+              "rank": 5,
+              "rider_url": "rider/tobias-halland-johannessen"
+            }
+          ],
+          "name": "Alpe d'Huez",
+          "distance_km": 127.9
+        }
+      ],
+      "gc_leader": "rider/tadej-pogacar",
+      "kom_leader": "rider/richard-carapaz",
+      "sprint_leader": "rider/mads-pedersen",
+      "youth_leader": "rider/isaac-del-toro",
+      "most_aggressive_rider": "rider/richard-carapaz",
+      "jersey_takeovers": [
+        "rider/richard-carapaz"
+      ]
+    }
   }
 }
