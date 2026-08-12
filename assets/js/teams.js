@@ -3,7 +3,7 @@
 
 // Same Apps Script deployment used by the entry form (form.js).
 // It needs a doGet() handler that returns the submitted teams as JSON:
-// [{ "playerName": "Monique", "riders": ["Tadej Pogačar", "Jonas Vingegaard", ...] }, ...]
+// [{ "playerName": "Monique", "firstName": "Ellen", "riders": ["Tadej Pogačar", "Jonas Vingegaard", ...] }, ...]
 // See README.md for the doGet() snippet to add on the Apps Script side.
 const TEAMS_DATA_URL =
     "https://script.google.com/macros/s/AKfycbw389djdf27sw6uPJaIzZROgydiK5lC9kf2tBJYdrIPN7ujDna-9IZppaheXWshRefa/exec?action=teams";
@@ -93,10 +93,11 @@ function renderTeams(teams, riderPoints, teamTotals) {
 
         const total = teamTotals[team.playerName];
         const totalLabel = total !== undefined ? `${total} pts` : "";
+        const firstNameLabel = team.firstName ? ` (${team.firstName})` : "";
 
         return `
             <div class="team-card">
-                <h3>${team.playerName} <span class="team-total">${totalLabel}</span></h3>
+                <h3>${team.playerName}${firstNameLabel} <span class="team-total">${totalLabel}</span></h3>
                 <ul class="team-riders">
                     ${riderRows}
                 </ul>

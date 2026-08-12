@@ -88,7 +88,7 @@ This needs a matching update on the Apps Script side. `docs/apps-script-doPost.g
 has the full `doPost` implementation — replace your current `doPost`
 function with it (or merge it in if you've customized yours). It expects a
 **PIN** column in your sheet (any position, found by header name), alongside
-`Timestamp | Player Name | PIN | Rider 1 ... Rider 20`. In short, it:
+`Timestamp | Player Name | First Name | PIN | Rider 1 ... Rider 20`. In short, it:
 - Looks up a row by Player Name (case-insensitive)
 - If no `action` is sent (a normal submission): creates a new row if the
   name doesn't exist yet, or **overwrites** the existing row if the name
@@ -144,6 +144,7 @@ function doGet(e) {
   const headers = rows.shift(); // first row = column headers
 
   const playerNameCol = headers.indexOf("Player Name");
+  const firstNameCol = headers.indexOf("First Name");
 
   // Collect every column that starts with "Rider " (Rider 1, Rider 2, ... Rider 8)
   const riderCols = headers
@@ -155,6 +156,7 @@ function doGet(e) {
     .filter(row => row[playerNameCol]) // skip any blank rows
     .map(row => ({
       playerName: row[playerNameCol],
+      firstName: firstNameCol !== -1 ? row[firstNameCol] : "",
       riders: riderCols
         .map(colIndex => row[colIndex])
         .filter(riderName => riderName) // drop empty rider slots
@@ -167,7 +169,7 @@ function doGet(e) {
 }
 ```
 
-This matches a sheet with columns `Timestamp | Player Name | Rider 1
+This matches a sheet with columns `Timestamp | Player Name | First Name | PIN | Rider 1
 | Rider 2 | ... | Rider 20`. If your columns differ, adjust the header names
 above accordingly, then redeploy the Web App (Deploy → Manage deployments →
 Edit → New version) so the new `doGet` goes live. `teams.js` calls the same

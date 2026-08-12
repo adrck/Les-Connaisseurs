@@ -32,6 +32,7 @@ async function initForm() {
             if (settings.entriesOpen === false) {
                 document.querySelector(".rider-picker").innerHTML =
                     "<p>Inschrijvingen zijn momenteel gesloten.</p>";
+                document.getElementById("player-firstname").disabled = true;
                 document.getElementById("player-name").disabled = true;
                 document.getElementById("player-pin").disabled = true;
                 document.getElementById("submit-btn").disabled = true;
@@ -55,6 +56,10 @@ async function initForm() {
         renderAvailableList();
         renderSelectedList();
         validateForm();
+
+        document
+            .getElementById("player-firstname")
+            .addEventListener("input", validateForm);
 
         document
             .getElementById("player-name")
@@ -84,6 +89,10 @@ async function initForm() {
 
 function getPinValue() {
     return document.getElementById("player-pin").value.trim();
+}
+
+function getFirstNameValue() {
+    return document.getElementById("player-firstname").value.trim();
 }
 
 function getNameValue() {
@@ -135,6 +144,7 @@ async function maybeLookupTeam() {
 
             isExistingTeam = true;
 
+            document.getElementById("player-firstname").value = result.firstName || "";
             selectedRiders = Array.isArray(result.riders) ? result.riders.slice(0, TEAM_SIZE) : [];
 
             renderAvailableList();
@@ -293,10 +303,12 @@ function validateForm() {
     const formMessage = document.getElementById("form-message");
     const counterEl = document.getElementById("selection-counter");
 
+    const firstName = getFirstNameValue();
     const playerName = getNameValue();
     const pin = getPinValue();
 
     const valid =
+        firstName !== "" &&
         playerName !== "" &&
         /^[0-9]{4}$/.test(pin) &&
         selectedRiders.length === TEAM_SIZE;
@@ -320,6 +332,7 @@ async function submitForm(event) {
     event.preventDefault();
 
     const submission = {
+        firstName: getFirstNameValue(),
         playerName: getNameValue(),
         pin: getPinValue(),
         riders: selectedRiders
