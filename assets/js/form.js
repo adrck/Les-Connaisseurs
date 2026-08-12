@@ -311,14 +311,17 @@ function validateForm() {
         firstName !== "" &&
         playerName !== "" &&
         /^[0-9]{4}$/.test(pin) &&
-        selectedRiders.length === TEAM_SIZE;
+        selectedRiders.length > 0;
 
     submitButton.disabled = !valid;
     submitButton.textContent = isExistingTeam ? "Update Team" : "Bevestig Team";
 
     if (counterEl) {
-        counterEl.textContent = `${selectedRiders.length} of ${TEAM_SIZE} renners geselecteerd`;
-        counterEl.style.color = selectedRiders.length === TEAM_SIZE ? "#2e7d32" : "#0b5ed7";
+        const complete = selectedRiders.length === TEAM_SIZE;
+        counterEl.textContent = complete
+            ? `${selectedRiders.length} of ${TEAM_SIZE} renners geselecteerd`
+            : `${selectedRiders.length} of ${TEAM_SIZE} renners geselecteerd — nog niet compleet`;
+        counterEl.style.color = complete ? "#2e7d32" : "var(--oro)";
     }
 
     if (selectedRiders.length < TEAM_SIZE || playerName !== "") {
@@ -330,6 +333,19 @@ function validateForm() {
 async function submitForm(event) {
 
     event.preventDefault();
+
+    if (selectedRiders.length < TEAM_SIZE) {
+        const proceed = window.confirm(
+            `Je hebt nog maar ${selectedRiders.length} van de ${TEAM_SIZE} renners gekozen. ` +
+            `Je team meedoet met minder renners is toegestaan, maar het is jouw eigen ` +
+            `verantwoordelijkheid om op tijd (voor het sluiten van de inschrijvingen) een ` +
+            `compleet team van ${TEAM_SIZE} renners te kiezen.\n\n` +
+            `Toch indienen met ${selectedRiders.length} renners?`
+        );
+        if (!proceed) {
+            return;
+        }
+    }
 
     const submission = {
         firstName: getFirstNameValue(),
