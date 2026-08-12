@@ -672,6 +672,10 @@ th.sortable:hover {
     font-family: var(--font-mono);
 }
 
+.scoring-table td.rider-name {
+    font-family: var(--font-body);
+}
+
 /* Jersey colors switch based on data/settings.json's "whichGt" value,
    applied as a body class (gt-lav / gt-tdf / gt-gdi) by rules.js.
    Falls back to the Vuelta (lav) colors if no gt-* class is present yet
