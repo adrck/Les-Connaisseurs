@@ -250,7 +250,7 @@ function buildRankTableSection(title, note, entries, pointsForRank) {
         return `
             <tr>
                 <td>${entry.rank}</td>
-                <td>${escapeHtml(slugToName(entry.rider_url))}</td>
+                <td class="rider-name">${escapeHtml(slugToName(entry.rider_url))}</td>
                 <td>${points !== undefined ? points : "—"}</td>
             </tr>
         `;
