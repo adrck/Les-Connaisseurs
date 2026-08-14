@@ -4,6 +4,8 @@
     "competition": "Les Connaisseurs - Vuelta de España 2026",
 
     "teamSize": 20,
+    "benchSize": 3,
+    "maxSwaps": 3,
 
     "entriesOpen": true
 }

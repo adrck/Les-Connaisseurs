@@ -56,7 +56,7 @@ async function initTeams() {
 
         const teams = await teamsResponse.json();
 
-        renderTeams(teams, riderPoints, teamTotals);
+        renderTeams(teams, riderPoints, teamTotals, settings.teamSize || 20);
 
     } catch (error) {
         container.innerHTML = `
@@ -69,7 +69,7 @@ async function initTeams() {
 
 }
 
-function renderTeams(teams, riderPoints, teamTotals) {
+function renderTeams(teams, riderPoints, teamTotals, teamSize) {
 
     const container = document.getElementById("teamsList");
 
@@ -86,10 +86,17 @@ function renderTeams(teams, riderPoints, teamTotals) {
 
     container.innerHTML = sorted.map(team => {
 
-        const riderRows = (team.riders || []).map(riderName => {
+        const riders = team.riders || [];
+        const activeRiders = riders.slice(0, teamSize);
+        const benchRiders = riders.slice(teamSize);
+
+        const riderRow = riderName => {
             const points = riderPoints[slugifyName(riderName)] || 0;
             return `<li>${riderName} <span class="points-tag">${points} pts</span></li>`;
-        }).join("");
+        };
+
+        const activeRows = activeRiders.map(riderRow).join("");
+        const benchRows = benchRiders.map(riderRow).join("");
 
         const total = teamTotals[team.playerName];
         const totalLabel = total !== undefined ? `${total} pts` : "";
@@ -99,8 +106,14 @@ function renderTeams(teams, riderPoints, teamTotals) {
             <div class="team-card">
                 <h3>${team.playerName}${firstNameLabel} <span class="team-total">${totalLabel}</span></h3>
                 <ul class="team-riders">
-                    ${riderRows}
+                    ${activeRows}
                 </ul>
+                ${benchRiders.length ? `
+                    <div class="team-bench-heading">Wisselrenners</div>
+                    <ul class="team-riders team-riders--bench">
+                        ${benchRows}
+                    </ul>
+                ` : ""}
             </div>
         `;
 

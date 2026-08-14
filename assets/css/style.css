@@ -472,6 +472,59 @@ hr{
     margin: 0;
 }
 
+.rider-chip--bench {
+    background: #FFF9EC;
+    border-color: var(--oro);
+}
+
+.rider-bench-divider {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 10px 0 4px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--oro);
+}
+
+.rider-bench-divider::after {
+    content: "";
+    flex: 1;
+    border-top: 1px dashed var(--oro);
+}
+
+.rider-chip-move {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.rider-chip-move-up,
+.rider-chip-move-down {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    color: #555;
+    font-size: 12px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 2px 5px;
+    margin: 0;
+}
+
+.rider-chip-move-up:hover:not(:disabled),
+.rider-chip-move-down:hover:not(:disabled) {
+    background: #f0f0f0;
+    border-color: #bbb;
+}
+
+.rider-chip-move-up:disabled,
+.rider-chip-move-down:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+
 @media (max-width: 700px) {
 
     .rider-picker {
@@ -541,6 +594,20 @@ th.sortable:hover {
     color: #666;
     font-size: 0.85em;
     font-weight: bold;
+}
+
+.team-bench-heading {
+    font-size: 0.8em;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--oro);
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--oro);
+}
+
+.team-riders--bench li {
+    color: #777;
 }
 
 /* ---------- Standings page ---------- */

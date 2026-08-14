@@ -32,11 +32,30 @@ After each stage, the organiser updates `data/state.json` with:
 - `stages_processed` — which stage numbers have been scored
 - `stage_history` — points scored by each rider, per stage
 - `team_stage_history` — each player's total points scored in that stage
-- `leaderboard_history` — each player's cumulative total after that stage
+  (using whichever of their 23 riders were *active* during that specific
+  stage — see "Bench riders and swaps" below)
+- `leaderboard_history` — each player's cumulative total after that stage,
+  including any swap penalties incurred by then; recomputed from scratch
+  every time `main.py update` runs, so it stays correct even if a stage
+  gets reprocessed out of order
 
 The Standings page reads `leaderboard_history` and lets you pick any past
 stage to see standings and the change since the previous stage. The Riders
 page reads `rider_points` to show each rider's season total.
+
+This is driven by `main.py` (+ `scoring.py`, `stage_parser.py`), a local
+CLI you run yourself — it's not part of the website. Team rosters come from
+a local `teams.json` (see `teams_example.json` for the shape):
+```json
+{
+  "Alice": {
+    "riders": ["rider/...", "...23 total, first 20 = active..."],
+    "swaps": [{"stage": 12, "swap_out": "rider/...", "swap_in": "rider/..."}]
+  }
+}
+```
+`main.py`'s `--team-size` flag (default `20`) should match
+`data/settings.json`'s `teamSize` if you ever change it.
 
 ## Team entry & the Google Sheet
 
@@ -52,13 +71,15 @@ right. The submitted payload is unchanged in shape — `riders` is still a
 plain array of rider names — only now its length matches whatever
 `teamSize` is set to.
 
-**Since `teamSize` is now 20**, double check the Apps Script `doPost` (and
-the Sheet itself) can handle 20 riders per submission, not 8. If your sheet
-only has columns up to `Rider 8`, you'll need to add `Rider 9` through
-`Rider 20`, and update `doPost` to write all 20 values instead of dropping
-the extras. The `doGet` snippet below (for the Teams page) already reads
-however many `Rider N` columns exist, so that side doesn't need touching —
-just add the extra header columns and it'll pick them up automatically.
+**Players now pick 23 riders, not just `teamSize`.** `data/settings.json`'s
+`teamSize` (20) + `benchSize` (3) = 23 total: the first `teamSize` are
+active, the rest are bench/reserve (see "Bench riders and swaps" below).
+Double check the Sheet has columns up to `Rider 23`, not just `Rider 20` —
+if it only goes up to `Rider 20`, add `Rider 21` through `Rider 23`. The
+`doGet`/`doPost` code in `docs/apps-script-doPost.gs.txt` already reads
+however many `Rider N` columns exist, so it doesn't need touching beyond
+pasting that file in — just add the extra header columns and it'll pick
+them up automatically.
 
 ### Editing an existing team (name + PIN)
 
@@ -85,32 +106,76 @@ How it works on the frontend (`assets/js/form.js`):
   so the backend can verify it again server-side.
 
 This needs a matching update on the Apps Script side. `docs/apps-script-doPost.gs.txt`
-has the full `doPost` implementation — replace your current `doPost`
-function with it (or merge it in if you've customized yours). It expects a
-**PIN** column in your sheet (any position, found by header name), alongside
-`Timestamp | Player Name | First Name | PIN | Rider 1 ... Rider 20`. In short, it:
+has the full `doPost` **and** `doGet` implementation together — replace your
+entire Apps Script project's code with it (or merge it in if you've
+customized yours). It expects a **PIN** column in your sheet (any position,
+found by header name), alongside
+`Timestamp | Player Name | First Name | PIN | Rider 1 ... Rider 23`
+(23, not 20 — see "Bench riders and swaps" below). In short, it:
 - Looks up a row by Player Name (case-insensitive)
 - If no `action` is sent (a normal submission): creates a new row if the
-  name doesn't exist yet, or **overwrites** the existing row if the name
-  exists *and* the PIN matches — rejects the write with an error message if
+  name doesn't exist yet; if the name exists *and* the PIN matches, either
+  overwrites it (entries still open) or treats it as a swap request
+  (entries closed — see below); rejects the write with an error message if
   the PIN doesn't match
-- If `action: "lookup"` is sent: returns that player's existing riders if
-  the name+PIN matches, `{ exists: false }` if the name isn't found yet, or
-  an error if the name exists but the PIN doesn't match
+- If `action: "lookup"` is sent: returns that player's existing riders (and
+  how many swaps they've already used) if the name+PIN matches,
+  `{ exists: false }` if the name isn't found yet, or an error if the name
+  exists but the PIN doesn't match
 
-As with the `doGet` change, redeploy the Web App (Deploy → Manage
-deployments → Edit → New version) after adding this so it actually goes
-live. The existing `doGet` used by the Teams page is unaffected and doesn't
-need any changes — it only ever reads Player Name and Rider columns, never
-the PIN, so there's no risk of PINs leaking onto the public Teams page.
+Redeploy the Web App (Deploy → Manage deployments → Edit → New version)
+after adding this so it actually goes live.
 
-**Not enforced:** whether entries are still open. The PIN check happens
-server-side, but `entriesOpen` in `settings.json` is only checked in the
-browser (it just disables the form). Someone could technically still submit
-after "closing" entries by calling the Apps Script URL directly. For a
-small trusted group this is a reasonable trade-off — see the "budget and
-trust model" discussion earlier in the project history if you want to
-revisit this later.
+### Bench riders and swaps
+
+Each player picks **23** riders, not 20 — the first `teamSize` (20, from
+`data/settings.json`) are their active team, the last `benchSize` (3) are
+bench/reserve riders. Your Sheet's Rider columns need to run from
+`Rider 1` through `Rider 23` to match (add the 3 extra columns if you
+haven't already).
+
+Once `data/settings.json`'s `entriesOpen` becomes `false`, a submission for
+an *existing* player name is no longer treated as a free edit — it's
+compared against what's already stored, and only reordering which riders
+are in the active first `teamSize` positions is allowed (the full 23-rider
+pool must stay identical; trying to bring in a rider from outside it, or
+change the total count, is rejected). Each rider who leaves the active set
+counts as one swap. Swaps are capped at `maxSwaps` (3, from
+`settings.json`), tracked per player in a new **"Swaps"** sheet tab
+(`Timestamp | Player Name | Stage | Swap Out | Swap In`) that gets created
+automatically the first time it's needed — same pattern as the "Contact"
+tab.
+
+To know *which* stage a swap counts as taking effect from, the script
+fetches your live `data/state.json` (`SITE_STATE_URL` near the top of
+`docs/apps-script-doPost.gs.txt` — update that constant if your site ever
+moves) and uses one more than the highest number in `stages_processed`
+(or stage 1 if that list is still empty). This means there's a window
+between a stage actually being raced and you running `main.py update` for
+it locally where a swap would be recorded against the *previous* stage
+number instead of the correct one — fine for a friends' group, just worth
+knowing.
+
+**Getting swaps into `teams.json`:** `main.py` reads team rosters from a
+local `teams.json` you maintain by hand (see "Scoring the race" below) —
+it's separate from the live Sheet. `doGet` now includes each team's swap
+history alongside their riders, so after any swaps happen, fetch
+`YOUR_APPS_SCRIPT_URL?action=teams` in a browser and copy each team's
+updated `riders` (bench reordering doesn't matter, only the roster
+contents) and `swaps` array into your local `teams.json` before running
+`main.py update` — same manual step you already do for the roster itself,
+now just carrying `swaps` along with it. See `teams_example.json` for the
+exact shape.
+
+**Partially enforced:** whether entries are still open. `doPost` now fetches
+the live `data/settings.json` itself (`SITE_SETTINGS_URL` near the top of
+the file) to check `entriesOpen` server-side — a brand new player name is
+rejected once it's `false`, and an existing player's submission switches
+from a free edit to swap-only mode. If that fetch fails for any reason
+(site down, network hiccup), it fails *open* (treats entries as still open)
+rather than blocking everyone — a reasonable trade-off for a small trusted
+group, but worth knowing if something seems off right around when entries
+close.
 
 ### Contact page
 
@@ -131,51 +196,13 @@ to *read* the submissions back out of the Google Sheet, which the Apps
 Script project doesn't currently expose (it only accepts `doPost`, used for
 submitting).
 
-To enable this, add a `doGet` handler to the same Apps Script project,
-something like:
-
-```javascript
-function doGet(e) {
-
-  // If your tab isn't named "Sheet1", either rename it or swap this line
-  // for: SpreadsheetApp.getActiveSpreadsheet().getSheets()[0]
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1");
-  const rows = sheet.getDataRange().getValues();
-  const headers = rows.shift(); // first row = column headers
-
-  const playerNameCol = headers.indexOf("Player Name");
-  const firstNameCol = headers.indexOf("First Name");
-
-  // Collect every column that starts with "Rider " (Rider 1, Rider 2, ... Rider 8)
-  const riderCols = headers
-    .map((header, index) => ({ header, index }))
-    .filter(col => col.header.toString().startsWith("Rider "))
-    .map(col => col.index);
-
-  const teams = rows
-    .filter(row => row[playerNameCol]) // skip any blank rows
-    .map(row => ({
-      playerName: row[playerNameCol],
-      firstName: firstNameCol !== -1 ? row[firstNameCol] : "",
-      riders: riderCols
-        .map(colIndex => row[colIndex])
-        .filter(riderName => riderName) // drop empty rider slots
-    }));
-
-  return ContentService
-    .createTextOutput(JSON.stringify(teams))
-    .setMimeType(ContentService.MimeType.JSON);
-
-}
-```
-
-This matches a sheet with columns `Timestamp | Player Name | First Name | PIN | Rider 1
-| Rider 2 | ... | Rider 20`. If your columns differ, adjust the header names
-above accordingly, then redeploy the Web App (Deploy → Manage deployments →
-Edit → New version) so the new `doGet` goes live. `teams.js` calls the same
-deployment URL as `form.js`, with `?action=teams` appended — the parameter
-is currently unused server-side but is there so you can branch on it inside
-`doGet` later if the script ever needs to serve more than one kind of data.
+To enable this, add a `doGet` handler to the same Apps Script project — it's
+already included in `docs/apps-script-doPost.gs.txt` (that file has both
+`doPost` and `doGet` together now), so if you've already pasted that file
+in for the PIN/swap features above, `doGet` is already there too and no
+separate step is needed. It reads the same `Rider 1`...`Rider 23` and
+`First Name` columns described above, plus each team's swap history from
+the "Swaps" tab (see "Bench riders and swaps" above).
 
 If the Teams page still shows nothing after this, open the browser
 DevTools Console on that page — a CORS error there usually means the

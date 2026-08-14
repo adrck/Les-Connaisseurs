@@ -5,11 +5,33 @@ const APPS_SCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbw389djdf27sw6uPJaIzZROgydiK5lC9kf2tBJYdrIPN7ujDna-9IZppaheXWshRefa/exec";
 
 let TEAM_SIZE = 20;
+let BENCH_SIZE = 3;
+let MAX_SWAPS = 3;
+let entriesOpen = true;
 
 let riders = [];
-let selectedRiders = []; // array of rider names, in the order picked
+let selectedRiders = []; // array of rider names, in order: first TEAM_SIZE = active, rest = bench
 let isExistingTeam = false; // becomes true once a matching name+PIN is found
 let lastLookupKey = ""; // "name|pin" for the most recently completed lookup
+let originalActiveSet = null; // Set of active rider names as loaded, once entriesOpen is false
+let swapsUsedSoFar = 0; // swaps already used in earlier sessions, from the lookup response
+
+function totalSize() {
+    return TEAM_SIZE + BENCH_SIZE;
+}
+
+// How many riders in the current selection differ from the active set as it
+// was when this team was loaded - i.e. how many swaps this edit represents.
+// Reordering purely within the bench (no boundary crossing) doesn't count.
+function effectiveSwapsThisEdit() {
+    if (!originalActiveSet) return 0;
+    const currentActive = new Set(selectedRiders.slice(0, TEAM_SIZE));
+    let count = 0;
+    originalActiveSet.forEach(name => {
+        if (!currentActive.has(name)) count++;
+    });
+    return count;
+}
 
 async function initForm() {
     const form = document.getElementById("team-form");
@@ -29,14 +51,26 @@ async function initForm() {
                 TEAM_SIZE = settings.teamSize;
             }
 
+            if (settings.benchSize !== undefined) {
+                BENCH_SIZE = settings.benchSize;
+            }
+
+            if (settings.maxSwaps !== undefined) {
+                MAX_SWAPS = settings.maxSwaps;
+            }
+
             if (settings.entriesOpen === false) {
-                document.querySelector(".rider-picker").innerHTML =
-                    "<p>Inschrijvingen zijn momenteel gesloten.</p>";
-                document.getElementById("player-firstname").disabled = true;
-                document.getElementById("player-name").disabled = true;
-                document.getElementById("player-pin").disabled = true;
-                document.getElementById("submit-btn").disabled = true;
-                return;
+                entriesOpen = false;
+                const notice = document.createElement("p");
+                notice.className = "form-message";
+                notice.style.color = "var(--oro)";
+                notice.style.fontWeight = "bold";
+                notice.textContent =
+                    `Inschrijvingen zijn gesloten — er kunnen geen nieuwe teams meer worden ` +
+                    `aangemeld. Vul je Teamnaam + PIN in om je bestaande team te laden: je kunt ` +
+                    `dan nog tot ${MAX_SWAPS}x wisselen tussen je actieve team en je ` +
+                    `wisselrenners (met een oplopende puntenaftrek per wissel).`;
+                document.querySelector(".rider-picker").insertAdjacentElement("beforebegin", notice);
             }
         }
 
@@ -50,7 +84,7 @@ async function initForm() {
 
         const headingCount = document.getElementById("riders-heading-count");
         if (headingCount) {
-            headingCount.textContent = TEAM_SIZE;
+            headingCount.textContent = totalSize();
         }
 
         renderAvailableList();
@@ -143,23 +177,32 @@ async function maybeLookupTeam() {
         } else if (result.exists) {
 
             isExistingTeam = true;
+            swapsUsedSoFar = result.swapsUsed || 0;
 
             document.getElementById("player-firstname").value = result.firstName || "";
-            selectedRiders = Array.isArray(result.riders) ? result.riders.slice(0, TEAM_SIZE) : [];
+            selectedRiders = Array.isArray(result.riders) ? result.riders.slice(0, totalSize()) : [];
+            originalActiveSet = entriesOpen ? null : new Set(selectedRiders.slice(0, TEAM_SIZE));
 
             renderAvailableList();
             renderSelectedList();
 
             lookupMessage.style.color = "#2e7d32";
             lookupMessage.style.fontWeight = "bold";
-            lookupMessage.textContent = "Bestaand team is geladen — maak je wijziging en kies Update team.";
+            lookupMessage.textContent = entriesOpen
+                ? "Bestaand team is geladen — maak je wijziging en kies Update team."
+                : `Bestaand team is geladen. Je hebt ${Math.max(0, MAX_SWAPS - swapsUsedSoFar)} van ` +
+                  `de ${MAX_SWAPS} wissels nog over. Verplaats renners met de pijltjes om een ` +
+                  `wisselrenner actief te maken (of andersom).`;
 
         } else {
 
             isExistingTeam = false;
-            lookupMessage.style.color = "#555";
-            lookupMessage.style.fontWeight = "normal";
-            lookupMessage.textContent = "Nieuw team — Kies hieronder je renners.";
+            originalActiveSet = null;
+            lookupMessage.style.color = entriesOpen ? "#555" : "#c62828";
+            lookupMessage.style.fontWeight = entriesOpen ? "normal" : "bold";
+            lookupMessage.textContent = entriesOpen
+                ? "Nieuw team — Kies hieronder je renners."
+                : "Geen team gevonden met deze naam + PIN. Inschrijvingen zijn gesloten, dus er kan geen nieuw team meer worden aangemeld.";
 
         }
 
@@ -180,10 +223,10 @@ function addRider(name) {
 
     if (selectedRiders.includes(name)) return;
 
-    if (selectedRiders.length >= TEAM_SIZE) {
+    if (selectedRiders.length >= totalSize()) {
         const formMessage = document.getElementById("form-message");
         formMessage.textContent =
-            `Jouw team is al volledig (${TEAM_SIZE} renners). Verwijder er een om te wisselen.`;
+            `Jouw team is al volledig (${TEAM_SIZE} actief + ${BENCH_SIZE} wissel = ${totalSize()} renners). Verwijder er een om te wisselen.`;
         return;
     }
 
@@ -200,6 +243,25 @@ function removeRider(name) {
     selectedRiders = selectedRiders.filter(riderName => riderName !== name);
 
     renderAvailableList();
+    renderSelectedList();
+    validateForm();
+
+}
+
+// Moves a rider up (-1) or down (+1) in the list. Crossing the boundary
+// between position TEAM_SIZE and TEAM_SIZE+1 is how someone moves a rider
+// from active to bench, or a bench rider into the active team.
+function moveRider(name, direction) {
+
+    const index = selectedRiders.indexOf(name);
+    if (index === -1) return;
+
+    const newIndex = index + direction;
+    if (newIndex < 0 || newIndex >= selectedRiders.length) return;
+
+    const [rider] = selectedRiders.splice(index, 1);
+    selectedRiders.splice(newIndex, 0, rider);
+
     renderSelectedList();
     validateForm();
 
@@ -276,23 +338,58 @@ function renderSelectedList() {
         return;
     }
 
-    container.innerHTML = selectedRiders.map((name, index) => `
-        <div class="rider-chip">
-            <span class="rider-chip-index">${index + 1}</span>
-            <span class="rider-chip-name">${name}</span>
-            <button
-                type="button"
-                class="rider-chip-remove"
-                data-rider-name="${name.replace(/"/g, "&quot;")}"
-                aria-label="Remove ${name}"
-            >
-                &times;
-            </button>
-        </div>
-    `).join("");
+    container.innerHTML = selectedRiders.map((name, index) => {
+
+        const isBench = index >= TEAM_SIZE;
+        const escapedName = name.replace(/"/g, "&quot;");
+        const dividerBefore = index === TEAM_SIZE
+            ? `<div class="rider-bench-divider">Wisselrenners (bank)</div>`
+            : "";
+
+        return `
+            ${dividerBefore}
+            <div class="rider-chip${isBench ? " rider-chip--bench" : ""}">
+                <span class="rider-chip-index">${index + 1}</span>
+                <span class="rider-chip-name">${name}</span>
+                <div class="rider-chip-move">
+                    <button
+                        type="button"
+                        class="rider-chip-move-up"
+                        data-rider-name="${escapedName}"
+                        aria-label="Verplaats ${name} omhoog"
+                        ${index === 0 ? "disabled" : ""}
+                    >&uarr;</button>
+                    <button
+                        type="button"
+                        class="rider-chip-move-down"
+                        data-rider-name="${escapedName}"
+                        aria-label="Verplaats ${name} omlaag"
+                        ${index === selectedRiders.length - 1 ? "disabled" : ""}
+                    >&darr;</button>
+                </div>
+                <button
+                    type="button"
+                    class="rider-chip-remove"
+                    data-rider-name="${escapedName}"
+                    aria-label="Remove ${name}"
+                >
+                    &times;
+                </button>
+            </div>
+        `;
+
+    }).join("");
 
     container.querySelectorAll(".rider-chip-remove").forEach(button => {
         button.addEventListener("click", () => removeRider(button.dataset.riderName));
+    });
+
+    container.querySelectorAll(".rider-chip-move-up").forEach(button => {
+        button.addEventListener("click", () => moveRider(button.dataset.riderName, -1));
+    });
+
+    container.querySelectorAll(".rider-chip-move-down").forEach(button => {
+        button.addEventListener("click", () => moveRider(button.dataset.riderName, 1));
     });
 
 }
@@ -317,15 +414,47 @@ function validateForm() {
     submitButton.textContent = isExistingTeam ? "Update Team" : "Bevestig Team";
 
     if (counterEl) {
-        const complete = selectedRiders.length === TEAM_SIZE;
+        const total = totalSize();
+        const complete = selectedRiders.length === total;
+        const activeCount = Math.min(selectedRiders.length, TEAM_SIZE);
+        const benchCount = Math.max(0, selectedRiders.length - TEAM_SIZE);
+        const breakdown = `${activeCount} actief, ${benchCount} op de bank`;
         counterEl.textContent = complete
-            ? `${selectedRiders.length} of ${TEAM_SIZE} renners geselecteerd`
-            : `${selectedRiders.length} of ${TEAM_SIZE} renners geselecteerd — nog niet compleet`;
+            ? `${selectedRiders.length} of ${total} renners geselecteerd (${breakdown})`
+            : `${selectedRiders.length} of ${total} renners geselecteerd (${breakdown}) — nog niet compleet`;
         counterEl.style.color = complete ? "#2e7d32" : "var(--oro)";
     }
 
-    if (selectedRiders.length < TEAM_SIZE || playerName !== "") {
+    if (selectedRiders.length < totalSize() || playerName !== "") {
         formMessage.textContent = "";
+    }
+
+    if (!entriesOpen && !isExistingTeam) {
+        submitButton.disabled = true;
+    }
+
+    if (!entriesOpen && originalActiveSet) {
+        const effectiveSwaps = effectiveSwapsThisEdit();
+        const remaining = MAX_SWAPS - swapsUsedSoFar - effectiveSwaps;
+        const swapEl = document.getElementById("swap-counter") || (() => {
+            const el = document.createElement("p");
+            el.id = "swap-counter";
+            el.className = "form-message";
+            counterEl.insertAdjacentElement("afterend", el);
+            return el;
+        })();
+        if (effectiveSwaps > 0) {
+            swapEl.style.color = remaining < 0 ? "#c62828" : "var(--oro)";
+            swapEl.style.fontWeight = "bold";
+            swapEl.textContent = remaining < 0
+                ? `Dit is ${effectiveSwaps} wissels — je hebt nog maar ${Math.max(0, MAX_SWAPS - swapsUsedSoFar)} over. Zet er een terug.`
+                : `Dit is ${effectiveSwaps} wissel${effectiveSwaps === 1 ? "" : "s"} deze bewerking — daarna nog ${remaining} over.`;
+            if (remaining < 0) {
+                submitButton.disabled = true;
+            }
+        } else {
+            swapEl.textContent = "";
+        }
     }
 
 }
@@ -334,16 +463,55 @@ async function submitForm(event) {
 
     event.preventDefault();
 
-    if (selectedRiders.length < TEAM_SIZE) {
+    if (!entriesOpen && !isExistingTeam) {
+        alert("Inschrijvingen zijn gesloten — er kunnen geen nieuwe teams meer worden aangemeld.");
+        return;
+    }
+
+    if (entriesOpen && selectedRiders.length < totalSize()) {
         const proceed = window.confirm(
-            `Je hebt nog maar ${selectedRiders.length} van de ${TEAM_SIZE} renners gekozen. ` +
-            `Je team meedoet met minder renners is toegestaan, maar het is jouw eigen ` +
-            `verantwoordelijkheid om op tijd (voor het sluiten van de inschrijvingen) een ` +
-            `compleet team van ${TEAM_SIZE} renners te kiezen.\n\n` +
+            `Je hebt nog maar ${selectedRiders.length} van de ${totalSize()} renners gekozen ` +
+            `(${TEAM_SIZE} actief + ${BENCH_SIZE} wissel). Je team meedoet met minder renners is ` +
+            `toegestaan, maar het is jouw eigen verantwoordelijkheid om op tijd (voor het sluiten ` +
+            `van de inschrijvingen) een compleet team te kiezen.\n\n` +
             `Toch indienen met ${selectedRiders.length} renners?`
         );
         if (!proceed) {
             return;
+        }
+    }
+
+    if (!entriesOpen) {
+        const effectiveSwaps = effectiveSwapsThisEdit();
+        const remaining = MAX_SWAPS - swapsUsedSoFar - effectiveSwaps;
+
+        if (remaining < 0) {
+            alert(
+                `Dit zijn ${effectiveSwaps} wissels, maar je hebt nog maar ` +
+                `${Math.max(0, MAX_SWAPS - swapsUsedSoFar)} over. Zet een renner terug voordat je indient.`
+            );
+            return;
+        }
+
+        if (effectiveSwaps > 0) {
+            // Indicative only - the actual point deduction is calculated
+            // server-side (scoring.py), this is just so the player knows
+            // roughly what to expect before confirming.
+            const costTable = [5, 10, 15];
+            let cost = 0;
+            for (let i = swapsUsedSoFar; i < swapsUsedSoFar + effectiveSwaps; i++) {
+                cost += costTable[i] !== undefined ? costTable[i] : costTable[costTable.length - 1];
+            }
+
+            const proceed = window.confirm(
+                `Je voert ${effectiveSwaps} wissel${effectiveSwaps === 1 ? "" : "s"} door. ` +
+                `Dat kost ongeveer ${cost} punten (oplopend per wissel). Daarna heb je nog ` +
+                `${remaining} van de ${MAX_SWAPS} wissels over voor de rest van de wedstrijd.\n\n` +
+                `Wissel doorvoeren?`
+            );
+            if (!proceed) {
+                return;
+            }
         }
     }
 
@@ -375,14 +543,18 @@ async function submitForm(event) {
         if (result.success) {
 
             alert(wasUpdate
-                ? "Jouw team is succesvol bijgewerkt!"
+                ? (result.message || "Jouw team is succesvol bijgewerkt!")
                 : "Jouw team is succesvol ingediend!");
 
             document.getElementById("team-form").reset();
             selectedRiders = [];
             isExistingTeam = false;
             lastLookupKey = "";
+            originalActiveSet = null;
+            swapsUsedSoFar = 0;
             document.getElementById("lookup-message").textContent = "";
+            const swapEl = document.getElementById("swap-counter");
+            if (swapEl) swapEl.textContent = "";
             renderAvailableList();
             renderSelectedList();
 
