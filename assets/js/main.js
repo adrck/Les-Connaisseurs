@@ -14,6 +14,17 @@ async function loadPage(page) {
 
         document.body.className = "page-" + page;
 
+        // Auto pageview counting is disabled on the script tag (this is a
+        // single-page app - no real page reloads), so report each
+        // navigation manually instead. Guarded in case GoatCounter's script
+        // is blocked (ad blocker) or hasn't finished loading yet.
+        if (window.goatcounter && window.goatcounter.count) {
+            window.goatcounter.count({
+                path: page,
+                title: document.title
+            });
+        }
+
        // Remove any previous page script
 const existing = document.getElementById("pageScript");
 
