@@ -16,27 +16,29 @@
 <form id="team-form">
 
     <div class="form-group">
-        <label for="player-firstname">Voornaam *</label>
+        <label for="player-firstname">Voornaam</label>
         <input
             type="text"
             id="player-firstname"
+            placeholder="<verplicht veld>"
             name="firstName"
             required
         >
     </div>
 
     <div class="form-group">
-        <label for="player-name">Teamnaam *</label>
+        <label for="player-name">Teamnaam</label>
         <input
             type="text"
             id="player-name"
+            placeholder="<verplicht veld>"
             name="playerName"
             required
         >
     </div>
 
     <div class="form-group">
-        <label for="player-pin">Team PIN * <span class="field-hint">(4 cijfers — kies de 1e keer een PIN. Voer deze later 
+        <label for="player-pin">Team PIN<span class="field-hint">(4 cijfers — kies de 1e keer een PIN. Voer deze later 
             weer in tezamen met je teamnaam om een al bestaand team aan te passen.</span></label>
         <input
             type="text"
@@ -46,6 +48,7 @@
             pattern="[0-9]{4}"
             maxlength="4"
             autocomplete="off"
+            placeholder="<verplicht veld>"
             required
         >
     </div>
