@@ -1,5 +1,357 @@
 [
   {
+    "team": "Alpecin - Premier Tech (WT)",
+    "name": "DEBRUYNE Ramses"
+  },
+  {
+    "team": "Alpecin - Premier Tech (WT)",
+    "name": "GROVES Kaden"
+  },
+  {
+    "team": "Alpecin - Premier Tech (WT)",
+    "name": "GOGL Michael"
+  },
+  {
+    "team": "Alpecin - Premier Tech (WT)",
+    "name": "BUSATTO Francesco"
+  },
+  {
+    "team": "Alpecin - Premier Tech (WT)",
+    "name": "SENTJENS Sente"
+  },
+  {
+    "team": "Alpecin - Premier Tech (WT)",
+    "name": "DE VYLDER Lindsay"
+  },
+  {
+    "team": "Alpecin - Premier Tech (WT)",
+    "name": "GLIVAR Gal"
+  },
+  {
+    "team": "Alpecin - Premier Tech (WT)",
+    "name": "HOULE Hugo"
+  },
+  {
+    "team": "Decathlon CMA CGM Team (WT)",
+    "name": "BISIAUX Leo"
+  },
+  {
+    "team": "Decathlon CMA CGM Team (WT)",
+    "name": "CHAMBERLAIN Oscar"
+  },
+  {
+    "team": "Decathlon CMA CGM Team (WT)",
+    "name": "DE PESTEL Sander"
+  },
+  {
+    "team": "Decathlon CMA CGM Team (WT)",
+    "name": "GALL Felix"
+  },
+  {
+    "team": "Decathlon CMA CGM Team (WT)",
+    "name": "LABROSSE Jordan"
+  },
+  {
+    "team": "Decathlon CMA CGM Team (WT)",
+    "name": "MUHLBERGER Gregor"
+  },
+  {
+    "team": "Decathlon CMA CGM Team (WT)",
+    "name": "RICCITELLO Matthew"
+  },
+  {
+    "team": "Decathlon CMA CGM Team (WT)",
+    "name": "SCOTSON Callum"
+  },
+  {
+    "team": "EF Education - EasyPost (WT)",
+    "name": "CARAPAZ Richard"
+  },
+  {
+    "team": "EF Education - EasyPost (WT)",
+    "name": "SHAW James"
+  },
+  {
+    "team": "EF Education - EasyPost (WT)",
+    "name": "ALBANESE Vincenzo"
+  },
+  {
+    "team": "EF Education - EasyPost (WT)",
+    "name": "BELOKI Markel"
+  },
+  {
+    "team": "EF Education - EasyPost (WT)",
+    "name": "MACKELLAR Alastair"
+  },
+  {
+    "team": "EF Education - EasyPost (WT)",
+    "name": "RAFFERTY Darren"
+  },
+  {
+    "team": "EF Education - EasyPost (WT)",
+    "name": "STEINHAUSER Georg"
+  },
+  {
+    "team": "EF Education - EasyPost (WT)",
+    "name": "RODRIGUEZ Juan Felipe"
+  },
+  {
+    "team": "Groupama - FDJ United (PRT)",
+    "name": "MARTIN Guillaume"
+  },
+  {
+    "team": "Groupama - FDJ United (PRT)",
+    "name": "LE GAC Olivier"
+  },
+  {
+    "team": "Groupama - FDJ United (PRT)",
+    "name": "MOLARD Rudy"
+  },
+  {
+    "team": "Groupama - FDJ United (PRT)",
+    "name": "BERTHET Clement"
+  },
+  {
+    "team": "Groupama - FDJ United (PRT)",
+    "name": "TRONCHON Bastien"
+  },
+  {
+    "team": "Groupama - FDJ United (PRT)",
+    "name": "PALENI Enzo"
+  },
+  {
+    "team": "Groupama - FDJ United (PRT)",
+    "name": "MADOUAS Valentin"
+  },
+  {
+    "team": "Groupama - FDJ United (PRT)",
+    "name": "ROCHAS Remy"
+  },
+  {
+    "team": "Lidl - Trek (WT)",
+    "name": "SKJELMOSE Mattias"
+  },
+  {
+    "team": "Lidl - Trek (WT)",
+    "name": "PEDERSEN Mads"
+  },
+  {
+    "team": "Lidl - Trek (WT)",
+    "name": "NYS Thibau"
+  },
+  {
+    "team": "Lidl - Trek (WT)",
+    "name": "BERNARD Julien"
+  },
+  {
+    "team": "Lidl - Trek (WT)",
+    "name": "KAMNA Lennard"
+  },
+  {
+    "team": "Lidl - Trek (WT)",
+    "name": "KONRAD Patrick"
+  },
+  {
+    "team": "Lidl - Trek (WT)",
+    "name": "MOSCA Jacopo"
+  },
+  {
+    "team": "Lidl - Trek (WT)",
+    "name": "SUNEKAER NORSGAARD Mathias"
+  },
+  {
+    "team": "Lotto Intermarché (WT)",
+    "name": "WIDAR Jarno"
+  },
+  {
+    "team": "Lotto Intermarché (WT)",
+    "name": "CRAPS Lars"
+  },
+  {
+    "team": "Lotto Intermarché (WT)",
+    "name": "VAN BOVEN Luca"
+  },
+  {
+    "team": "Lotto Intermarché (WT)",
+    "name": "BRAET Vito"
+  },
+  {
+    "team": "Lotto Intermarché (WT)",
+    "name": "DE SCHUYTENEER Steffen"
+  },
+  {
+    "team": "Lotto Intermarché (WT)",
+    "name": "ROTA Lorenzo"
+  },
+  {
+    "team": "Lotto Intermarché (WT)",
+    "name": "VAN SINTMAARTENSDIJK Roel"
+  },
+  {
+    "team": "Lotto Intermarché (WT)",
+    "name": "THOMPSON Reuben"
+  },
+  {
+    "team": "Movistar Team (WT)",
+    "name": "AULAR Orluis"
+  },
+  {
+    "team": "Movistar Team (WT)",
+    "name": "MAS Enric"
+  },
+  {
+    "team": "Movistar Team (WT)",
+    "name": "UIJTDEBROEKS Cian"
+  },
+  {
+    "team": "Movistar Team (WT)",
+    "name": "ROMEO Ivan"
+  },
+  {
+    "team": "Movistar Team (WT)",
+    "name": "CANAL Carlos"
+  },
+  {
+    "team": "Movistar Team (WT)",
+    "name": "ARCAS Jorge"
+  },
+  {
+    "team": "Movistar Team (WT)",
+    "name": "GARCIA PIERNA Raul"
+  },
+  {
+    "team": "Movistar Team (WT)",
+    "name": "CASTRILLO Pablo"
+  },
+  {
+    "team": "Red Bull - BORA - hansgrohe (WT)",
+    "name": "ROGLIC Primoz"
+  },
+  {
+    "team": "Red Bull - BORA - hansgrohe (WT)",
+    "name": "VERMEERSCH Gianni"
+  },
+  {
+    "team": "Red Bull - BORA - hansgrohe (WT)",
+    "name": "TUCKWELL Luke"
+  },
+  {
+    "team": "Red Bull - BORA - hansgrohe (WT)",
+    "name": "FISHER-BLACK Finn"
+  },
+  {
+    "team": "Red Bull - BORA - hansgrohe (WT)",
+    "name": "MEEUS Jordi"
+  },
+  {
+    "team": "Red Bull - BORA - hansgrohe (WT)",
+    "name": "MOSCON Gianni"
+  },
+  {
+    "team": "Red Bull - BORA - hansgrohe (WT)",
+    "name": "THORNLEY Callum"
+  },
+  {
+    "team": "Red Bull - BORA - hansgrohe (WT)",
+    "name": "WANDAHL Frederik"
+  },
+  {
+    "team": "Team Jayco AlUla (WT)",
+    "name": "DOUBLE Paul"
+  },
+  {
+    "team": "Team Jayco AlUla (WT)",
+    "name": "PICKERING Finlay"
+  },
+  {
+    "team": "Team Jayco AlUla (WT)",
+    "name": "COVI Alessandro"
+  },
+  {
+    "team": "Team Jayco AlUla (WT)",
+    "name": "HELLEMOSE Asbjorn"
+  },
+  {
+    "team": "Team Jayco AlUla (WT)",
+    "name": "SUTTERLIN Jasha"
+  },
+  {
+    "team": "Team Jayco AlUla (WT)",
+    "name": "MCKENZIE Hamish"
+  },
+  {
+    "team": "Team Jayco AlUla (WT)",
+    "name": "BOUWMAN Koen"
+  },
+  {
+    "team": "Team Jayco AlUla (WT)",
+    "name": "PORTER Rudy"
+  },
+  {
+    "team": "Team Picnic PostNL (WT)",
+    "name": "MARTINEZ Juan Guillermo"
+  },
+  {
+    "team": "Team Picnic PostNL (WT)",
+    "name": "GAFFURI Mattia"
+  },
+  {
+    "team": "Team Picnic PostNL (WT)",
+    "name": "HAMILTON Chris"
+  },
+  {
+    "team": "Team Picnic PostNL (WT)",
+    "name": "RENARD-HAQUIN Henri-Francois"
+  },
+  {
+    "team": "Team Picnic PostNL (WT)",
+    "name": "DE JONG Timo"
+  },
+  {
+    "team": "Team Picnic PostNL (WT)",
+    "name": "LEEMREIZE Gijs"
+  },
+  {
+    "team": "Team Picnic PostNL (WT)",
+    "name": "PEACE Oliver"
+  },
+  {
+    "team": "Team Picnic PostNL (WT)",
+    "name": "ROOSEN Timo"
+  },
+  {
+    "team": "Team Visma | Lease a Bike (WT)",
+    "name": "VAN AERT Wout"
+  },
+  {
+    "team": "Team Visma | Lease a Bike (WT)",
+    "name": "BRENNAN Matthew"
+  },
+  {
+    "team": "Team Visma | Lease a Bike (WT)",
+    "name": "NORDHAGEN Jorgen"
+  },
+  {
+    "team": "Team Visma | Lease a Bike (WT)",
+    "name": "TULETT Ben"
+  },
+  {
+    "team": "Team Visma | Lease a Bike (WT)",
+    "name": "KRUIJSWIJK Steven"
+  },
+  {
+    "team": "Team Visma | Lease a Bike (WT)",
+    "name": "LAPORTE Christophe"
+  },
+  {
+    "team": "Team Visma | Lease a Bike (WT)",
+    "name": "ARMIRAIL Bruno"
+  },
+  {
+    "team": "Team Visma | Lease a Bike (WT)",
+    "name": "KUSS Sepp"
+  },
+  {
     "team": "UAE Team Emirates - XRG (WT)",
     "name": "POGACAR Tadej"
   },
@@ -32,224 +384,8 @@
     "name": "NOVAK Domen"
   },
   {
-    "team": "XDS Astana Team (WT)",
-    "name": "LANGELLOTTI Victor"
-  },
-  {
-    "team": "XDS Astana Team (WT)",
-    "name": "FORTUNATO Lorenzo"
-  },
-  {
-    "team": "XDS Astana Team (WT)",
-    "name": "RODRIGUEZ Cristian"
-  },
-  {
-    "team": "XDS Astana Team (WT)",
-    "name": "BALLERINI Davide"
-  },
-  {
-    "team": "XDS Astana Team (WT)",
-    "name": "CHAMPOUSSIN Clement"
-  },
-  {
-    "team": "XDS Astana Team (WT)",
-    "name": "LOPEZ Harold Martin"
-  },
-  {
-    "team": "XDS Astana Team (WT)",
-    "name": "TEJADA Harold"
-  },
-  {
-    "team": "XDS Astana Team (WT)",
-    "name": "MULUBRHAN Henok"
-  },
-  {
-    "team": "Equipo Kern Pharma (WT)",
-    "name": "COBO Ivan"
-  },
-  {
-    "team": "Equipo Kern Pharma (WT)",
-    "name": "WENZEL Mats"
-  },
-  {
-    "team": "Equipo Kern Pharma (WT)",
-    "name": "URIARTE Diego"
-  },
-  {
-    "team": "Equipo Kern Pharma (WT)",
-    "name": "SOSA Ivan Ramiro"
-  },
-  {
-    "team": "Equipo Kern Pharma (WT)",
-    "name": "RUIZ Ibon"
-  },
-  {
-    "team": "Equipo Kern Pharma (WT)",
-    "name": "ELOSEGUI Inigo"
-  },
-  {
-    "team": "Equipo Kern Pharma (WT)",
-    "name": "BRUSTENGA Marc"
-  },
-  {
-    "team": "Equipo Kern Pharma (WT)",
-    "name": "BERRADE Urko"
-  },
-  {
-    "team": "Movistar Team (WT)",
-    "name": "CASTRILLO Pablo"
-  },
-  {
-    "team": "Movistar Team (WT)",
-    "name": "GARCIA PIERNA Raul"
-  },
-  {
-    "team": "Movistar Team (WT)",
-    "name": "UIJTDEBROEKS Cian"
-  },
-  {
-    "team": "Movistar Team (WT)",
-    "name": "ROMEO Ivan"
-  },
-  {
-    "team": "Movistar Team (WT)",
-    "name": "ARCAS Jorge"
-  },
-  {
-    "team": "Movistar Team (WT)",
-    "name": "MAS Enric"
-  },
-  {
-    "team": "Movistar Team (WT)",
-    "name": "QUINTANA Nairo"
-  },
-  {
-    "team": "Team Visma | Lease a Bike (WT)",
-    "name": "GRAAT Tijmen"
-  },
-  {
-    "team": "Team Visma | Lease a Bike (WT)",
-    "name": "KRUIJSWIJK Steven"
-  },
-  {
-    "team": "Team Visma | Lease a Bike (WT)",
-    "name": "TULETT Ben"
-  },
-  {
-    "team": "Team Visma | Lease a Bike (WT)",
-    "name": "NORDHAGEN Jorgen"
-  },
-  {
-    "team": "Team Visma | Lease a Bike (WT)",
-    "name": "BRENNAN Matthew"
-  },
-  {
-    "team": "Team Visma | Lease a Bike (WT)",
-    "name": "VAN AERT Wout"
-  },
-  {
-    "team": "Team Visma | Lease a Bike (WT)",
-    "name": "HUISING Menno"
-  },
-  {
-    "team": "Soudal Quick-Step (WT)",
-    "name": "PARET-PEINTRE Valentin"
-  },
-  {
-    "team": "Soudal Quick-Step (WT)",
-    "name": "LANDA Mikel"
-  },
-  {
-    "team": "Soudal Quick-Step (WT)",
-    "name": "DAINESE Alberto"
-  },
-  {
-    "team": "Soudal Quick-Step (WT)",
-    "name": "HAYTER Ethan"
-  },
-  {
-    "team": "Soudal Quick-Step (WT)",
-    "name": "CRAS Steff"
-  },
-  {
-    "team": "Soudal Quick-Step (WT)",
-    "name": "ZANA Filippo"
-  },
-  {
-    "team": "Red Bull - BORA - hansgrohe (WT)",
-    "name": "HAJEK Alexander"
-  },
-  {
-    "team": "Red Bull - BORA - hansgrohe (WT)",
-    "name": "PITHIE Laurence"
-  },
-  {
-    "team": "Red Bull - BORA - hansgrohe (WT)",
-    "name": "VERMEERSCH Gianni"
-  },
-  {
-    "team": "Red Bull - BORA - hansgrohe (WT)",
-    "name": "ROGLIC Primoz"
-  },
-  {
-    "team": "Red Bull - BORA - hansgrohe (WT)",
-    "name": "TUCKWELL Luke"
-  },
-  {
-    "team": "Alpecin - Premier Tech (WT)",
-    "name": "GLIVAR Gal"
-  },
-  {
-    "team": "Alpecin - Premier Tech (WT)",
-    "name": "RIESEBEEK Oscar"
-  },
-  {
-    "team": "Alpecin - Premier Tech (WT)",
-    "name": "VERGALLITO Luca"
-  },
-  {
-    "team": "Alpecin - Premier Tech (WT)",
-    "name": "HOULE Hugo"
-  },
-  {
-    "team": "Netcompany INEOS (WT)",
-    "name": "DE PLUS Laurens"
-  },
-  {
-    "team": "Netcompany INEOS (WT)",
-    "name": "RODRIGUEZ Carlos"
-  },
-  {
-    "team": "Netcompany INEOS (WT)",
-    "name": "ONLEY Oscar"
-  },
-  {
-    "team": "Netcompany INEOS (WT)",
-    "name": "LAURANCE Axel"
-  },
-  {
-    "team": "Lidl - Trek (WT)",
-    "name": "PEDERSEN Mads"
-  },
-  {
-    "team": "Lidl - Trek (WT)",
-    "name": "NYS Thibau"
-  },
-  {
-    "team": "Lidl - Trek (WT)",
-    "name": "SKJELMOSE Mattias"
-  },
-  {
-    "team": "Lidl - Trek (WT)",
-    "name": "SUNEKAER NORSGAARD Mathias"
-  },
-  {
     "team": "Uno-X Mobility (WT)",
-    "name": "DVERSNES LAVIK Fredrik"
-  },
-  {
-    "team": "Uno-X Mobility (WT)",
-    "name": "LEKNESSUND Andreas"
+    "name": "JOHANNESSEN Tobias Halland"
   },
   {
     "team": "Uno-X Mobility (WT)",
@@ -257,103 +393,59 @@
   },
   {
     "team": "Uno-X Mobility (WT)",
+    "name": "DVERSNES LAVIK Fredrik"
+  },
+  {
+    "team": "Uno-X Mobility (WT)",
+    "name": "TILLER Rasmus"
+  },
+  {
+    "team": "Uno-X Mobility (WT)",
     "name": "CORT Magnus"
   },
   {
-    "team": "Bahrain - Victorious (WT)",
-    "name": "BUITRAGO Santiago"
+    "team": "Uno-X Mobility (WT)",
+    "name": "DALBY Simon"
   },
   {
-    "team": "Bahrain - Victorious (WT)",
-    "name": "ERMAKOV Roman"
+    "team": "Uno-X Mobility (WT)",
+    "name": "TJOTTA Martin"
   },
   {
-    "team": "Bahrain - Victorious (WT)",
-    "name": "MIQUEL Pau"
+    "team": "Uno-X Mobility (WT)",
+    "name": "LEKNESSUND Andreas"
   },
   {
-    "team": "Decathlon CMA CGM Team (WT)",
-    "name": "BISIAUX Leo"
+    "team": "XDS Astana Team (WT)",
+    "name": "MULUBRHAN Henok"
   },
   {
-    "team": "Decathlon CMA CGM Team (WT)",
-    "name": "GALL Felix"
+    "team": "XDS Astana Team (WT)",
+    "name": "TEJADA Harold"
   },
   {
-    "team": "Decathlon CMA CGM Team (WT)",
-    "name": "RICCITELLO Matthew"
+    "team": "XDS Astana Team (WT)",
+    "name": "RODRIGUEZ Cristian"
   },
   {
-    "team": "EF Education - EasyPost (WT)",
-    "name": "SHAW James"
+    "team": "XDS Astana Team (WT)",
+    "name": "FORTUNATO Lorenzo"
   },
   {
-    "team": "EF Education - EasyPost (WT)",
-    "name": "CARAPAZ Richard"
+    "team": "XDS Astana Team (WT)",
+    "name": "LANGELLOTTI Victor"
   },
   {
-    "team": "EF Education - EasyPost (WT)",
-    "name": "VAN DEN BERG Marijn"
+    "team": "XDS Astana Team (WT)",
+    "name": "VAN BEKKUM Darren"
   },
   {
-    "team": "Groupama - FDJ United (PRT)",
-    "name": "MOLARD Rudy"
+    "team": "XDS Astana Team (WT)",
+    "name": "FEDOROV Yevgeniy"
   },
   {
-    "team": "Groupama - FDJ United (PRT)",
-    "name": "BERTHET Clement"
-  },
-  {
-    "team": "Groupama - FDJ United (PRT)",
-    "name": "MARTIN Guillaume"
-  },
-  {
-    "team": "Cofidis (PRT)",
-    "name": "RENARD Alexis"
-  },
-  {
-    "team": "Cofidis (PRT)",
-    "name": "BUCHMANN Emanuel"
-  },
-  {
-    "team": "Cofidis (PRT)",
-    "name": "COQUARD Bryan"
-  },
-  {
-    "team": "Pinarello Q36.5 Pro Cycling Team (PRT)",
-    "name": "CALZONI Walter"
-  },
-  {
-    "team": "Pinarello Q36.5 Pro Cycling Team (PRT)",
-    "name": "DE LA CRUZ David"
-  },
-  {
-    "team": "Pinarello Q36.5 Pro Cycling Team (PRT)",
-    "name": "VADER Milan"
-  },
-  {
-    "team": "NSN Cycling Team (WT)",
-    "name": "HIRT Jan"
-  },
-  {
-    "team": "NSN Cycling Team (WT)",
-    "name": "LUTSENKO Alexey"
-  },
-  {
-    "team": "Team Jayco AlUla (WT)",
-    "name": "PLAPP Luke"
-  },
-  {
-    "team": "Team Jayco AlUla (WT)",
-    "name": "DOUBLE Paul"
-  },
-  {
-    "team": "Team Picnic PostNL (WT)",
-    "name": "POOLE Max"
-  },
-  {
-    "team": "Team Picnic PostNL (WT)",
-    "name": "MARTINEZ Juan Guillermo"
+    "team": "XDS Astana Team (WT)",
+    "name": "ROMELE Alessandro"
   },
   {
     "team": "Tudor Pro Cycling Team (PRT)",
@@ -364,15 +456,195 @@
     "name": "KUNG Stefan"
   },
   {
-    "team": "Burgos Burpellet BH (WT)",
-    "name": "DIAZ Jose Manuel"
+    "team": "Tudor Pro Cycling Team (PRT)",
+    "name": "BARTA Will"
+  },
+  {
+    "team": "Tudor Pro Cycling Team (PRT)",
+    "name": "KLUCKERS Arthur"
+  },
+  {
+    "team": "Tudor Pro Cycling Team (PRT)",
+    "name": "THALMANN Roland"
+  },
+  {
+    "team": "Tudor Pro Cycling Team (PRT)",
+    "name": "WARBASSE Larry"
+  },
+  {
+    "team": "Tudor Pro Cycling Team (PRT)",
+    "name": "WEISS Fabian"
+  },
+  {
+    "team": "Tudor Pro Cycling Team (PRT)",
+    "name": "WILKSCH Hannes"
+  },
+  {
+    "team": "Cofidis (PRT)",
+    "name": "COQUARD Bryan"
+  },
+  {
+    "team": "Cofidis (PRT)",
+    "name": "BUCHMANN Emanuel"
+  },
+  {
+    "team": "Cofidis (PRT)",
+    "name": "RENARD Alexis"
+  },
+  {
+    "team": "Cofidis (PRT)",
+    "name": "KIRSCH Alex"
+  },
+  {
+    "team": "Cofidis (PRT)",
+    "name": "MONIQUET Sylvain"
+  },
+  {
+    "team": "Cofidis (PRT)",
+    "name": "OURSELIN Paul"
+  },
+  {
+    "team": "Cofidis (PRT)",
+    "name": "ROULAND Louis"
+  },
+  {
+    "team": "Cofidis (PRT)",
+    "name": "SAMITIER Sergio"
   },
   {
     "team": "Burgos Burpellet BH (WT)",
     "name": "HERRADA Jesus"
   },
   {
-    "team": "Lotto Intermarché (WT)",
-    "name": "WIDAR Jarno"
+    "team": "Burgos Burpellet BH (WT)",
+    "name": "DIAZ Jose Manuel"
+  },
+  {
+    "team": "Burgos Burpellet BH (WT)",
+    "name": "CHUMIL Sergio Geovani"
+  },
+  {
+    "team": "Burgos Burpellet BH (WT)",
+    "name": "FAURA Jose Luis"
+  },
+  {
+    "team": "Burgos Burpellet BH (WT)",
+    "name": "APARICIO Mario"
+  },
+  {
+    "team": "Burgos Burpellet BH (WT)",
+    "name": "FERNANDEZ Sinuhe"
+  },
+  {
+    "team": "Burgos Burpellet BH (WT)",
+    "name": "ALLENO Clement"
+  },
+  {
+    "team": "Burgos Burpellet BH (WT)",
+    "name": "MACIAS Cesar"
+  },
+  {
+    "team": "Equipo Kern Pharma (WT)",
+    "name": "COBO Ivan"
+  },
+  {
+    "team": "Equipo Kern Pharma (WT)",
+    "name": "BERRADE Urko"
+  },
+  {
+    "team": "Equipo Kern Pharma (WT)",
+    "name": "BRUSTENGA Marc"
+  },
+  {
+    "team": "Equipo Kern Pharma (WT)",
+    "name": "ELOSEGUI Inigo"
+  },
+  {
+    "team": "Equipo Kern Pharma (WT)",
+    "name": "RUIZ Ibon"
+  },
+  {
+    "team": "Equipo Kern Pharma (WT)",
+    "name": "SOSA Ivan Ramiro"
+  },
+  {
+    "team": "Equipo Kern Pharma (WT)",
+    "name": "URIARTE Diego"
+  },
+  {
+    "team": "Equipo Kern Pharma (WT)",
+    "name": "WENZEL Mats"
+  },
+  {
+    "team": "Soudal Quick-Step (WT)",
+    "name": "HAYTER Ethan"
+  },
+  {
+    "team": "Soudal Quick-Step (WT)",
+    "name": "ZANA Filippo"
+  },
+  {
+    "team": "Soudal Quick-Step (WT)",
+    "name": "CRAS Steff"
+  },
+  {
+    "team": "Soudal Quick-Step (WT)",
+    "name": "DAINESE Alberto"
+  },
+  {
+    "team": "Soudal Quick-Step (WT)",
+    "name": "LANDA Mikel"
+  },
+  {
+    "team": "Soudal Quick-Step (WT)",
+    "name": "PARET-PEINTRE Valentin"
+  },
+  {
+    "team": "Netcompany INEOS (WT)",
+    "name": "LAURANCE Axel"
+  },
+  {
+    "team": "Netcompany INEOS (WT)",
+    "name": "RODRIGUEZ Carlos"
+  },
+  {
+    "team": "Netcompany INEOS (WT)",
+    "name": "DE PLUS Laurens"
+  },
+  {
+    "team": "Netcompany INEOS (WT)",
+    "name": "ONLEY Oscar"
+  },
+  {
+    "team": "Bahrain - Victorious (WT)",
+    "name": "MIQUEL Pau"
+  },
+  {
+    "team": "Bahrain - Victorious (WT)",
+    "name": "ERMAKOV Roman"
+  },
+  {
+    "team": "Bahrain - Victorious (WT)",
+    "name": "BUITRAGO Santiago"
+  },
+  {
+    "team": "Pinarello Q36.5 Pro Cycling Team (PRT)",
+    "name": "VADER Milan"
+  },
+  {
+    "team": "Pinarello Q36.5 Pro Cycling Team (PRT)",
+    "name": "DE LA CRUZ David"
+  },
+  {
+    "team": "Pinarello Q36.5 Pro Cycling Team (PRT)",
+    "name": "CALZONI Walter"
+  },
+  {
+    "team": "NSN Cycling Team (WT)",
+    "name": "HIRT Jan"
+  },
+  {
+    "team": "NSN Cycling Team (WT)",
+    "name": "LUTSENKO Alexey"
   }
 ]
