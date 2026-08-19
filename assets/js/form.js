@@ -95,7 +95,7 @@ async function initForm() {
             // not derived from riders.json, since that file's eventual count
             // IS that number, not something to compare it against itself.
             const expectedTotal = EXPECTED_RIDER_COUNT || riders.length;
-            confirmedCounter.textContent = `${riders.length} / ${expectedTotal} renners bevestigd`;
+            confirmedCounter.textContent = `(${riders.length} / ${expectedTotal} renners bevestigd)`;
         }
 
         const headingCount = document.getElementById("riders-heading-count");
