@@ -7,6 +7,7 @@ const APPS_SCRIPT_URL =
 let TEAM_SIZE = 20;
 let BENCH_SIZE = 3;
 let MAX_SWAPS = 3;
+let EXPECTED_RIDER_COUNT = null;
 let entriesOpen = true;
 
 let riders = [];
@@ -59,6 +60,10 @@ async function initForm() {
                 MAX_SWAPS = settings.maxSwaps;
             }
 
+            if (settings.expectedRiderCount !== undefined) {
+                EXPECTED_RIDER_COUNT = settings.expectedRiderCount;
+            }
+
             if (settings.entriesOpen === false) {
                 entriesOpen = false;
                 const notice = document.createElement("p");
@@ -81,6 +86,17 @@ async function initForm() {
         riders = await ridersResponse.json();
 
         riders.sort((a, b) => a.name.localeCompare(b.name));
+
+        const confirmedCounter = document.getElementById("rider-confirmed-counter");
+        if (confirmedCounter) {
+            // riders.length = however many are in riders.json right now (this
+            // grows over time as the startlist gets confirmed); the expected
+            // total is a fixed number you already know, from settings.json -
+            // not derived from riders.json, since that file's eventual count
+            // IS that number, not something to compare it against itself.
+            const expectedTotal = EXPECTED_RIDER_COUNT || riders.length;
+            confirmedCounter.textContent = `${riders.length} / ${expectedTotal} renners bevestigd`;
+        }
 
         const headingCount = document.getElementById("riders-heading-count");
         if (headingCount) {
