@@ -6,6 +6,7 @@
     "teamSize": 20,
     "benchSize": 3,
     "maxSwaps": 3,
+    "expectedRiderCount": 184,
 
     "entriesOpen": true
 }
