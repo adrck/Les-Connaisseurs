@@ -64,8 +64,19 @@ async function initForm() {
                 EXPECTED_RIDER_COUNT = settings.expectedRiderCount;
             }
 
-            if (settings.entriesOpen === false) {
-                entriesOpen = false;
+            // entriesOpen is now a deadline timestamp (ISO 8601 string, e.g.
+            // "2026-08-24T18:00:00+02:00") rather than a plain boolean.
+            // Entries are open as long as "now" is before that deadline.
+            // If the value is missing or can't be parsed as a date, we fail
+            // open (same behaviour as before, when the key was simply absent).
+            if (settings.entriesOpen) {
+                const deadline = new Date(settings.entriesOpen);
+                if (!isNaN(deadline.getTime())) {
+                    entriesOpen = new Date() < deadline;
+                }
+            }
+
+            if (!entriesOpen) {
                 const notice = document.createElement("p");
                 notice.className = "form-message";
                 notice.style.color = "var(--oro)";
