@@ -8,8 +8,29 @@
 const TEAMS_DATA_URL =
     "https://script.google.com/macros/s/AKfycbw389djdf27sw6uPJaIzZROgydiK5lC9kf2tBJYdrIPN7ujDna-9IZppaheXWshRefa/exec?action=teams";
 
+// Team rosters (from the Apps Script / Sheet) store rider names in
+// startlist convention: "SURNAME Firstname" - surname in caps, sometimes
+// multiple words (e.g. "VAN AERT Wout", "FISHER-BLACK Finn"). But
+// state.json's rider_points keys are generated in "Firstname Surname"
+// order instead - confirmed against a real key: "rider/tadej-pogacar"
+// for "POGACAR Tadej". This reorders before slugifying so points
+// actually match. Heuristic (consumes leading all-caps word(s) as the
+// surname) - not guaranteed for every edge case, per the earlier project
+// note that slugs and startlist names don't always reliably match.
+function reorderLastnameFirst(rawName) {
+    const words = rawName.trim().split(/\s+/);
+    let splitIndex = 0;
+    while (splitIndex < words.length && words[splitIndex] === words[splitIndex].toUpperCase()) {
+        splitIndex++;
+    }
+    if (splitIndex === 0 || splitIndex >= words.length) return rawName;
+    const surname = words.slice(0, splitIndex).join(" ");
+    const firstname = words.slice(splitIndex).join(" ");
+    return firstname + " " + surname;
+}
+
 function slugifyName(name) {
-    return "rider/" + name
+    return "rider/" + reorderLastnameFirst(name)
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase()
@@ -57,8 +78,17 @@ async function initTeams() {
             return;
         }
 
-        const stateResponse = await fetch("data/state.json");
-        const state = stateResponse.ok ? await stateResponse.json() : {};
+        let state = {};
+        try {
+            const stateResponse = await fetch("data/state.json");
+            if (stateResponse.ok) state = await stateResponse.json();
+        } catch (error) {
+            // data/state.json missing, empty, or malformed - don't let this
+            // take down the whole Teams page. Team rosters (from the Apps
+            // Script) are independent of this file, so fall back to no
+            // point totals rather than showing a misleading error.
+            console.error("Kon data/state.json niet lezen, ga verder zonder puntentotalen:", error);
+        }
         const riderPoints = state.rider_points || {};
 
         const latestStage = state.stages_processed && state.stages_processed.length
