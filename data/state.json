@@ -1,1 +1,112 @@
-{}
+{
+  "rider_points": {
+    "rider/tadej-pogacar": 22,
+    "rider/ethan-hayter": 16,
+    "rider/joshua-tarling": 14,
+    "rider/callum-thornley": 10,
+    "rider/christophe-laporte": 8,
+    "rider/oscar-chamberlain": 5,
+    "rider/leo-bisiaux": 4,
+    "rider/wout-van-aert": 3,
+    "rider/finn-fisher-black": 2,
+    "rider/arthur-kluckers": 1
+  },
+  "stages_processed": [
+    1
+  ],
+  "stage_history": {
+    "1": {
+      "rider/tadej-pogacar": 22,
+      "rider/ethan-hayter": 16,
+      "rider/joshua-tarling": 14,
+      "rider/callum-thornley": 10,
+      "rider/christophe-laporte": 8,
+      "rider/oscar-chamberlain": 5,
+      "rider/leo-bisiaux": 4,
+      "rider/wout-van-aert": 3,
+      "rider/finn-fisher-black": 2,
+      "rider/arthur-kluckers": 1
+    }
+  },
+  "team_stage_history": {
+    "1": {
+      "Monique": 25,
+      "Angelo": 25,
+      "Jeroen": 33,
+      "Claudia": 25,
+      "Bent": 25,
+      "Jaap": 25,
+      "Sjoukje": 41,
+      "Erwin": 27,
+      "Bram": 39,
+      "Maarten": 25,
+      "Peter": 25,
+      "Tamara": 27
+    }
+  },
+  "leaderboard_history": {
+    "1": {
+      "Monique": 25,
+      "Angelo": 25,
+      "Jeroen": 33,
+      "Claudia": 25,
+      "Bent": 25,
+      "Jaap": 25,
+      "Sjoukje": 41,
+      "Erwin": 27,
+      "Bram": 39,
+      "Maarten": 25,
+      "Peter": 25,
+      "Tamara": 27
+    }
+  },
+  "stage_results": {
+    "1": {
+      "stage_finish": [
+        {
+          "rank": 1,
+          "rider_url": "rider/tadej-pogacar"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/ethan-hayter"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/joshua-tarling"
+        },
+        {
+          "rank": 4,
+          "rider_url": "rider/callum-thornley"
+        },
+        {
+          "rank": 5,
+          "rider_url": "rider/christophe-laporte"
+        },
+        {
+          "rank": 6,
+          "rider_url": "rider/oscar-chamberlain"
+        },
+        {
+          "rank": 7,
+          "rider_url": "rider/leo-bisiaux"
+        },
+        {
+          "rank": 8,
+          "rider_url": "rider/wout-van-aert"
+        },
+        {
+          "rank": 9,
+          "rider_url": "rider/finn-fisher-black"
+        },
+        {
+          "rank": 10,
+          "rider_url": "rider/arthur-kluckers"
+        }
+      ],
+      "sprint_leader": "rider/tadej-pogacar",
+      "youth_leader": "rider/joshua-tarling",
+      "most_aggressive_rider": null
+    }
+  }
+}
