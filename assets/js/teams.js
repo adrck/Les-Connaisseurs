@@ -18,6 +18,27 @@ function slugifyName(name) {
         .replace(/\s+/g, "-");
 }
 
+// entriesOpen in settings.json is a deadline timestamp (ISO 8601 string),
+// not a boolean - same logic as form.js and the Apps Script, kept here
+// too since this page has its own separate open/closed check. Fails open
+// (returns true = still open) if the value is missing or unparseable.
+function isEntriesOpen(settings) {
+    if (!settings || !settings.entriesOpen) return true;
+    const deadline = new Date(settings.entriesOpen);
+    if (isNaN(deadline.getTime())) return true;
+    return new Date() < deadline;
+}
+
+function renderEntryCounter(count) {
+    const container = document.getElementById("teamsList");
+    const plural = count === 1 ? "" : "s";
+    const verb = count === 1 ? "heeft" : "hebben";
+    container.innerHTML = `
+        <p class="entries-counter">${count} deelnemer${plural} ${verb} al een team ingediend.</p>
+        <p>Teams zijn zichtbaar zodra inschrijvingen zijn gesloten.</p>
+    `;
+}
+
 async function initTeams() {
 
     const container = document.getElementById("teamsList");
@@ -29,10 +50,10 @@ async function initTeams() {
         const settingsResponse = await fetch("data/settings.json");
         const settings = settingsResponse.ok ? await settingsResponse.json() : {};
 
-        if (settings.entriesOpen !== false) {
-            container.innerHTML = `
-                <p>Teams zijn zichtbaar zodra inschrijvingen zijn gesloten.</p>
-            `;
+        if (isEntriesOpen(settings)) {
+            const teamsResponse = await fetch(TEAMS_DATA_URL);
+            const teams = teamsResponse.ok ? await teamsResponse.json() : [];
+            renderEntryCounter(Array.isArray(teams) ? teams.length : 0);
             return;
         }
 

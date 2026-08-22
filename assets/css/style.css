@@ -610,6 +610,12 @@ th.sortable:hover {
     color: #777;
 }
 
+.entries-counter {
+    font-weight: bold;
+    color: var(--rojo);
+    font-size: 1.1em;
+}
+
 /* ---------- Standings page ---------- */
 
 #stage-select {
