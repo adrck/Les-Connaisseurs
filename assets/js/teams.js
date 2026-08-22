@@ -57,6 +57,7 @@ async function initTeams() {
         const teams = await teamsResponse.json();
 
         renderTeams(teams, riderPoints, teamTotals, settings.teamSize || 20);
+        renderRiderOwnership(teams, riderPoints);
 
     } catch (error) {
         container.innerHTML = `
@@ -118,6 +119,81 @@ function renderTeams(teams, riderPoints, teamTotals, teamSize) {
         `;
 
     }).join("");
+
+}
+
+function computeRiderOwnership(teams, riderPoints) {
+
+    const ownership = {};
+
+    teams.forEach(team => {
+        (team.riders || []).forEach(riderName => {
+            if (!ownership[riderName]) {
+                ownership[riderName] = {
+                    riderName,
+                    players: [],
+                    points: riderPoints[slugifyName(riderName)] || 0
+                };
+            }
+            ownership[riderName].players.push(team.playerName);
+        });
+    });
+
+    return Object.values(ownership).sort((a, b) => {
+        if (b.players.length !== a.players.length) {
+            return b.players.length - a.players.length;
+        }
+        return b.points - a.points;
+    });
+
+}
+
+function renderRiderOwnership(teams, riderPoints) {
+
+    const teamsContainer = document.getElementById("teamsList");
+    if (!teamsContainer) return;
+
+    let section = document.getElementById("riderOwnership");
+
+    if (!section) {
+        section = document.createElement("div");
+        section.id = "riderOwnership";
+        section.className = "rider-overview";
+        teamsContainer.insertAdjacentElement("afterend", section);
+    }
+
+    const ownership = computeRiderOwnership(teams, riderPoints);
+
+    if (ownership.length === 0) {
+        section.innerHTML = "";
+        return;
+    }
+
+    const rows = ownership.map(o => `
+        <tr>
+            <td>${o.riderName}</td>
+            <td>${o.players.join(", ")}</td>
+            <td>${o.players.length}x</td>
+            <td>${o.points} pts</td>
+        </tr>
+    `).join("");
+
+    section.innerHTML = `
+        <h3 class="scoring-subhead">Totaaloverzicht Les Connaisseurs</h3>
+        <table class="rider-overview-table">
+            <thead>
+                <tr>
+                    <th>Renner</th>
+                    <th>Deelnemers</th>
+                    <th>#</th>
+                    <th>Punten</th>
+                </tr>
+            </thead>
+            <tbody>
+                ${rows}
+            </tbody>
+        </table>
+    `;
 
 }
 

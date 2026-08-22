@@ -867,3 +867,20 @@ body.gt-gdi .jersey-chip--young {
     }
 
 }
+
+/* ---------- Teams page: rider ownership overview ---------- */
+
+.rider-overview {
+    margin-top: 30px;
+}
+
+.rider-overview-table {
+    max-width: 900px;
+}
+
+.rider-overview-table th:nth-child(3),
+.rider-overview-table td:nth-child(3),
+.rider-overview-table th:nth-child(4),
+.rider-overview-table td:nth-child(4) {
+    text-align: right;
+}
