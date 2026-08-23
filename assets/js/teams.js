@@ -121,6 +121,29 @@ async function initTeams() {
 
 }
 
+function extractSurname(rawName) {
+    const words = rawName.trim().split(/\s+/);
+    let splitIndex = 0;
+    while (splitIndex < words.length && words[splitIndex] === words[splitIndex].toUpperCase()) {
+        splitIndex++;
+    }
+    if (splitIndex === 0) return rawName;
+    return words.slice(0, splitIndex).join(" ");
+}
+
+// Sorts riders within an already-determined active/bench group by
+// descending points, tie-broken alphabetically by surname. Does NOT
+// change active/bench membership - that's fixed by array position
+// before this ever runs (see renderTeams).
+function sortRidersByPoints(riders, riderPoints) {
+    return riders.slice().sort((a, b) => {
+        const pointsA = riderPoints[slugifyName(a)] || 0;
+        const pointsB = riderPoints[slugifyName(b)] || 0;
+        if (pointsB !== pointsA) return pointsB - pointsA;
+        return extractSurname(a).localeCompare(extractSurname(b));
+    });
+}
+
 function renderTeams(teams, riderPoints, teamTotals, teamSize) {
 
     const container = document.getElementById("teamsList");
@@ -129,6 +152,11 @@ function renderTeams(teams, riderPoints, teamTotals, teamSize) {
         container.innerHTML = "<p>Er zijn nog geen teams ingediend.</p>";
         return;
     }
+
+    // Only sort by points once scoring has actually started - otherwise
+    // every rider sits at 0 and we'd just be reshuffling everyone's
+    // carefully arranged pick order into alphabetical order for no reason.
+    const hasScoring = Object.keys(riderPoints).length > 0;
 
     const sorted = teams.slice().sort((a, b) => {
         const totalA = teamTotals[a.playerName] ?? 0;
@@ -139,8 +167,13 @@ function renderTeams(teams, riderPoints, teamTotals, teamSize) {
     container.innerHTML = sorted.map(team => {
 
         const riders = team.riders || [];
-        const activeRiders = riders.slice(0, teamSize);
-        const benchRiders = riders.slice(teamSize);
+        let activeRiders = riders.slice(0, teamSize);
+        let benchRiders = riders.slice(teamSize);
+
+        if (hasScoring) {
+            activeRiders = sortRidersByPoints(activeRiders, riderPoints);
+            benchRiders = sortRidersByPoints(benchRiders, riderPoints);
+        }
 
         const riderRow = riderName => {
             const points = riderPoints[slugifyName(riderName)] || 0;
