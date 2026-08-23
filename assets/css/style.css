@@ -747,6 +747,7 @@ th.sortable:hover {
 
 .scoring-table td.rider-name {
     font-family: var(--font-body);
+    font-weight: normal;
 }
 
 /* Jersey colors switch based on data/settings.json's "whichGt" value,
