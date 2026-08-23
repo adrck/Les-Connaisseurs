@@ -1,22 +1,34 @@
 {
   "rider_points": {
-    "rider/tadej-pogacar": 22,
-    "rider/ethan-hayter": 16,
+    "rider/tadej-pogacar": 46,
+    "rider/ethan-hayter": 26,
     "rider/joshua-tarling": 14,
     "rider/callum-thornley": 10,
     "rider/christophe-laporte": 8,
     "rider/oscar-chamberlain": 5,
     "rider/leo-bisiaux": 4,
-    "rider/wout-van-aert": 3,
-    "rider/finn-fisher-black": 2,
-    "rider/arthur-kluckers": 1
+    "rider/wout-van-aert": 6,
+    "rider/finn-fisher-black": 6,
+    "rider/arthur-kluckers": 1,
+    "rider/matthew-brennan": 25,
+    "rider/pau-miquel": 16,
+    "rider/mads-pedersen": 10,
+    "rider/hugo-hofstetter": 8,
+    "rider/tobias-halland-johannessen": 5,
+    "rider/oscar-onley": 3,
+    "rider/axel-laurance": 2,
+    "rider/orluis-aular": 1,
+    "rider/bryan-coquard": 1,
+    "rider/koen-bouwman": 7,
+    "rider/diego-uriarte": 2
   },
   "stages_processed": [
-    1
+    1,
+    2
   ],
   "stage_history": {
     "1": {
-      "rider/tadej-pogacar": 22,
+      "rider/tadej-pogacar": 27,
       "rider/ethan-hayter": 16,
       "rider/joshua-tarling": 14,
       "rider/callum-thornley": 10,
@@ -26,38 +38,83 @@
       "rider/wout-van-aert": 3,
       "rider/finn-fisher-black": 2,
       "rider/arthur-kluckers": 1
+    },
+    "2": {
+      "rider/matthew-brennan": 25,
+      "rider/pau-miquel": 16,
+      "rider/tadej-pogacar": 19,
+      "rider/mads-pedersen": 10,
+      "rider/hugo-hofstetter": 8,
+      "rider/tobias-halland-johannessen": 5,
+      "rider/finn-fisher-black": 4,
+      "rider/oscar-onley": 3,
+      "rider/axel-laurance": 2,
+      "rider/orluis-aular": 1,
+      "rider/ethan-hayter": 10,
+      "rider/wout-van-aert": 3,
+      "rider/bryan-coquard": 1,
+      "rider/koen-bouwman": 7,
+      "rider/diego-uriarte": 2
     }
   },
   "team_stage_history": {
     "1": {
-      "Monique": 25,
-      "Angelo": 25,
-      "Jeroen": 33,
-      "Claudia": 25,
-      "Bent": 25,
-      "Jaap": 25,
-      "Sjoukje": 41,
-      "Erwin": 27,
-      "Bram": 39,
-      "Maarten": 25,
-      "Peter": 25,
-      "Tamara": 27
+      "Monique": 30,
+      "Angelo": 30,
+      "Jeroen": 38,
+      "Claudia": 30,
+      "Bent": 30,
+      "Jaap": 30,
+      "Sjoukje": 46,
+      "Erwin": 32,
+      "Bram": 44,
+      "Maarten": 30,
+      "Peter": 30,
+      "Tamara": 32
+    },
+    "2": {
+      "Monique": 35,
+      "Angelo": 35,
+      "Jeroen": 35,
+      "Claudia": 61,
+      "Bent": 37,
+      "Jaap": 60,
+      "Sjoukje": 70,
+      "Erwin": 65,
+      "Bram": 62,
+      "Maarten": 60,
+      "Peter": 60,
+      "Tamara": 64
     }
   },
   "leaderboard_history": {
     "1": {
-      "Monique": 25,
-      "Angelo": 25,
-      "Jeroen": 33,
-      "Claudia": 25,
-      "Bent": 25,
-      "Jaap": 25,
-      "Sjoukje": 41,
-      "Erwin": 27,
-      "Bram": 39,
-      "Maarten": 25,
-      "Peter": 25,
-      "Tamara": 27
+      "Monique": 30,
+      "Angelo": 30,
+      "Jeroen": 38,
+      "Claudia": 30,
+      "Bent": 30,
+      "Jaap": 30,
+      "Sjoukje": 46,
+      "Erwin": 32,
+      "Bram": 44,
+      "Maarten": 30,
+      "Peter": 30,
+      "Tamara": 32
+    },
+    "2": {
+      "Monique": 65,
+      "Angelo": 65,
+      "Jeroen": 73,
+      "Claudia": 91,
+      "Bent": 67,
+      "Jaap": 90,
+      "Sjoukje": 116,
+      "Erwin": 97,
+      "Bram": 106,
+      "Maarten": 90,
+      "Peter": 90,
+      "Tamara": 96
     }
   },
   "stage_results": {
@@ -106,7 +163,109 @@
       ],
       "sprint_leader": "rider/tadej-pogacar",
       "youth_leader": "rider/joshua-tarling",
-      "most_aggressive_rider": null
+      "most_aggressive_rider": "rider/tadej-pogacar"
+    },
+    "2": {
+      "stage_finish": [
+        {
+          "rank": 1,
+          "rider_url": "rider/matthew-brennan"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/pau-miquel"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/tadej-pogacar"
+        },
+        {
+          "rank": 4,
+          "rider_url": "rider/mads-pedersen"
+        },
+        {
+          "rank": 5,
+          "rider_url": "rider/hugo-hofstetter"
+        },
+        {
+          "rank": 6,
+          "rider_url": "rider/tobias-halland-johannessen"
+        },
+        {
+          "rank": 7,
+          "rider_url": "rider/finn-fisher-black"
+        },
+        {
+          "rank": 8,
+          "rider_url": "rider/oscar-onley"
+        },
+        {
+          "rank": 9,
+          "rider_url": "rider/axel-laurance"
+        },
+        {
+          "rank": 10,
+          "rider_url": "rider/orluis-aular"
+        }
+      ],
+      "intermediate_sprint": [
+        {
+          "rank": 1,
+          "rider_url": "rider/ethan-hayter"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/wout-van-aert"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/bryan-coquard"
+        }
+      ],
+      "intermediate_sprint_location": {
+        "name": "Gréoux-les-Bains",
+        "distance_km": 166.2
+      },
+      "climbs": [
+        {
+          "category": "3",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/koen-bouwman"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/diego-uriarte"
+            }
+          ],
+          "name": "Alto Chateauneuf-Grasse",
+          "distance_km": 32.3
+        },
+        {
+          "category": "3",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/koen-bouwman"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/diego-uriarte"
+            }
+          ],
+          "name": "Col de Saint Andrieu",
+          "distance_km": 92.4
+        }
+      ],
+      "gc_leader": "rider/tadej-pogacar",
+      "kom_leader": "rider/koen-bouwman",
+      "sprint_leader": "rider/tadej-pogacar",
+      "youth_leader": "rider/matthew-brennan",
+      "jersey_takeovers": [
+        "rider/matthew-brennan"
+      ],
+      "most_aggressive_rider": "rider/ethan-hayter"
     }
   }
 }
