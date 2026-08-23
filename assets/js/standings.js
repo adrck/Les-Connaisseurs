@@ -233,10 +233,7 @@ function renderStageBreakdown(stage) {
     }
 
     if (data.most_aggressive_rider) {
-        parts.push(`
-            <h3 class="scoring-subhead">Meest aanvallende renner</h3>
-            <p class="scoring-note">${escapeHtml(slugToName(data.most_aggressive_rider))} — +${AGGRESSIVE_POINTS} pts</p>
-        `);
+        parts.push(buildAggressiveRiderSection(data.most_aggressive_rider));
     }
 
     container.innerHTML = parts.join("\n");
@@ -290,13 +287,32 @@ function buildJerseySection(data) {
 
 }
 
+function buildAggressiveRiderSection(riderUrl) {
+
+    return `
+        <h3 class="scoring-subhead">Meest aanvallende renner</h3>
+        <table class="scoring-table">
+            <thead>
+                <tr><th>Renner</th><th>Punten</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="rider-name">${escapeHtml(slugToName(riderUrl))}</td>
+                    <td>+${AGGRESSIVE_POINTS}</td>
+                </tr>
+            </tbody>
+        </table>
+    `;
+
+}
+
 function buildTakeoverSection(takeovers) {
 
     // Each entry is just a rider_url string — a takeover is worth a flat
     // +3 pts regardless of which jersey changed hands.
     const rows = takeovers.map(riderUrl => `
         <tr>
-            <td>${escapeHtml(slugToName(riderUrl))}</td>
+            <td class="rider-name">${escapeHtml(slugToName(riderUrl))}</td>
             <td>+${TAKEOVER_POINTS}</td>
         </tr>
     `).join("");
