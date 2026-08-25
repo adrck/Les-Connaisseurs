@@ -1,6 +1,6 @@
 {
   "rider_points": {
-    "rider/tadej-pogacar": 46,
+    "rider/tadej-pogacar": 103,
     "rider/ethan-hayter": 26,
     "rider/joshua-tarling": 14,
     "rider/callum-thornley": 10,
@@ -15,16 +15,29 @@
     "rider/mads-pedersen": 10,
     "rider/hugo-hofstetter": 8,
     "rider/tobias-halland-johannessen": 5,
-    "rider/oscar-onley": 3,
+    "rider/oscar-onley": 19,
     "rider/axel-laurance": 2,
     "rider/orluis-aular": 1,
     "rider/bryan-coquard": 1,
     "rider/koen-bouwman": 7,
-    "rider/diego-uriarte": 2
+    "rider/diego-uriarte": 2,
+    "rider/jarno-widar": 16,
+    "rider/felix-gall": 13,
+    "rider/sepp-kuss": 12,
+    "rider/enric-mas": 6,
+    "rider/primoz-roglic": 4,
+    "rider/mattias-skjelmose-jensen": 3,
+    "rider/richard-carapaz": 6,
+    "rider/gregor-muhlberger": 2,
+    "rider/ramses-debruyne": 3,
+    "rider/lorenzo-fortunato": 6,
+    "rider/paul-double": 4,
+    "rider/ivan-rami-sosa": 1
   },
   "stages_processed": [
     1,
-    2
+    2,
+    4
   ],
   "stage_history": {
     "1": {
@@ -55,6 +68,22 @@
       "rider/bryan-coquard": 1,
       "rider/koen-bouwman": 7,
       "rider/diego-uriarte": 2
+    },
+    "4": {
+      "rider/tadej-pogacar": 57,
+      "rider/jarno-widar": 16,
+      "rider/felix-gall": 13,
+      "rider/oscar-onley": 16,
+      "rider/sepp-kuss": 12,
+      "rider/enric-mas": 6,
+      "rider/primoz-roglic": 4,
+      "rider/mattias-skjelmose-jensen": 3,
+      "rider/richard-carapaz": 6,
+      "rider/gregor-muhlberger": 2,
+      "rider/ramses-debruyne": 3,
+      "rider/lorenzo-fortunato": 6,
+      "rider/paul-double": 4,
+      "rider/ivan-rami-sosa": 1
     }
   },
   "team_stage_history": {
@@ -85,6 +114,20 @@
       "Maarten": 60,
       "Peter": 60,
       "Tamara": 64
+    },
+    "4": {
+      "Monique": 89,
+      "Angelo": 130,
+      "Jeroen": 120,
+      "Claudia": 118,
+      "Bent": 114,
+      "Jaap": 108,
+      "Sjoukje": 136,
+      "Erwin": 102,
+      "Bram": 108,
+      "Maarten": 102,
+      "Peter": 114,
+      "Tamara": 130
     }
   },
   "leaderboard_history": {
@@ -115,6 +158,20 @@
       "Maarten": 90,
       "Peter": 90,
       "Tamara": 96
+    },
+    "4": {
+      "Monique": 154,
+      "Angelo": 195,
+      "Jeroen": 193,
+      "Claudia": 209,
+      "Bent": 181,
+      "Jaap": 198,
+      "Sjoukje": 252,
+      "Erwin": 199,
+      "Bram": 214,
+      "Maarten": 192,
+      "Peter": 204,
+      "Tamara": 226
     }
   },
   "stage_results": {
@@ -266,6 +323,151 @@
         "rider/matthew-brennan"
       ],
       "most_aggressive_rider": "rider/ethan-hayter"
+    },
+    "4": {
+      "stage_finish": [
+        {
+          "rank": 1,
+          "rider_url": "rider/tadej-pogacar"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/jarno-widar"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/felix-gall"
+        },
+        {
+          "rank": 4,
+          "rider_url": "rider/oscar-onley"
+        },
+        {
+          "rank": 5,
+          "rider_url": "rider/sepp-kuss"
+        },
+        {
+          "rank": 6,
+          "rider_url": "rider/enric-mas"
+        },
+        {
+          "rank": 7,
+          "rider_url": "rider/primoz-roglic"
+        },
+        {
+          "rank": 8,
+          "rider_url": "rider/mattias-skjelmose-jensen"
+        },
+        {
+          "rank": 9,
+          "rider_url": "rider/richard-carapaz"
+        },
+        {
+          "rank": 10,
+          "rider_url": "rider/gregor-muhlberger"
+        }
+      ],
+      "intermediate_sprint": [
+        {
+          "rank": 1,
+          "rider_url": "rider/tadej-pogacar"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/ramses-debruyne"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/gregor-muhlberger"
+        }
+      ],
+      "intermediate_sprint_location": {
+        "name": "Ordino",
+        "distance_km": 68.401
+      },
+      "climbs": [
+        {
+          "category": "1",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/lorenzo-fortunato"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/paul-double"
+            },
+            {
+              "rank": 3,
+              "rider_url": "rider/ivan-rami-sosa"
+            }
+          ],
+          "name": "Port d'Envalira",
+          "distance_km": 25.1
+        },
+        {
+          "category": "1",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/tadej-pogacar"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/richard-carapaz"
+            },
+            {
+              "rank": 3,
+              "rider_url": "rider/enric-mas"
+            }
+          ],
+          "name": "Collada de Beixalis",
+          "distance_km": 59.3
+        },
+        {
+          "category": "1",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/tadej-pogacar"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/sepp-kuss"
+            },
+            {
+              "rank": 3,
+              "rider_url": "rider/felix-gall"
+            }
+          ],
+          "name": "Coll d'Ordino",
+          "distance_km": 78.7
+        },
+        {
+          "category": "3",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/tadej-pogacar"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/oscar-onley"
+            }
+          ],
+          "name": "Alto de la Comella",
+          "distance_km": 100.0
+        }
+      ],
+      "gc_leader": "rider/tadej-pogacar",
+      "kom_leader": "rider/tadej-pogacar",
+      "sprint_leader": "rider/tadej-pogacar",
+      "youth_leader": "rider/oscar-onley",
+      "jersey_takeovers": [
+        "rider/tadej-pogacar",
+        "rider/oscar-onley"
+      ],
+      "most_aggressive_rider": "rider/tadej-pogacar"
     }
   }
 }
