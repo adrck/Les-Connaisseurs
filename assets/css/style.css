@@ -277,6 +277,14 @@ tr:nth-child(even) {
     background: #f8f9fa;
 }
 
+tr.leaderboard-row--top {
+    background: rgba(227, 161, 0, 0.18);
+}
+
+tr.leaderboard-row--top td {
+    font-weight: 600;
+}
+
 /* ---------- Footer ---------- */
 
 footer {

@@ -70,6 +70,7 @@ async function loadResults() {
             .sort((a, b) => a - b);
 
         setupStageSelect();
+        setupLeaderboardCaption();
         await setupJerseyTheme();
 
         const latestStage = stageOrder[stageOrder.length - 1];
@@ -135,6 +136,23 @@ function setupStageSelect() {
 
 }
 
+function setupLeaderboardCaption() {
+
+    const tbody = document.getElementById("leaderboard-body");
+    if (!tbody) return;
+
+    const table = tbody.closest("table");
+    if (!table || document.getElementById("leaderboard-medal-caption")) return;
+
+    const caption = document.createElement("p");
+    caption.id = "leaderboard-medal-caption";
+    caption.className = "scoring-note";
+    caption.textContent = "\ud83e\udd47 = hoogste score van de geselecteerde etappe";
+
+    table.insertAdjacentElement("beforebegin", caption);
+
+}
+
 function displayLeaderboard(stage) {
 
     const leaderboard = leaderboardHistory[stage] || {};
@@ -148,6 +166,20 @@ function displayLeaderboard(stage) {
     // Sort highest score first
     const standings = Object.entries(leaderboard)
         .sort((a, b) => b[1] - a[1]);
+
+    // dayScore picks the gold-row winner(s) for this stage - it is NOT
+    // shown directly anywhere. On stage 1 there's no previous stage to
+    // diff against, so that stage's raw total IS the day's score (nothing
+    // existed before it). On every other stage it's the real gain. The
+    // visible delta column below keeps its own separate "—" placeholder
+    // on stage 1, unchanged - dayScore and deltaLabel are computed
+    // independently on purpose.
+    const dayScores = standings.map(([player, points]) => {
+        const previousPoints = previousLeaderboard[player];
+        return previousPoints !== undefined ? points - previousPoints : points;
+    });
+
+    const maxDayScore = dayScores.length ? Math.max(...dayScores) : null;
 
     const tbody = document.getElementById("leaderboard-body");
 
@@ -163,11 +195,19 @@ function displayLeaderboard(stage) {
             deltaLabel = delta > 0 ? `+${delta}` : `${delta}`;
         }
 
+        // Ties for the top day-score all get gold - no cap, no silver/
+        // bronze tier. A stage where everyone scored the same is a real
+        // (if rare) "everyone gets gold" day, not a bug.
+        const isTopScorer = maxDayScore !== null && dayScores[index] === maxDayScore;
+
         const row = document.createElement("tr");
+        if (isTopScorer) {
+            row.className = "leaderboard-row--top";
+        }
 
         row.innerHTML = `
             <td>${index + 1}</td>
-            <td>${player}</td>
+            <td>${isTopScorer ? "\ud83e\udd47 " : ""}${player}</td>
             <td>${points}</td>
             <td>${deltaLabel}</td>
         `;
