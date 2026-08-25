@@ -116,18 +116,18 @@
       "Tamara": 64
     },
     "4": {
-      "Monique": 89,
-      "Angelo": 130,
-      "Jeroen": 120,
-      "Claudia": 118,
-      "Bent": 114,
-      "Jaap": 108,
-      "Sjoukje": 136,
-      "Erwin": 102,
-      "Bram": 108,
-      "Maarten": 102,
-      "Peter": 114,
-      "Tamara": 130
+      "Monique": 92,
+      "Angelo": 133,
+      "Jeroen": 123,
+      "Claudia": 121,
+      "Bent": 117,
+      "Jaap": 111,
+      "Sjoukje": 139,
+      "Erwin": 105,
+      "Bram": 111,
+      "Maarten": 105,
+      "Peter": 117,
+      "Tamara": 133
     }
   },
   "leaderboard_history": {
@@ -160,18 +160,18 @@
       "Tamara": 96
     },
     "4": {
-      "Monique": 154,
-      "Angelo": 195,
-      "Jeroen": 193,
-      "Claudia": 209,
-      "Bent": 181,
-      "Jaap": 198,
-      "Sjoukje": 252,
-      "Erwin": 199,
-      "Bram": 214,
-      "Maarten": 192,
-      "Peter": 204,
-      "Tamara": 226
+      "Monique": 157,
+      "Angelo": 198,
+      "Jeroen": 196,
+      "Claudia": 212,
+      "Bent": 184,
+      "Jaap": 201,
+      "Sjoukje": 255,
+      "Erwin": 202,
+      "Bram": 217,
+      "Maarten": 195,
+      "Peter": 207,
+      "Tamara": 229
     }
   },
   "stage_results": {
@@ -383,7 +383,7 @@
       ],
       "intermediate_sprint_location": {
         "name": "Ordino",
-        "distance_km": 68.4
+        "distance_km": 68.401
       },
       "climbs": [
         {
