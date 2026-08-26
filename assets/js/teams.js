@@ -163,6 +163,17 @@ function computeTeamEarnedPoints(riderName, swapInStage, stageHistory) {
     return total;
 }
 
+// leaderboard_history / teamTotals are keyed by firstName (e.g. "Bram"),
+// NOT playerName (e.g. "Brambilla") - confirmed against real state.json
+// data. One known manual override: "Team Quersos" is keyed as "Jeroen" in
+// the backend, not its literal firstName field ("Geronimo Quersos
+// (Jeroen)"). Same convention used when building teams.json.
+const TEAM_KEY_OVERRIDES = { "Team Quersos": "Jeroen" };
+
+function teamTotalsKey(team) {
+    return TEAM_KEY_OVERRIDES[team.playerName] || team.firstName;
+}
+
 function renderTeams(teams, riderPoints, teamTotals, teamSize, stageHistory) {
 
     const container = document.getElementById("teamsList");
@@ -178,8 +189,8 @@ function renderTeams(teams, riderPoints, teamTotals, teamSize, stageHistory) {
     const hasScoring = Object.keys(riderPoints).length > 0;
 
     const sorted = teams.slice().sort((a, b) => {
-        const totalA = teamTotals[a.playerName] ?? 0;
-        const totalB = teamTotals[b.playerName] ?? 0;
+        const totalA = teamTotals[teamTotalsKey(a)] ?? 0;
+        const totalB = teamTotals[teamTotalsKey(b)] ?? 0;
         return totalB - totalA;
     });
 
@@ -212,7 +223,7 @@ function renderTeams(teams, riderPoints, teamTotals, teamSize, stageHistory) {
         const activeRows = activeRiders.map(riderRow).join("");
         const benchRows = benchRiders.map(riderRow).join("");
 
-        const total = teamTotals[team.playerName];
+        const total = teamTotals[teamTotalsKey(team)];
         const totalLabel = total !== undefined ? `${total} pts` : "";
         const firstNameLabel = team.firstName ? ` (${team.firstName})` : "";
 
