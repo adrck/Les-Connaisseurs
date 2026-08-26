@@ -1,22 +1,22 @@
 {
   "rider_points": {
-    "rider/tadej-pogacar": 103,
-    "rider/ethan-hayter": 26,
+    "rider/tadej-pogacar": 113,
+    "rider/ethan-hayter": 36,
     "rider/joshua-tarling": 14,
     "rider/callum-thornley": 10,
-    "rider/christophe-laporte": 8,
+    "rider/christophe-laporte": 13,
     "rider/oscar-chamberlain": 5,
     "rider/leo-bisiaux": 4,
-    "rider/wout-van-aert": 6,
+    "rider/wout-van-aert": 10,
     "rider/finn-fisher-black": 6,
     "rider/arthur-kluckers": 1,
-    "rider/matthew-brennan": 25,
+    "rider/matthew-brennan": 45,
     "rider/pau-miquel": 16,
     "rider/mads-pedersen": 10,
     "rider/hugo-hofstetter": 8,
     "rider/tobias-halland-johannessen": 5,
-    "rider/oscar-onley": 19,
-    "rider/axel-laurance": 2,
+    "rider/oscar-onley": 21,
+    "rider/axel-laurance": 10,
     "rider/orluis-aular": 1,
     "rider/bryan-coquard": 1,
     "rider/koen-bouwman": 7,
@@ -32,12 +32,22 @@
     "rider/ramses-debruyne": 3,
     "rider/lorenzo-fortunato": 6,
     "rider/paul-double": 4,
-    "rider/ivan-rami-sosa": 1
+    "rider/ivan-rami-sosa": 1,
+    "rider/jordi-meeus": 16,
+    "rider/vincenzo-albanese": 12,
+    "rider/alessandro-romele": 10,
+    "rider/alberto-dainese": 4,
+    "rider/vito-braet": 3,
+    "rider/david-gonzalez-lopez": 2,
+    "rider/bruno-armirail": 1,
+    "rider/pavel-sivakov": 2,
+    "rider/harold-tejada": 1
   },
   "stages_processed": [
     1,
     2,
-    4
+    4,
+    5
   ],
   "stage_history": {
     "1": {
@@ -84,6 +94,24 @@
       "rider/lorenzo-fortunato": 6,
       "rider/paul-double": 4,
       "rider/ivan-rami-sosa": 1
+    },
+    "5": {
+      "rider/matthew-brennan": 20,
+      "rider/jordi-meeus": 16,
+      "rider/vincenzo-albanese": 12,
+      "rider/alessandro-romele": 10,
+      "rider/axel-laurance": 8,
+      "rider/christophe-laporte": 5,
+      "rider/alberto-dainese": 4,
+      "rider/vito-braet": 3,
+      "rider/david-gonzalez-lopez": 2,
+      "rider/wout-van-aert": 4,
+      "rider/ethan-hayter": 10,
+      "rider/bruno-armirail": 1,
+      "rider/pavel-sivakov": 2,
+      "rider/harold-tejada": 1,
+      "rider/tadej-pogacar": 10,
+      "rider/oscar-onley": 2
     }
   },
   "team_stage_history": {
@@ -128,6 +156,20 @@
       "Maarten": 105,
       "Peter": 117,
       "Tamara": 133
+    },
+    "5": {
+      "Monique": 16,
+      "Angelo": 36,
+      "Jeroen": 37,
+      "Claudia": 36,
+      "Bent": 25,
+      "Jaap": 52,
+      "Sjoukje": 46,
+      "Erwin": 38,
+      "Bram": 52,
+      "Maarten": 56,
+      "Peter": 36,
+      "Tamara": 36
     }
   },
   "leaderboard_history": {
@@ -172,6 +214,20 @@
       "Maarten": 200,
       "Peter": 212,
       "Tamara": 229
+    },
+    "5": {
+      "Monique": 173,
+      "Angelo": 239,
+      "Jeroen": 238,
+      "Claudia": 248,
+      "Bent": 209,
+      "Jaap": 258,
+      "Sjoukje": 301,
+      "Erwin": 240,
+      "Bram": 264,
+      "Maarten": 256,
+      "Peter": 248,
+      "Tamara": 265
     }
   },
   "stage_results": {
@@ -468,6 +524,91 @@
         "rider/oscar-onley"
       ],
       "most_aggressive_rider": "rider/tadej-pogacar"
+    },
+    "5": {
+      "stage_finish": [
+        {
+          "rank": 1,
+          "rider_url": "rider/matthew-brennan"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/jordi-meeus"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/vincenzo-albanese"
+        },
+        {
+          "rank": 4,
+          "rider_url": "rider/alessandro-romele"
+        },
+        {
+          "rank": 5,
+          "rider_url": "rider/axel-laurance"
+        },
+        {
+          "rank": 6,
+          "rider_url": "rider/christophe-laporte"
+        },
+        {
+          "rank": 7,
+          "rider_url": "rider/alberto-dainese"
+        },
+        {
+          "rank": 8,
+          "rider_url": "rider/vito-braet"
+        },
+        {
+          "rank": 9,
+          "rider_url": "rider/david-gonzalez-lopez"
+        },
+        {
+          "rank": 10,
+          "rider_url": "rider/wout-van-aert"
+        }
+      ],
+      "intermediate_sprint": [
+        {
+          "rank": 1,
+          "rider_url": "rider/ethan-hayter"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/wout-van-aert"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/bruno-armirail"
+        }
+      ],
+      "intermediate_sprint_location": {
+        "name": "Tivenys",
+        "distance_km": 114.7
+      },
+      "climbs": [
+        {
+          "category": "3",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/pavel-sivakov"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/harold-tejada"
+            }
+          ],
+          "name": "Puerto de Paüls",
+          "distance_km": 148.4
+        }
+      ],
+      "gc_leader": "rider/tadej-pogacar",
+      "kom_leader": "rider/tadej-pogacar",
+      "sprint_leader": "rider/tadej-pogacar",
+      "youth_leader": "rider/oscar-onley",
+      "most_aggressive_rider": "rider/ethan-hayter",
+      "jersey_takeovers": []
     }
   }
 }
