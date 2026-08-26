@@ -90,6 +90,7 @@ async function initTeams() {
             console.error("Kon data/state.json niet lezen, ga verder zonder puntentotalen:", error);
         }
         const riderPoints = state.rider_points || {};
+        const stageHistory = state.stage_history || {};
 
         const latestStage = state.stages_processed && state.stages_processed.length
             ? Math.max(...state.stages_processed)
@@ -107,7 +108,7 @@ async function initTeams() {
 
         const teams = await teamsResponse.json();
 
-        renderTeams(teams, riderPoints, teamTotals, settings.teamSize || 20);
+        renderTeams(teams, riderPoints, teamTotals, settings.teamSize || 20, stageHistory);
         renderRiderOwnership(teams, riderPoints);
 
     } catch (error) {
@@ -144,7 +145,25 @@ function sortRidersByPoints(riders, riderPoints) {
     });
 }
 
-function renderTeams(teams, riderPoints, teamTotals, teamSize) {
+// Sums a rider's points from stage_history for stages >= swapInStage only
+// - this is what they've actually earned for THIS team, since a swap only
+// counts a rider from the stage they joined onward. Uses stage_history's
+// real published numbers directly rather than re-deriving scoring logic.
+// Note: assumes a rider is only ever swapped in once per team (per project
+// convention) - a rider swapped out and back in again later would need
+// multiple windows summed, which isn't handled here.
+function computeTeamEarnedPoints(riderName, swapInStage, stageHistory) {
+    const slug = slugifyName(riderName);
+    let total = 0;
+    Object.keys(stageHistory).forEach(stageKey => {
+        if (Number(stageKey) >= swapInStage) {
+            total += stageHistory[stageKey][slug] || 0;
+        }
+    });
+    return total;
+}
+
+function renderTeams(teams, riderPoints, teamTotals, teamSize, stageHistory) {
 
     const container = document.getElementById("teamsList");
 
@@ -176,8 +195,18 @@ function renderTeams(teams, riderPoints, teamTotals, teamSize) {
         }
 
         const riderRow = riderName => {
-            const points = riderPoints[slugifyName(riderName)] || 0;
-            return `<li>${riderName} <span class="points-tag">${points} pts</span></li>`;
+            const lifetimePoints = riderPoints[slugifyName(riderName)] || 0;
+            const swapIn = (team.swaps || []).find(s => s.swap_in === riderName);
+
+            if (swapIn) {
+                const teamPoints = computeTeamEarnedPoints(riderName, swapIn.stage, stageHistory);
+                return `<li>
+                    <span>${riderName} <span class="swap-badge">sinds etappe ${swapIn.stage}</span></span>
+                    <span class="points-tag">${teamPoints} pts <span class="points-tag-secondary">(${lifetimePoints} totaal)</span></span>
+                </li>`;
+            }
+
+            return `<li>${riderName} <span class="points-tag">${lifetimePoints} pts</span></li>`;
         };
 
         const activeRows = activeRiders.map(riderRow).join("");

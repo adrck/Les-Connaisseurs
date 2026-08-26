@@ -624,6 +624,24 @@ th.sortable:hover {
     font-size: 1.1em;
 }
 
+.swap-badge {
+    display: inline-block;
+    background: var(--oro);
+    color: var(--tinta);
+    font-size: 0.68em;
+    font-weight: bold;
+    padding: 1px 7px;
+    border-radius: 10px;
+    margin-left: 6px;
+    vertical-align: middle;
+}
+
+.points-tag-secondary {
+    font-size: 0.85em;
+    color: #999;
+    margin-left: 4px;
+}
+
 /* ---------- Standings page ---------- */
 
 #stage-select {
