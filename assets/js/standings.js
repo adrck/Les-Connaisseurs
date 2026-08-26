@@ -2,6 +2,7 @@
 "use strict";
 
 let leaderboardHistory = {};
+let stageHistory = {};
 let stageResults = {};
 let stageOrder = [];
 
@@ -64,6 +65,7 @@ async function loadResults() {
         const results = await response.json();
 
         leaderboardHistory = results.leaderboard_history || {};
+        stageHistory = results.stage_history || {};
         stageResults = results.stage_results || {};
         stageOrder = Object.keys(leaderboardHistory)
             .map(Number)
@@ -232,6 +234,11 @@ function renderStageBreakdown(stage) {
 
     const parts = [];
 
+    const stagePoints = stageHistory[stage];
+    if (stagePoints && Object.keys(stagePoints).length) {
+        parts.push(buildTotalScorePerRiderSection(stagePoints));
+    }
+
     parts.push(buildRankTableSection(
         "Etappe finish",
         null,
@@ -277,6 +284,29 @@ function renderStageBreakdown(stage) {
     }
 
     container.innerHTML = parts.join("\n");
+
+}
+
+function buildTotalScorePerRiderSection(stagePoints) {
+
+    const rows = Object.entries(stagePoints)
+        .sort((a, b) => b[1] - a[1])
+        .map(([riderUrl, points]) => `
+            <tr>
+                <td class="rider-name">${escapeHtml(slugToName(riderUrl))}</td>
+                <td>${points}</td>
+            </tr>
+        `).join("");
+
+    return `
+        <h3 class="scoring-subhead">Totale score per renner</h3>
+        <table class="scoring-table">
+            <thead>
+                <tr><th>Renner</th><th>Punten</th></tr>
+            </thead>
+            <tbody>${rows}</tbody>
+        </table>
+    `;
 
 }
 
