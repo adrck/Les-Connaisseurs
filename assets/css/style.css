@@ -914,18 +914,25 @@ tr.rider-breakdown-row {
     background: transparent;
 }
 
+/* display: inline (not inline-flex) on purpose - an inline-flex button
+   inside a table cell establishes its own flex formatting context, and
+   depending on the active font's metrics that can make the browser compute
+   a taller line box for this row than for a plain-text cell next to it
+   (confirmed - this was making these rows visibly taller than the rest of
+   the table). Plain inline content always sizes exactly like the
+   surrounding text, so there's nothing left that can inflate row height. */
 .rider-breakdown-toggle {
+    display: inline;
     background: none;
     border: none;
+    appearance: none;
     padding: 0;
     margin: 0;
     font: inherit;
     font-family: var(--font-body);
+    line-height: inherit;
     color: inherit;
     cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
     text-align: left;
 }
 
@@ -936,7 +943,9 @@ tr.rider-breakdown-row {
 .rider-breakdown-arrow {
     display: inline-block;
     font-size: 11px;
+    line-height: 1;
     color: #999;
+    margin-right: 6px;
     transition: transform 0.15s ease;
 }
 
