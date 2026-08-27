@@ -29,14 +29,25 @@ function reorderLastnameFirst(rawName) {
     return firstname + " " + surname;
 }
 
+// Manual aliases for known slug mismatches the automatic reorder/slugify
+// heuristic can't catch on its own - e.g. a surname missing from the
+// Sheet's startlist entry. Confirmed against real rider_points keys in
+// state.json. Same aliases used when building the local teams.json for
+// scoring, kept in sync here since this file does its own separate
+// slug lookup for the Teams page.
+const SLUG_ALIASES = {
+    "rider/mattias-skjelmose": "rider/mattias-skjelmose-jensen"
+};
+
 function slugifyName(name) {
-    return "rider/" + reorderLastnameFirst(name)
+    const slug = "rider/" + reorderLastnameFirst(name)
         .normalize("NFD")
         .replace(/[\u0300-\u036f]/g, "")
         .toLowerCase()
         .trim()
         .replace(/[^a-z0-9\s-]/g, "")
         .replace(/\s+/g, "-");
+    return SLUG_ALIASES[slug] || slug;
 }
 
 // entriesOpen in settings.json is a deadline timestamp (ISO 8601 string),
