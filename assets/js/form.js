@@ -87,6 +87,21 @@ async function initForm() {
                     `dan nog tot ${MAX_SWAPS}x wisselen tussen je actieve team en je ` +
                     `wisselrenners (met een oplopende puntenaftrek per wissel).`;
                 document.querySelector(".rider-picker").insertAdjacentElement("beforebegin", notice);
+
+                // No rider outside the 23 already on this team may be added
+                // once entries are closed, and a rider can no longer be
+                // fully removed either - the only valid change is moving one
+                // across the active/bench boundary with the up/down arrows
+                // (see moveRider()). So the "zoek renner" column, which only
+                // ever adds riders from the full peloton, has nothing valid
+                // left to do - hide it rather than leave dead UI that used
+                // to let people delete a rider and strand their team one
+                // rider short before finding a replacement.
+                const searchColumn = document.getElementById("rider-search-column");
+                if (searchColumn) searchColumn.style.display = "none";
+
+                const pickerEl = document.querySelector(".rider-picker");
+                if (pickerEl) pickerEl.classList.add("rider-picker--closed");
             }
         }
 
@@ -248,6 +263,12 @@ async function maybeLookupTeam() {
 
 function addRider(name) {
 
+    // Defense in depth: the "zoek renner" column that calls this is hidden
+    // once entries are closed (see initForm), but guard here too in case
+    // this ever gets called from somewhere else - no rider outside the
+    // team's existing 23 may be added post-close.
+    if (!entriesOpen) return;
+
     if (selectedRiders.includes(name)) return;
 
     if (selectedRiders.length >= totalSize()) {
@@ -266,6 +287,14 @@ function addRider(name) {
 }
 
 function removeRider(name) {
+
+    // Defense in depth: the remove (x) button is no longer rendered once
+    // entries are closed (see renderSelectedList), but guard here too.
+    // Fully removing a rider is a team-building action, not a swap - once
+    // closed, moveRider() (crossing the active/bench boundary) is the only
+    // valid way to change the roster, so the team is never left one rider
+    // short mid-edit the way it could be when this was reachable.
+    if (!entriesOpen) return;
 
     selectedRiders = selectedRiders.filter(riderName => riderName !== name);
 
@@ -394,6 +423,7 @@ function renderSelectedList() {
                         ${index === selectedRiders.length - 1 ? "disabled" : ""}
                     >&darr;</button>
                 </div>
+                ${entriesOpen ? `
                 <button
                     type="button"
                     class="rider-chip-remove"
@@ -401,7 +431,7 @@ function renderSelectedList() {
                     aria-label="Remove ${name}"
                 >
                     &times;
-                </button>
+                </button>` : ""}
             </div>
         `;
 

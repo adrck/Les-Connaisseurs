@@ -220,10 +220,39 @@ function displayLeaderboard(stage) {
 
 }
 
+// Expands/collapses one rider's per-stage scoring breakdown. Bound once
+// per container (see renderStageBreakdown) via delegation, since the
+// container's innerHTML gets fully replaced every time the stage select
+// changes - binding directly to the toggle buttons would lose the
+// listeners on the very next render.
+function handleRiderBreakdownToggle(event) {
+
+    const toggle = event.target.closest(".rider-breakdown-toggle");
+    if (!toggle) return;
+
+    const summaryRow = toggle.closest("tr");
+    const detailRow = summaryRow && summaryRow.nextElementSibling;
+    if (!detailRow || !detailRow.classList.contains("rider-breakdown-row")) return;
+
+    const isExpanded = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!isExpanded));
+    detailRow.hidden = isExpanded;
+    summaryRow.classList.toggle("rider-summary-row--expanded", !isExpanded);
+
+}
+
 function renderStageBreakdown(stage) {
 
     const container = document.getElementById("stage-breakdown-content");
     if (!container) return;
+
+    // Bind the toggle handler once - dataset survives the innerHTML
+    // rewrites below since it lives on the container element itself, not
+    // on any of the rows we're about to throw away and rebuild.
+    if (!container.dataset.breakdownToggleBound) {
+        container.addEventListener("click", handleRiderBreakdownToggle);
+        container.dataset.breakdownToggleBound = "true";
+    }
 
     const data = stageResults[stage];
 
@@ -236,7 +265,7 @@ function renderStageBreakdown(stage) {
 
     const stagePoints = stageHistory[stage];
     if (stagePoints && Object.keys(stagePoints).length) {
-        parts.push(buildTotalScorePerRiderSection(stagePoints));
+        parts.push(buildTotalScorePerRiderSection(stagePoints, data));
     }
 
     parts.push(buildRankTableSection(
@@ -287,19 +316,113 @@ function renderStageBreakdown(stage) {
 
 }
 
-function buildTotalScorePerRiderSection(stagePoints) {
+// Reconstructs, for one rider, every discrete scoring event within a
+// single stage (finish placing, tussensprint, climbs, jerseys held,
+// takeover, aggressive rider) by walking the exact same stage-result data
+// used to build the category tables elsewhere in this file. This never
+// needs its own copy of the points tables or scoring logic to keep in
+// sync - it's just indexing the same data by rider instead of by rank.
+function buildRiderStageEvents(riderUrl, data) {
+
+    const events = [];
+
+    (data.stage_finish || []).forEach(entry => {
+        if (entry.rider_url !== riderUrl) return;
+        const points = FINISH_POINTS[entry.rank - 1];
+        if (points === undefined) return;
+        events.push({ label: "Etappe finish", detail: `${entry.rank}e plaats`, points });
+    });
+
+    (data.intermediate_sprint || []).forEach(entry => {
+        if (entry.rider_url !== riderUrl) return;
+        const points = SPRINT_POINTS[entry.rank - 1];
+        if (points === undefined) return;
+        const loc = data.intermediate_sprint_location;
+        const detail = loc
+            ? `${entry.rank}e plaats — ${loc.name} (km ${loc.distance_km})`
+            : `${entry.rank}e plaats`;
+        events.push({ label: "Tussensprint", detail, points });
+    });
+
+    (data.climbs || []).forEach(climb => {
+        const pointsForCategory = CLIMB_POINTS[climb.category] || [];
+        (climb.results || []).forEach(entry => {
+            if (entry.rider_url !== riderUrl) return;
+            const points = pointsForCategory[entry.rank - 1];
+            if (points === undefined) return;
+            const catLabel = climb.category === "HC" ? "HC" : `Cat. ${climb.category}`;
+            events.push({
+                label: "Beklimming",
+                detail: `${entry.rank}e plaats — ${climb.name} (${catLabel})`,
+                points
+            });
+        });
+    });
+
+    JERSEY_FIELDS.forEach(jersey => {
+        if (data[jersey.field] === riderUrl) {
+            events.push({ label: "Klassementstrui gedragen", detail: jersey.label, points: jersey.points });
+        }
+    });
+
+    if ((data.jersey_takeovers || []).includes(riderUrl)) {
+        events.push({ label: "Overname van een klassementstrui", detail: null, points: TAKEOVER_POINTS });
+    }
+
+    if (data.most_aggressive_rider === riderUrl) {
+        events.push({ label: "Meest aanvallende renner", detail: null, points: AGGRESSIVE_POINTS });
+    }
+
+    return events;
+
+}
+
+function buildTotalScorePerRiderSection(stagePoints, data) {
 
     const rows = Object.entries(stagePoints)
         .sort((a, b) => b[1] - a[1])
-        .map(([riderUrl, points]) => `
-            <tr>
-                <td class="rider-name">${escapeHtml(slugToName(riderUrl))}</td>
-                <td>${points}</td>
-            </tr>
-        `).join("");
+        .map(([riderUrl, points], index) => {
+
+            const events = buildRiderStageEvents(riderUrl, data);
+            // Striped by logical rider row, not raw DOM position - each
+            // rider now spans two <tr>s (summary + hidden detail), so the
+            // usual tr:nth-child(even) rule would stripe those in pairs
+            // instead of alternating rider-to-rider.
+            const stripeClass = index % 2 === 1 ? " rider-summary-row--even" : "";
+
+            const detailItems = events.length
+                ? events.map(event => `
+                    <li>
+                        <span class="rider-breakdown-label">${escapeHtml(event.label)}${
+                            event.detail ? ` <span class="rider-breakdown-detail">— ${escapeHtml(event.detail)}</span>` : ""
+                        }</span>
+                        <span class="rider-breakdown-points">+${event.points}</span>
+                    </li>
+                `).join("")
+                : `<li class="rider-breakdown-empty">Geen losse scoringsmomenten gevonden voor deze etappe.</li>`;
+
+            return `
+                <tr class="rider-summary-row${stripeClass}">
+                    <td class="rider-name">
+                        <button type="button" class="rider-breakdown-toggle" aria-expanded="false">
+                            <span class="rider-breakdown-arrow" aria-hidden="true">&#9656;</span>
+                            ${escapeHtml(slugToName(riderUrl))}
+                        </button>
+                    </td>
+                    <td>${points}</td>
+                </tr>
+                <tr class="rider-breakdown-row" hidden>
+                    <td colspan="2">
+                        <ul class="rider-breakdown-list">${detailItems}</ul>
+                    </td>
+                </tr>
+            `;
+
+        }).join("");
 
     return `
         <h3 class="scoring-subhead">Totale score per renner</h3>
+        <p class="scoring-note">Klik op een renner voor de puntenverdeling van deze etappe.</p>
         <table class="scoring-table">
             <thead>
                 <tr><th>Renner</th><th>Punten</th></tr>

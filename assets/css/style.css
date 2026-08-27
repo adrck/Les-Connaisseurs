@@ -389,6 +389,13 @@ hr{
     margin-top: 10px;
 }
 
+/* Once entries are closed, the "zoek renner" column is hidden (no new
+   riders can be added to a team - see form.js) so "Jouw team" gets the
+   full width instead of leaving half the layout empty. */
+.rider-picker--closed {
+    grid-template-columns: 1fr;
+}
+
 .rider-picker-column label {
     margin-top: 0;
 }
@@ -891,6 +898,96 @@ body.gt-gdi .jersey-chip--young {
     font-family: var(--font-mono);
     font-weight: 700;
     font-size: 18px;
+}
+
+/* ---------- Per-rider stage breakdown (expandable rows) ---------- */
+
+/* Each rider in "Totale score per renner" is really two <tr>s (a summary
+   row and a hidden detail row) - restripe explicitly per rider instead of
+   relying on the generic tr:nth-child(even) rule, which would otherwise
+   alternate per raw row instead of per rider. */
+tr.rider-summary-row--even {
+    background: #f8f9fa;
+}
+
+tr.rider-breakdown-row {
+    background: transparent;
+}
+
+.rider-breakdown-toggle {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    font-family: var(--font-body);
+    color: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    text-align: left;
+}
+
+.rider-breakdown-toggle:hover {
+    color: var(--rojo);
+}
+
+.rider-breakdown-arrow {
+    display: inline-block;
+    font-size: 11px;
+    color: #999;
+    transition: transform 0.15s ease;
+}
+
+.rider-summary-row--expanded .rider-breakdown-arrow {
+    transform: rotate(90deg);
+}
+
+.rider-breakdown-row td {
+    padding: 0 12px 12px;
+    border-top: none;
+}
+
+.rider-breakdown-list {
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 4px 12px;
+    background: #fafbfc;
+    border: 1px solid #eee;
+    border-radius: 6px;
+}
+
+.rider-breakdown-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 6px 0;
+    font-family: var(--font-body);
+    font-size: 14px;
+}
+
+.rider-breakdown-list li + li {
+    border-top: 1px dashed #e5e5e5;
+}
+
+.rider-breakdown-detail {
+    color: #888;
+    font-weight: normal;
+}
+
+.rider-breakdown-points {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    white-space: nowrap;
+    color: #2e7d32;
+}
+
+.rider-breakdown-empty {
+    color: #888;
+    font-style: italic;
+    justify-content: flex-start;
 }
 
 @media (max-width: 700px) {
