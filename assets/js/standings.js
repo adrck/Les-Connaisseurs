@@ -34,7 +34,8 @@ function escapeHtml(value) {
     return String(value)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
 }
 
 // Turns a "rider/valentin-paret-peintre" style URL into a readable
@@ -155,6 +156,27 @@ function setupLeaderboardCaption() {
 
 }
 
+// Clicking a participant's name jumps to their card on the Teams page.
+// loadPage() just injects HTML and a script tag - it has no general way to
+// hand data to the page script it's about to load - so the target team key
+// is stashed on window right before navigating, and teams.js picks it up
+// once its own cards have actually rendered (see scrollToPendingTeam()
+// there) and clears it immediately after use.
+function handleParticipantLinkClick(event) {
+
+    const link = event.target.closest(".participant-link");
+    if (!link) return;
+
+    event.preventDefault();
+
+    window.pendingTeamScrollKey = link.dataset.teamKey;
+
+    if (typeof loadPage === "function") {
+        loadPage("teams");
+    }
+
+}
+
 function displayLeaderboard(stage) {
 
     const leaderboard = leaderboardHistory[stage] || {};
@@ -185,6 +207,14 @@ function displayLeaderboard(stage) {
 
     const tbody = document.getElementById("leaderboard-body");
 
+    // Bind once - dataset flag survives the tbody.innerHTML rewrites below
+    // since it lives on the tbody element itself, not on the rows we're
+    // about to throw away and rebuild every time the stage select changes.
+    if (!tbody.dataset.participantLinkBound) {
+        tbody.addEventListener("click", handleParticipantLinkClick);
+        tbody.dataset.participantLinkBound = "true";
+    }
+
     tbody.innerHTML = "";
 
     standings.forEach(([player, points], index) => {
@@ -209,7 +239,7 @@ function displayLeaderboard(stage) {
 
         row.innerHTML = `
             <td>${index + 1}</td>
-            <td>${isTopScorer ? "\ud83e\udd47 " : ""}${player}</td>
+            <td>${isTopScorer ? "\ud83e\udd47 " : ""}<a href="#" class="participant-link" data-team-key="${escapeHtml(player)}">${escapeHtml(player)}</a></td>
             <td>${points}</td>
             <td>${deltaLabel}</td>
         `;

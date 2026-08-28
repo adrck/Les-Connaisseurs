@@ -39,6 +39,15 @@ const SLUG_ALIASES = {
     "rider/mattias-skjelmose": "rider/mattias-skjelmose-jensen"
 };
 
+// Minimal escape for interpolating a value into a double-quoted HTML
+// attribute (same ad hoc convention form.js already uses for its rider
+// chip data attributes) - this file doesn't otherwise escape its
+// interpolated HTML, so this is deliberately scoped to the one new
+// attribute that needs it rather than a broader cleanup.
+function escapeAttr(value) {
+    return String(value).replace(/"/g, "&quot;");
+}
+
 function slugifyName(name) {
     const slug = "rider/" + reorderLastnameFirst(name)
         .normalize("NFD")
@@ -121,6 +130,7 @@ async function initTeams() {
 
         renderTeams(teams, riderPoints, teamTotals, settings.teamSize || 20, stageHistory);
         renderRiderOwnership(teams, riderPoints);
+        scrollToPendingTeam();
 
     } catch (error) {
         container.innerHTML = `
@@ -239,7 +249,7 @@ function renderTeams(teams, riderPoints, teamTotals, teamSize, stageHistory) {
         const firstNameLabel = team.firstName ? ` (${team.firstName})` : "";
 
         return `
-            <div class="team-card">
+            <div class="team-card" data-team-key="${escapeAttr(teamTotalsKey(team))}">
                 <h3>${team.playerName}${firstNameLabel} <span class="team-total">${totalLabel}</span></h3>
                 <ul class="team-riders">
                     ${activeRows}
@@ -254,6 +264,31 @@ function renderTeams(teams, riderPoints, teamTotals, teamSize, stageHistory) {
         `;
 
     }).join("");
+
+}
+
+// If someone arrived here via a "jump to team" link from the Stand page
+// (see standings.js's handleParticipantLinkClick), scroll to and briefly
+// highlight the matching card. Compares dataset values directly rather
+// than building a CSS attribute-selector string out of the key, so there's
+// no need to worry about escaping it for selector syntax - just an exact
+// string match. Clears the pending key immediately so a normal visit to
+// Teams afterwards (e.g. via the nav bar) doesn't re-trigger it.
+function scrollToPendingTeam() {
+
+    const targetKey = window.pendingTeamScrollKey;
+    if (!targetKey) return;
+
+    window.pendingTeamScrollKey = null;
+
+    const card = Array.from(document.querySelectorAll(".team-card"))
+        .find(el => el.dataset.teamKey === targetKey);
+
+    if (!card) return;
+
+    card.scrollIntoView({ behavior: "smooth", block: "center" });
+    card.classList.add("team-card--highlight");
+    setTimeout(() => card.classList.remove("team-card--highlight"), 2500);
 
 }
 

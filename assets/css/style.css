@@ -285,6 +285,18 @@ tr.leaderboard-row--top td {
     font-weight: 600;
 }
 
+.participant-link {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dotted #999;
+    cursor: pointer;
+}
+
+.participant-link:hover {
+    color: var(--rojo);
+    border-bottom-color: var(--rojo);
+}
+
 /* ---------- Footer ---------- */
 
 footer {
@@ -575,6 +587,15 @@ th.sortable:hover {
     border-radius: 8px;
     padding: 18px 22px;
     margin-bottom: 18px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Briefly applied by scrollToPendingTeam() in teams.js when arriving via a
+   participant link from the Stand page - fades back out on its own via the
+   transition above once the class is removed. */
+.team-card--highlight {
+    border-color: var(--oro);
+    box-shadow: 0 0 0 3px rgba(227, 161, 0, 0.3);
 }
 
 .team-card h3 {
