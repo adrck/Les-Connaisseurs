@@ -205,6 +205,19 @@ function displayLeaderboard(stage) {
 
     const maxDayScore = dayScores.length ? Math.max(...dayScores) : null;
 
+    // Previous stage's ranking, so each row can show how many places it
+    // moved since then. Same "no previous data" convention as deltaLabel
+    // below: a team missing from the previous stage (stage 1, or a team
+    // that first appears later) has no entry in this map, and
+    // buildRankTrendPill() renders that as the neutral "–" pill rather
+    // than a fabricated +0.
+    const previousRank = {};
+    Object.entries(previousLeaderboard)
+        .sort((a, b) => b[1] - a[1])
+        .forEach(([player], idx) => {
+            previousRank[player] = idx + 1;
+        });
+
     const tbody = document.getElementById("leaderboard-body");
 
     // Bind once - dataset flag survives the tbody.innerHTML rewrites below
@@ -218,6 +231,8 @@ function displayLeaderboard(stage) {
     tbody.innerHTML = "";
 
     standings.forEach(([player, points], index) => {
+
+        const currentRank = index + 1;
 
         const previousPoints = previousLeaderboard[player];
         let deltaLabel = "\u2014";
@@ -238,7 +253,12 @@ function displayLeaderboard(stage) {
         }
 
         row.innerHTML = `
-            <td>${index + 1}</td>
+            <td>
+                <div class="plaats-cell">
+                    <span class="plaats-num">${currentRank}</span>
+                    ${buildRankTrendPill(currentRank, previousRank[player])}
+                </div>
+            </td>
             <td>${isTopScorer ? "\ud83e\udd47 " : ""}<a href="#" class="participant-link" data-team-key="${escapeHtml(player)}">${escapeHtml(player)}</a></td>
             <td>${points}</td>
             <td>${deltaLabel}</td>
@@ -247,6 +267,31 @@ function displayLeaderboard(stage) {
         tbody.appendChild(row);
 
     });
+
+}
+
+// Builds the little "\u25b2 2 / \u25bc 1 / \u2013" pill shown next to a team's rank
+// number - see the "Optie A2" mockup this was picked from. previousRank
+// being undefined (stage 1, or a team not yet present in the previous
+// stage) is treated the same as "unchanged": the neutral pill, not a
+// fabricated +0 or an up/down arrow that isn't backed by real data.
+function buildRankTrendPill(currentRank, previousRankValue) {
+
+    if (previousRankValue === undefined) {
+        return `<span class="trend-pill trend-pill--same">\u2013</span>`;
+    }
+
+    const change = previousRankValue - currentRank; // positive = moved up
+
+    if (change > 0) {
+        return `<span class="trend-pill trend-pill--up">\u25b2 ${change}</span>`;
+    }
+
+    if (change < 0) {
+        return `<span class="trend-pill trend-pill--down">\u25bc ${Math.abs(change)}</span>`;
+    }
+
+    return `<span class="trend-pill trend-pill--same">\u2013</span>`;
 
 }
 
