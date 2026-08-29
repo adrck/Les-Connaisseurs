@@ -689,6 +689,14 @@ th.sortable:hover {
     color: #777;
 }
 
+/* Manually flagged in state.json's abandoned_riders list (see teams.js) -
+   struck through wherever that rider shows up on this page, active,
+   bench, or in the ownership overview table below. */
+.rider-abandoned {
+    text-decoration: line-through;
+    opacity: 0.55;
+}
+
 .entries-counter {
     font-weight: bold;
     color: var(--rojo);

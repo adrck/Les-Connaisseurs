@@ -112,6 +112,14 @@ async function initTeams() {
         const riderPoints = state.rider_points || {};
         const stageHistory = state.stage_history || {};
 
+        // Manually maintained: state.json has no automatic way to know a
+        // rider abandoned the race, so this is a plain top-level array of
+        // rider slugs (same "rider/firstname-lastname" convention as the
+        // rest of state.json) that gets hand-edited in there directly.
+        // Falls back to no abandonments if the field isn't present yet, or
+        // on an older state.json from before this existed.
+        const abandonedRiders = new Set(state.abandoned_riders || []);
+
         const latestStage = state.stages_processed && state.stages_processed.length
             ? Math.max(...state.stages_processed)
             : null;
@@ -128,8 +136,8 @@ async function initTeams() {
 
         const teams = await teamsResponse.json();
 
-        renderTeams(teams, riderPoints, teamTotals, settings.teamSize || 20, stageHistory);
-        renderRiderOwnership(teams, riderPoints);
+        renderTeams(teams, riderPoints, teamTotals, settings.teamSize || 20, stageHistory, abandonedRiders);
+        renderRiderOwnership(teams, riderPoints, abandonedRiders);
         scrollToPendingTeam();
 
     } catch (error) {
@@ -195,7 +203,7 @@ function teamTotalsKey(team) {
     return TEAM_KEY_OVERRIDES[team.playerName] || team.firstName;
 }
 
-function renderTeams(teams, riderPoints, teamTotals, teamSize, stageHistory) {
+function renderTeams(teams, riderPoints, teamTotals, teamSize, stageHistory, abandonedRiders) {
 
     const container = document.getElementById("teamsList");
 
@@ -229,16 +237,17 @@ function renderTeams(teams, riderPoints, teamTotals, teamSize, stageHistory) {
         const riderRow = riderName => {
             const lifetimePoints = riderPoints[slugifyName(riderName)] || 0;
             const swapIn = (team.swaps || []).find(s => s.swap_in === riderName);
+            const abandonedClass = abandonedRiders.has(slugifyName(riderName)) ? "rider-abandoned" : "";
 
             if (swapIn) {
                 const teamPoints = computeTeamEarnedPoints(riderName, swapIn.stage, stageHistory);
-                return `<li>
+                return `<li class="${abandonedClass}">
                     <span>${riderName} <span class="swap-badge">sinds etappe ${swapIn.stage}</span></span>
                     <span class="points-tag">${teamPoints} pts <span class="points-tag-secondary">(${lifetimePoints} totaal)</span></span>
                 </li>`;
             }
 
-            return `<li>${riderName} <span class="points-tag">${lifetimePoints} pts</span></li>`;
+            return `<li class="${abandonedClass}">${riderName} <span class="points-tag">${lifetimePoints} pts</span></li>`;
         };
 
         const activeRows = activeRiders.map(riderRow).join("");
@@ -318,7 +327,7 @@ function computeRiderOwnership(teams, riderPoints) {
 
 }
 
-function renderRiderOwnership(teams, riderPoints) {
+function renderRiderOwnership(teams, riderPoints, abandonedRiders) {
 
     const teamsContainer = document.getElementById("teamsList");
     if (!teamsContainer) return;
@@ -339,14 +348,17 @@ function renderRiderOwnership(teams, riderPoints) {
         return;
     }
 
-    const rows = ownership.map(o => `
+    const rows = ownership.map(o => {
+        const abandonedClass = abandonedRiders.has(slugifyName(o.riderName)) ? " rider-abandoned" : "";
+        return `
         <tr>
-            <td>${o.riderName}</td>
+            <td class="${abandonedClass}">${o.riderName}</td>
             <td>${o.players.join(", ")}</td>
             <td>${o.players.length}x</td>
             <td>${o.points} pts</td>
         </tr>
-    `).join("");
+    `;
+    }).join("");
 
     section.innerHTML = `
         <h3 class="scoring-subhead">Totaaloverzicht Les Connaisseurs</h3>
