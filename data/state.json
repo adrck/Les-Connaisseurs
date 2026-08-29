@@ -7,35 +7,35 @@
     "rider/christophe-laporte": 13,
     "rider/oscar-chamberlain": 5,
     "rider/leo-bisiaux": 7,
-    "rider/wout-van-aert": 50,
+    "rider/wout-van-aert": 59,
     "rider/finn-fisher-black": 6,
     "rider/arthur-kluckers": 1,
-    "rider/matthew-brennan": 45,
+    "rider/matthew-brennan": 46,
     "rider/pau-miquel": 16,
-    "rider/mads-pedersen": 10,
-    "rider/hugo-hofstetter": 8,
+    "rider/mads-pedersen": 26,
+    "rider/hugo-hofstetter": 11,
     "rider/tobias-halland-johannessen": 27,
-    "rider/oscar-onley": 25,
+    "rider/oscar-onley": 27,
     "rider/axel-laurance": 10,
-    "rider/orluis-aular": 1,
-    "rider/bryan-coquard": 1,
+    "rider/orluis-aular": 3,
+    "rider/bryan-coquard": 21,
     "rider/koen-bouwman": 7,
     "rider/diego-uriarte": 2,
     "rider/jarno-widar": 16,
     "rider/felix-gall": 18,
     "rider/sepp-kuss": 12,
-    "rider/enric-mas": 28,
+    "rider/enric-mas": 36,
     "rider/primoz-roglic": 9,
-    "rider/mattias-skjelmose-jensen": 4,
+    "rider/mattias-skjelmose-jensen": 5,
     "rider/richard-carapaz": 16,
     "rider/gregor-muhlberger": 2,
     "rider/ramses-debruyne": 15,
     "rider/lorenzo-fortunato": 9,
     "rider/paul-double": 4,
     "rider/ivan-rami-sosa": 6,
-    "rider/jordi-meeus": 16,
+    "rider/jordi-meeus": 28,
     "rider/vincenzo-albanese": 12,
-    "rider/alessandro-romele": 10,
+    "rider/alessandro-romele": 14,
     "rider/alberto-dainese": 4,
     "rider/vito-braet": 3,
     "rider/david-gonzalez-lopez": 2,
@@ -50,11 +50,16 @@
     "rider/stefan-kung": 1,
     "rider/gijs-leemreize": 1,
     "rider/thomas-gloag": 1,
-    "rider/andreas-leknessund": 34,
+    "rider/andreas-leknessund": 40,
     "rider/jakob-omrzel": 10,
     "rider/alexey-lutsenko": 18,
     "rider/eddie-dunbar": 5,
-    "rider/raul-garcia-pierna": 2
+    "rider/raul-garcia-pierna": 2,
+    "rider/ben-turner": 10,
+    "rider/jordan-labrosse": 11,
+    "rider/bastien-tronchon": 5,
+    "rider/walter-calzoni": 1,
+    "rider/sinuhe-fernandez": 5
   },
   "stages_processed": [
     1,
@@ -62,7 +67,8 @@
     4,
     5,
     6,
-    7
+    7,
+    8
   ],
   "stage_history": {
     "1": {
@@ -161,6 +167,25 @@
       "rider/raul-garcia-pierna": 2,
       "rider/tadej-pogacar": 8,
       "rider/oscar-onley": 2
+    },
+    "8": {
+      "rider/bryan-coquard": 20,
+      "rider/mads-pedersen": 16,
+      "rider/jordi-meeus": 12,
+      "rider/ben-turner": 10,
+      "rider/jordan-labrosse": 11,
+      "rider/bastien-tronchon": 5,
+      "rider/alessandro-romele": 4,
+      "rider/hugo-hofstetter": 3,
+      "rider/orluis-aular": 2,
+      "rider/matthew-brennan": 1,
+      "rider/wout-van-aert": 9,
+      "rider/mattias-skjelmose-jensen": 1,
+      "rider/walter-calzoni": 1,
+      "rider/enric-mas": 8,
+      "rider/andreas-leknessund": 6,
+      "rider/oscar-onley": 2,
+      "rider/sinuhe-fernandez": 5
     }
   },
   "team_stage_history": {
@@ -247,6 +272,20 @@
       "Maarten": 67,
       "Peter": 67,
       "Tamara": 45
+    },
+    "8": {
+      "Monique": 28,
+      "Angelo": 48,
+      "Jeroen": 48,
+      "Claudia": 57,
+      "Bent": 36,
+      "Jaap": 49,
+      "Sjoukje": 37,
+      "Erwin": 39,
+      "Bram": 63,
+      "Maarten": 49,
+      "Peter": 29,
+      "Tamara": 37
     }
   },
   "leaderboard_history": {
@@ -333,6 +372,20 @@
       "Maarten": 422,
       "Peter": 390,
       "Tamara": 415
+    },
+    "8": {
+      "Monique": 348,
+      "Angelo": 458,
+      "Jeroen": 450,
+      "Claudia": 444,
+      "Bent": 402,
+      "Jaap": 466,
+      "Sjoukje": 485,
+      "Erwin": 418,
+      "Bram": 444,
+      "Maarten": 471,
+      "Peter": 419,
+      "Tamara": 452
     }
   },
   "stage_results": {
@@ -1012,6 +1065,120 @@
       "jersey_takeovers": [
         "rider/wout-van-aert"
       ]
+    },
+    "8": {
+      "stage_finish": [
+        {
+          "rank": 1,
+          "rider_url": "rider/bryan-coquard"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/mads-pedersen"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/jordi-meeus"
+        },
+        {
+          "rank": 4,
+          "rider_url": "rider/ben-turner"
+        },
+        {
+          "rank": 5,
+          "rider_url": "rider/jordan-labrosse"
+        },
+        {
+          "rank": 6,
+          "rider_url": "rider/bastien-tronchon"
+        },
+        {
+          "rank": 7,
+          "rider_url": "rider/alessandro-romele"
+        },
+        {
+          "rank": 8,
+          "rider_url": "rider/hugo-hofstetter"
+        },
+        {
+          "rank": 9,
+          "rider_url": "rider/orluis-aular"
+        },
+        {
+          "rank": 10,
+          "rider_url": "rider/matthew-brennan"
+        }
+      ],
+      "intermediate_sprint": [
+        {
+          "rank": 1,
+          "rider_url": "rider/wout-van-aert"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/jordan-labrosse"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/mattias-skjelmose-jensen"
+        }
+      ],
+      "intermediate_sprint_location": {
+        "name": "Simat de Valldigna",
+        "distance_km": 137.4
+      },
+      "climbs": [
+        {
+          "category": "3",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/wout-van-aert"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/walter-calzoni"
+            }
+          ],
+          "name": "Puerto de Barx",
+          "distance_km": 143.6
+        }
+      ],
+      "gc_leader": "rider/enric-mas",
+      "kom_leader": "rider/andreas-leknessund",
+      "sprint_leader": "rider/wout-van-aert",
+      "youth_leader": "rider/oscar-onley",
+      "most_aggressive_rider": "rider/sinuhe-fernandez",
+      "abandoned_riders": [
+        "rider/luca-van-boven",
+        "rider/tadej-pogacar",
+        "rider/mattia-gaffuri",
+        "rider/floris-van-tricht",
+        "rider/diego-uriarte",
+        "rider/joshua-tarling",
+        "rider/markel-beloki",
+        "rider/roel-van-sintmaartensdijk",
+        "rider/cian-uijtdebroeks",
+        "rider/alex-kirsch",
+        "rider/sergio-geovani-chumil"
+      ],
+      "jersey_takeovers": [
+        "rider/enric-mas",
+        "rider/andreas-leknessund"
+      ]
     }
-  }
+  },
+  "abandoned_riders": [
+    "rider/alex-kirsch",
+    "rider/cian-uijtdebroeks",
+    "rider/diego-uriarte",
+    "rider/floris-van-tricht",
+    "rider/joshua-tarling",
+    "rider/luca-van-boven",
+    "rider/markel-beloki",
+    "rider/mattia-gaffuri",
+    "rider/roel-van-sintmaartensdijk",
+    "rider/sergio-geovani-chumil",
+    "rider/tadej-pogacar"
+  ]
 }
