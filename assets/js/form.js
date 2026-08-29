@@ -16,6 +16,7 @@ let isExistingTeam = false; // becomes true once a matching name+PIN is found
 let lastLookupKey = ""; // "name|pin" for the most recently completed lookup
 let originalActiveSet = null; // Set of active rider names as loaded, once entriesOpen is false
 let swapsUsedSoFar = 0; // swaps already used in earlier sessions, from the lookup response
+let openSwapPickerFor = null; // name of the active rider whose "wissel" picker is currently expanded, or null
 
 function totalSize() {
     return TEAM_SIZE + BENCH_SIZE;
@@ -224,6 +225,7 @@ async function maybeLookupTeam() {
             document.getElementById("player-firstname").value = result.firstName || "";
             selectedRiders = Array.isArray(result.riders) ? result.riders.slice(0, totalSize()) : [];
             originalActiveSet = entriesOpen ? null : new Set(selectedRiders.slice(0, TEAM_SIZE));
+            openSwapPickerFor = null;
 
             renderAvailableList();
             renderSelectedList();
@@ -323,6 +325,41 @@ function moveRider(name, direction) {
 
 }
 
+// Opens (or closes) the small "who from the bench comes in" picker
+// attached to one active rider - see renderSelectedList(). Only one open
+// at a time: opening a second one implicitly closes whichever was already
+// open, so the list doesn't fill up with picker panels.
+function toggleSwapPicker(name) {
+
+    openSwapPickerFor = (openSwapPickerFor === name) ? null : name;
+
+    renderSelectedList();
+
+}
+
+// Directly exchanges one active rider with one bench rider in a single
+// step, instead of walking a rider down one position at a time with
+// moveRider() - added after real feedback that moving a rider from near
+// the top of a 20-person active list all the way to the bench took
+// upwards of 19 clicks. Everyone else's relative order is untouched; only
+// these two positions change.
+function swapRiders(activeName, benchName) {
+
+    const activeIndex = selectedRiders.indexOf(activeName);
+    const benchIndex = selectedRiders.indexOf(benchName);
+
+    if (activeIndex === -1 || benchIndex === -1) return;
+
+    selectedRiders[activeIndex] = benchName;
+    selectedRiders[benchIndex] = activeName;
+
+    openSwapPickerFor = null;
+
+    renderSelectedList();
+    validateForm();
+
+}
+
 function renderAvailableList() {
 
     const container = document.getElementById("rider-available-list");
@@ -394,6 +431,12 @@ function renderSelectedList() {
         return;
     }
 
+    // Only active riders (index < TEAM_SIZE) get a swap button, and only
+    // when there's actually a bench to swap with - an incomplete
+    // selection (still being built, entries open) can have zero bench
+    // riders yet.
+    const hasBench = selectedRiders.length > TEAM_SIZE;
+
     container.innerHTML = selectedRiders.map((name, index) => {
 
         const isBench = index >= TEAM_SIZE;
@@ -401,6 +444,33 @@ function renderSelectedList() {
         const dividerBefore = index === TEAM_SIZE
             ? `<div class="rider-bench-divider">Wisselrenners (bank)</div>`
             : "";
+
+        const canSwap = !isBench && hasBench;
+        const pickerOpen = canSwap && openSwapPickerFor === name;
+
+        const swapButton = canSwap ? `
+                <button
+                    type="button"
+                    class="rider-chip-swap"
+                    data-rider-name="${escapedName}"
+                    aria-label="Wissel ${name} met een wisselrenner"
+                    aria-expanded="${pickerOpen ? "true" : "false"}"
+                >&#8646;</button>` : "";
+
+        const swapPicker = pickerOpen ? `
+            <div class="rider-swap-picker">
+                <span class="rider-swap-picker-label">Wissel ${name} in voor:</span>
+                ${selectedRiders.slice(TEAM_SIZE).map(benchName => `
+                    <button
+                        type="button"
+                        class="rider-swap-option"
+                        data-active-name="${escapedName}"
+                        data-bench-name="${benchName.replace(/"/g, "&quot;")}"
+                    >${benchName}</button>
+                `).join("")}
+                <button type="button" class="rider-swap-cancel" data-active-name="${escapedName}">Annuleren</button>
+            </div>
+        ` : "";
 
         return `
             ${dividerBefore}
@@ -423,6 +493,7 @@ function renderSelectedList() {
                         ${index === selectedRiders.length - 1 ? "disabled" : ""}
                     >&darr;</button>
                 </div>
+                ${swapButton}
                 ${entriesOpen ? `
                 <button
                     type="button"
@@ -433,6 +504,7 @@ function renderSelectedList() {
                     &times;
                 </button>` : ""}
             </div>
+            ${swapPicker}
         `;
 
     }).join("");
@@ -447,6 +519,18 @@ function renderSelectedList() {
 
     container.querySelectorAll(".rider-chip-move-down").forEach(button => {
         button.addEventListener("click", () => moveRider(button.dataset.riderName, 1));
+    });
+
+    container.querySelectorAll(".rider-chip-swap").forEach(button => {
+        button.addEventListener("click", () => toggleSwapPicker(button.dataset.riderName));
+    });
+
+    container.querySelectorAll(".rider-swap-option").forEach(button => {
+        button.addEventListener("click", () => swapRiders(button.dataset.activeName, button.dataset.benchName));
+    });
+
+    container.querySelectorAll(".rider-swap-cancel").forEach(button => {
+        button.addEventListener("click", () => toggleSwapPicker(button.dataset.activeName));
     });
 
 }
@@ -609,6 +693,7 @@ async function submitForm(event) {
             lastLookupKey = "";
             originalActiveSet = null;
             swapsUsedSoFar = 0;
+            openSwapPickerFor = null;
             document.getElementById("lookup-message").textContent = "";
             const swapEl = document.getElementById("swap-counter");
             if (swapEl) swapEl.textContent = "";

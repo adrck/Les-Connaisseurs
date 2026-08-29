@@ -595,6 +595,77 @@ hr{
     cursor: default;
 }
 
+.rider-chip-swap {
+    background: none;
+    border: 1px solid var(--verde);
+    border-radius: 3px;
+    color: var(--verde);
+    font-size: 15px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px 7px;
+    margin: 0;
+}
+
+.rider-chip-swap:hover {
+    background: #EAF6EE;
+    border-color: var(--verde);
+}
+
+.rider-chip-swap[aria-expanded="true"] {
+    background: var(--verde);
+    color: white;
+}
+
+.rider-swap-picker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    background: #FAFAFA;
+    border: 1px dashed #ccc;
+    border-radius: 5px;
+    padding: 8px 10px;
+    margin: -2px 0 4px;
+}
+
+.rider-swap-picker-label {
+    flex-basis: 100%;
+    font-size: 0.85em;
+    color: #666;
+    margin-bottom: 2px;
+}
+
+.rider-swap-option {
+    background: white;
+    border: 1px solid var(--verde);
+    color: var(--verde);
+    border-radius: 5px;
+    padding: 6px 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.rider-swap-option:hover {
+    background: var(--verde);
+    color: white;
+}
+
+.rider-swap-cancel {
+    background: none;
+    border: 1px solid #ccc;
+    color: #777;
+    border-radius: 5px;
+    padding: 6px 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.rider-swap-cancel:hover {
+    background: #eee;
+    border-color: #aaa;
+}
+
 @media (max-width: 700px) {
 
     .rider-picker {
