@@ -1006,6 +1006,47 @@ body.gt-gdi .jersey-chip--young {
     border: 2px solid rgba(0,0,0,0.25); /* thicker so it reliably wins over border-collapse; white would otherwise blend into the page */
 }
 
+/* Vuelta mountain jersey ("maillot de lunares") is a polka-dot pattern too,
+   just blue instead of red and with noticeably bigger, chunkier dots than
+   the Tour version - real photos of the jersey confirm this. Same
+   radial-gradient trick as gt-tdf above, just bigger tiles + fatter dot
+   stop-percentages. */
+
+body.gt-lav .scoring-table th.col-mountain {
+    background-color: #FFFFFF;
+    background-image: radial-gradient(var(--azul-lunares) 38%, transparent 40%);
+    background-size: 21px 21px;
+    color: var(--tinta);
+}
+
+body.gt-lav .jersey-chip--mountain {
+    background-color: #FFFFFF;
+    background-image: radial-gradient(var(--azul-lunares) 38%, transparent 40%);
+    background-size: 28px 28px;
+    color: var(--tinta);
+}
+
+/* Legibility: on both polka-dot mountain jerseys (TdF red, Vuelta blue) the
+   dark text sits directly on top of the dot pattern, which breaks up the
+   letterforms and makes it hard to read - a plain white halo behind the
+   text fixes that without touching the dot pattern itself. Doesn't apply
+   to gt-gdi's mountain jersey, which is still a flat solid color. */
+
+body.gt-tdf .jersey-chip--mountain .jersey-chip-name,
+body.gt-tdf .jersey-chip--mountain .jersey-chip-rider,
+body.gt-tdf .jersey-chip--mountain .jersey-chip-points,
+body.gt-tdf .scoring-table th.col-mountain,
+body.gt-lav .jersey-chip--mountain .jersey-chip-name,
+body.gt-lav .jersey-chip--mountain .jersey-chip-rider,
+body.gt-lav .jersey-chip--mountain .jersey-chip-points,
+body.gt-lav .scoring-table th.col-mountain {
+    text-shadow:
+        0 0 3px #fff,
+        0 0 3px #fff,
+        0 0 5px #fff,
+        0 0 5px #fff;
+}
+
 .jersey-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
