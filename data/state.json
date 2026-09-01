@@ -7,24 +7,24 @@
     "rider/christophe-laporte": 13,
     "rider/oscar-chamberlain": 5,
     "rider/leo-bisiaux": 7,
-    "rider/wout-van-aert": 61,
-    "rider/finn-fisher-black": 6,
+    "rider/wout-van-aert": 73,
+    "rider/finn-fisher-black": 10,
     "rider/arthur-kluckers": 1,
     "rider/matthew-brennan": 46,
     "rider/pau-miquel": 16,
     "rider/mads-pedersen": 26,
-    "rider/hugo-hofstetter": 11,
+    "rider/hugo-hofstetter": 12,
     "rider/tobias-halland-johannessen": 27,
-    "rider/oscar-onley": 49,
+    "rider/oscar-onley": 51,
     "rider/axel-laurance": 10,
-    "rider/orluis-aular": 3,
+    "rider/orluis-aular": 6,
     "rider/bryan-coquard": 21,
     "rider/koen-bouwman": 7,
     "rider/diego-uriarte": 2,
     "rider/jarno-widar": 20,
     "rider/felix-gall": 28,
     "rider/sepp-kuss": 12,
-    "rider/enric-mas": 67,
+    "rider/enric-mas": 72,
     "rider/primoz-roglic": 22,
     "rider/mattias-skjelmose-jensen": 10,
     "rider/richard-carapaz": 19,
@@ -35,7 +35,7 @@
     "rider/ivan-rami-sosa": 6,
     "rider/jordi-meeus": 28,
     "rider/vincenzo-albanese": 12,
-    "rider/alessandro-romele": 27,
+    "rider/alessandro-romele": 35,
     "rider/alberto-dainese": 4,
     "rider/vito-braet": 3,
     "rider/david-gonzalez-lopez": 2,
@@ -46,7 +46,7 @@
     "rider/clement-berthet": 2,
     "rider/patrick-konrad": 3,
     "rider/jose-manuel-diaz": 6,
-    "rider/santiago-buitrago": 30,
+    "rider/santiago-buitrago": 33,
     "rider/stefan-kung": 4,
     "rider/gijs-leemreize": 2,
     "rider/thomas-gloag": 1,
@@ -56,13 +56,21 @@
     "rider/eddie-dunbar": 5,
     "rider/raul-garcia-pierna": 2,
     "rider/ben-turner": 10,
-    "rider/jordan-labrosse": 11,
-    "rider/bastien-tronchon": 5,
+    "rider/jordan-labrosse": 13,
+    "rider/bastien-tronchon": 25,
     "rider/walter-calzoni": 5,
     "rider/sinuhe-fernandez": 5,
     "rider/valentin-paret-peintre": 1,
     "rider/andreas-kron": 5,
-    "rider/marcel-camprubi": 1
+    "rider/marcel-camprubi": 1,
+    "rider/magnus-cort-nielsen": 16,
+    "rider/thibau-nys": 12,
+    "rider/xabier-mikel-azparren-irurzun": 5,
+    "rider/fabian-weiss": 8,
+    "rider/jasha-sutterlin": 4,
+    "rider/michael-gogl": 8,
+    "rider/enzo-paleni": 2,
+    "rider/ivan-cobo": 1
   },
   "stages_processed": [
     1,
@@ -72,7 +80,8 @@
     6,
     7,
     8,
-    9
+    9,
+    10
   ],
   "stage_history": {
     "1": {
@@ -212,6 +221,26 @@
       "rider/gijs-leemreize": 1,
       "rider/marcel-camprubi": 1,
       "rider/wout-van-aert": 2
+    },
+    "10": {
+      "rider/bastien-tronchon": 20,
+      "rider/magnus-cort-nielsen": 16,
+      "rider/thibau-nys": 12,
+      "rider/wout-van-aert": 12,
+      "rider/alessandro-romele": 8,
+      "rider/xabier-mikel-azparren-irurzun": 5,
+      "rider/finn-fisher-black": 4,
+      "rider/orluis-aular": 3,
+      "rider/jordan-labrosse": 2,
+      "rider/hugo-hofstetter": 1,
+      "rider/fabian-weiss": 8,
+      "rider/jasha-sutterlin": 4,
+      "rider/michael-gogl": 8,
+      "rider/enzo-paleni": 2,
+      "rider/ivan-cobo": 1,
+      "rider/enric-mas": 5,
+      "rider/santiago-buitrago": 3,
+      "rider/oscar-onley": 2
     }
   },
   "team_stage_history": {
@@ -326,6 +355,20 @@
       "Maarten": 107,
       "Peter": 56,
       "Tamara": 113
+    },
+    "10": {
+      "Monique": 33,
+      "Angelo": 22,
+      "Jeroen": 19,
+      "Claudia": 31,
+      "Bent": 34,
+      "Jaap": 19,
+      "Sjoukje": 19,
+      "Erwin": 38,
+      "Bram": 17,
+      "Maarten": 22,
+      "Peter": 26,
+      "Tamara": 38
     }
   },
   "leaderboard_history": {
@@ -440,6 +483,20 @@
       "Maarten": 578,
       "Peter": 470,
       "Tamara": 560
+    },
+    "10": {
+      "Monique": 447,
+      "Angelo": 591,
+      "Jeroen": 541,
+      "Claudia": 565,
+      "Bent": 544,
+      "Jaap": 562,
+      "Sjoukje": 577,
+      "Erwin": 539,
+      "Bram": 521,
+      "Maarten": 600,
+      "Peter": 496,
+      "Tamara": 598
     }
   },
   "stage_results": {
@@ -1406,6 +1463,125 @@
       "jersey_takeovers": [
         "rider/santiago-buitrago"
       ]
+    },
+    "10": {
+      "stage_finish": [
+        {
+          "rank": 1,
+          "rider_url": "rider/bastien-tronchon"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/magnus-cort-nielsen"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/thibau-nys"
+        },
+        {
+          "rank": 4,
+          "rider_url": "rider/wout-van-aert"
+        },
+        {
+          "rank": 5,
+          "rider_url": "rider/alessandro-romele"
+        },
+        {
+          "rank": 6,
+          "rider_url": "rider/xabier-mikel-azparren-irurzun"
+        },
+        {
+          "rank": 7,
+          "rider_url": "rider/finn-fisher-black"
+        },
+        {
+          "rank": 8,
+          "rider_url": "rider/orluis-aular"
+        },
+        {
+          "rank": 9,
+          "rider_url": "rider/jordan-labrosse"
+        },
+        {
+          "rank": 10,
+          "rider_url": "rider/hugo-hofstetter"
+        }
+      ],
+      "intermediate_sprint": [
+        {
+          "rank": 1,
+          "rider_url": "rider/fabian-weiss"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/jasha-sutterlin"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/michael-gogl"
+        }
+      ],
+      "intermediate_sprint_location": {
+        "name": "Hellín",
+        "distance_km": 125.0
+      },
+      "climbs": [
+        {
+          "category": "3",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/enzo-paleni"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/fabian-weiss"
+            }
+          ],
+          "name": "Puerto del Peralejo",
+          "distance_km": 47.6
+        },
+        {
+          "category": "3",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/fabian-weiss"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/jasha-sutterlin"
+            }
+          ],
+          "name": "Puerto de Aýna",
+          "distance_km": 86.3
+        },
+        {
+          "category": "3",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/michael-gogl"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/ivan-cobo"
+            }
+          ],
+          "name": "Puerto de Socovos",
+          "distance_km": 163.3
+        }
+      ],
+      "gc_leader": "rider/enric-mas",
+      "kom_leader": "rider/santiago-buitrago",
+      "sprint_leader": "rider/wout-van-aert",
+      "youth_leader": "rider/oscar-onley",
+      "most_aggressive_rider": "rider/michael-gogl",
+      "abandoned_riders": [
+        "rider/kaden-groves",
+        "rider/george-bennett"
+      ],
+      "jersey_takeovers": []
     }
   },
   "abandoned_riders": [
@@ -1413,7 +1589,9 @@
     "rider/cian-uijtdebroeks",
     "rider/diego-uriarte",
     "rider/floris-van-tricht",
+    "rider/george-bennett",
     "rider/joshua-tarling",
+    "rider/kaden-groves",
     "rider/luca-van-boven",
     "rider/markel-beloki",
     "rider/mattia-gaffuri",
@@ -1421,7 +1599,6 @@
     "rider/roel-van-sintmaartensdijk",
     "rider/sergio-geovani-chumil",
     "rider/tadej-pogacar",
-    "rider/kaden-groves",
     "rider/victor-langellotti"
   ]
 }
