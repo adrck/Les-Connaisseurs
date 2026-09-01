@@ -36,7 +36,11 @@ function reorderLastnameFirst(rawName) {
 // scoring, kept in sync here since this file does its own separate
 // slug lookup for the Teams page.
 const SLUG_ALIASES = {
-    "rider/mattias-skjelmose": "rider/mattias-skjelmose-jensen"
+    "rider/mattias-skjelmose": "rider/mattias-skjelmose-jensen",
+    "rider/david-gonzalez": "rider/david-gonzalez-lopez",
+    "rider/ivan-ramiro-sosa": "rider/ivan-rami-sosa",
+    "rider/magnus-cort": "rider/magnus-cort-nielsen",
+    "rider/xabier-mikel-azparren": "rider/xabier-mikel-azparren-irurzun"
 };
 
 // Minimal escape for interpolating a value into a double-quoted HTML
