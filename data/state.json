@@ -7,7 +7,7 @@
     "rider/christophe-laporte": 13,
     "rider/oscar-chamberlain": 5,
     "rider/leo-bisiaux": 7,
-    "rider/wout-van-aert": 86,
+    "rider/wout-van-aert": 107,
     "rider/finn-fisher-black": 10,
     "rider/arthur-kluckers": 1,
     "rider/matthew-brennan": 66,
@@ -15,20 +15,20 @@
     "rider/mads-pedersen": 26,
     "rider/hugo-hofstetter": 17,
     "rider/tobias-halland-johannessen": 27,
-    "rider/oscar-onley": 53,
+    "rider/oscar-onley": 55,
     "rider/axel-laurance": 10,
     "rider/orluis-aular": 7,
     "rider/bryan-coquard": 37,
     "rider/koen-bouwman": 7,
     "rider/diego-uriarte": 2,
     "rider/jarno-widar": 20,
-    "rider/felix-gall": 28,
+    "rider/felix-gall": 32,
     "rider/sepp-kuss": 12,
-    "rider/enric-mas": 77,
-    "rider/primoz-roglic": 22,
+    "rider/enric-mas": 87,
+    "rider/primoz-roglic": 25,
     "rider/mattias-skjelmose-jensen": 10,
-    "rider/richard-carapaz": 19,
-    "rider/gregor-muhlberger": 2,
+    "rider/richard-carapaz": 21,
+    "rider/gregor-muhlberger": 3,
     "rider/ramses-debruyne": 15,
     "rider/lorenzo-fortunato": 9,
     "rider/paul-double": 4,
@@ -46,13 +46,13 @@
     "rider/clement-berthet": 2,
     "rider/patrick-konrad": 3,
     "rider/jose-manuel-diaz": 6,
-    "rider/santiago-buitrago": 37,
+    "rider/santiago-buitrago": 64,
     "rider/stefan-kung": 4,
     "rider/gijs-leemreize": 2,
     "rider/thomas-gloag": 1,
     "rider/andreas-leknessund": 40,
-    "rider/jakob-omrzel": 10,
-    "rider/alexey-lutsenko": 20,
+    "rider/jakob-omrzel": 36,
+    "rider/alexey-lutsenko": 34,
     "rider/eddie-dunbar": 5,
     "rider/raul-garcia-pierna": 2,
     "rider/ben-turner": 10,
@@ -72,7 +72,13 @@
     "rider/enzo-paleni": 2,
     "rider/ivan-cobo": 1,
     "rider/matevz-govekar": 2,
-    "rider/lawrence-warbasse": 3
+    "rider/lawrence-warbasse": 3,
+    "rider/urko-berrade": 20,
+    "rider/mauri-vansevenant": 8,
+    "rider/joao-almeida": 3,
+    "rider/kevin-vermaerke": 1,
+    "rider/pello-bilbao": 1,
+    "rider/luke-tuckwell": 1
   },
   "stages_processed": [
     1,
@@ -84,7 +90,8 @@
     8,
     9,
     10,
-    11
+    11,
+    12
   ],
   "stage_history": {
     "1": {
@@ -261,6 +268,24 @@
       "rider/santiago-buitrago": 4,
       "rider/enric-mas": 5,
       "rider/oscar-onley": 2
+    },
+    "12": {
+      "rider/jakob-omrzel": 26,
+      "rider/urko-berrade": 20,
+      "rider/santiago-buitrago": 27,
+      "rider/alexey-lutsenko": 14,
+      "rider/mauri-vansevenant": 8,
+      "rider/enric-mas": 10,
+      "rider/felix-gall": 4,
+      "rider/primoz-roglic": 3,
+      "rider/richard-carapaz": 2,
+      "rider/gregor-muhlberger": 1,
+      "rider/wout-van-aert": 21,
+      "rider/joao-almeida": 3,
+      "rider/kevin-vermaerke": 1,
+      "rider/pello-bilbao": 1,
+      "rider/luke-tuckwell": 1,
+      "rider/oscar-onley": 2
     }
   },
   "team_stage_history": {
@@ -403,6 +428,20 @@
       "Maarten": 66,
       "Peter": 47,
       "Tamara": 44
+    },
+    "12": {
+      "Monique": 59,
+      "Angelo": 72,
+      "Jeroen": 45,
+      "Claudia": 45,
+      "Bent": 73,
+      "Jaap": 42,
+      "Sjoukje": 66,
+      "Erwin": 45,
+      "Bram": 33,
+      "Maarten": 72,
+      "Peter": 35,
+      "Tamara": 73
     }
   },
   "leaderboard_history": {
@@ -545,6 +584,20 @@
       "Maarten": 682,
       "Peter": 543,
       "Tamara": 642
+    },
+    "12": {
+      "Monique": 551,
+      "Angelo": 699,
+      "Jeroen": 634,
+      "Claudia": 692,
+      "Bent": 626,
+      "Jaap": 656,
+      "Sjoukje": 693,
+      "Erwin": 625,
+      "Bram": 644,
+      "Maarten": 754,
+      "Peter": 568,
+      "Tamara": 715
     }
   },
   "stage_results": {
@@ -1718,16 +1771,183 @@
         "rider/mads-pedersen"
       ],
       "jersey_takeovers": []
+    },
+    "12": {
+      "stage_finish": [
+        {
+          "rank": 1,
+          "rider_url": "rider/jakob-omrzel"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/urko-berrade"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/santiago-buitrago"
+        },
+        {
+          "rank": 4,
+          "rider_url": "rider/alexey-lutsenko"
+        },
+        {
+          "rank": 5,
+          "rider_url": "rider/mauri-vansevenant"
+        },
+        {
+          "rank": 6,
+          "rider_url": "rider/enric-mas"
+        },
+        {
+          "rank": 7,
+          "rider_url": "rider/felix-gall"
+        },
+        {
+          "rank": 8,
+          "rider_url": "rider/primoz-roglic"
+        },
+        {
+          "rank": 9,
+          "rider_url": "rider/richard-carapaz"
+        },
+        {
+          "rank": 10,
+          "rider_url": "rider/gregor-muhlberger"
+        }
+      ],
+      "intermediate_sprint": [
+        {
+          "rank": 1,
+          "rider_url": "rider/wout-van-aert"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/joao-almeida"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/kevin-vermaerke"
+        }
+      ],
+      "intermediate_sprint_location": {
+        "name": "Velefique",
+        "distance_km": 123.7
+      },
+      "climbs": [
+        {
+          "category": "3",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/wout-van-aert"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/santiago-buitrago"
+            }
+          ],
+          "name": "Alto del Cabecico",
+          "distance_km": 16.0
+        },
+        {
+          "category": "3",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/wout-van-aert"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/santiago-buitrago"
+            }
+          ],
+          "name": "Alto de Cóbdar",
+          "distance_km": 57.5
+        },
+        {
+          "category": "2",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/wout-van-aert"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/santiago-buitrago"
+            },
+            {
+              "rank": 3,
+              "rider_url": "rider/pello-bilbao"
+            }
+          ],
+          "name": "Collado García",
+          "distance_km": 86.4
+        },
+        {
+          "category": "1",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/santiago-buitrago"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/alexey-lutsenko"
+            },
+            {
+              "rank": 3,
+              "rider_url": "rider/luke-tuckwell"
+            }
+          ],
+          "name": "Alto de Velefique",
+          "distance_km": 135.4
+        },
+        {
+          "category": "1",
+          "results": [
+            {
+              "rank": 1,
+              "rider_url": "rider/jakob-omrzel"
+            },
+            {
+              "rank": 2,
+              "rider_url": "rider/urko-berrade"
+            },
+            {
+              "rank": 3,
+              "rider_url": "rider/santiago-buitrago"
+            }
+          ],
+          "name": "Calar Alto",
+          "distance_km": 166.6
+        }
+      ],
+      "gc_leader": "rider/enric-mas",
+      "kom_leader": "rider/santiago-buitrago",
+      "sprint_leader": "rider/wout-van-aert",
+      "youth_leader": "rider/oscar-onley",
+      "most_aggressive_rider": "rider/wout-van-aert",
+      "abandoned_riders": [
+        "rider/lindsay-de-vylder",
+        "rider/ben-tulett",
+        "rider/hamish-mckenzie",
+        "rider/david-gonzalez-lopez"
+      ],
+      "jersey_takeovers": []
     }
   },
   "abandoned_riders": [
     "rider/alex-kirsch",
+    "rider/ben-tulett",
     "rider/cian-uijtdebroeks",
+    "rider/david-gonzalez-lopez",
     "rider/diego-uriarte",
     "rider/floris-van-tricht",
     "rider/george-bennett",
+    "rider/hamish-mckenzie",
     "rider/joshua-tarling",
     "rider/kaden-groves",
+    "rider/lindsay-de-vylder",
     "rider/luca-van-boven",
     "rider/mads-pedersen",
     "rider/markel-beloki",
