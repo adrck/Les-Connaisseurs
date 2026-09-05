@@ -1,0 +1,35 @@
+name: Bump service worker cache version
+
+# Runs on every push to main. Rewrites CACHE_VERSION in sw.js to the
+# commit's SHA, so the browser always sees sw.js as "changed" and knows to
+# refresh its cache — no need to remember to bump it by hand.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Bump CACHE_VERSION in sw.js
+        run: |
+          NEW_VERSION="lc-${GITHUB_SHA:0:12}"
+          sed -i "s/const CACHE_VERSION = \".*\";/const CACHE_VERSION = \"${NEW_VERSION}\";/" sw.js
+          echo "New CACHE_VERSION: ${NEW_VERSION}"
+
+      - name: Commit and push if sw.js changed
+        run: |
+          if git diff --quiet -- sw.js; then
+            echo "sw.js unchanged, nothing to commit"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sw.js
+          git commit -m "chore: bump service worker cache version [skip ci]"
+          git push
