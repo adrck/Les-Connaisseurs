@@ -7,24 +7,24 @@
     "rider/christophe-laporte": 13,
     "rider/oscar-chamberlain": 5,
     "rider/leo-bisiaux": 11,
-    "rider/wout-van-aert": 159,
+    "rider/wout-van-aert": 166,
     "rider/finn-fisher-black": 15,
     "rider/arthur-kluckers": 1,
-    "rider/matthew-brennan": 83,
+    "rider/matthew-brennan": 103,
     "rider/pau-miquel": 16,
     "rider/mads-pedersen": 26,
-    "rider/hugo-hofstetter": 17,
+    "rider/hugo-hofstetter": 21,
     "rider/tobias-halland-johannessen": 27,
-    "rider/oscar-onley": 61,
+    "rider/oscar-onley": 63,
     "rider/axel-laurance": 10,
     "rider/orluis-aular": 7,
-    "rider/bryan-coquard": 37,
+    "rider/bryan-coquard": 53,
     "rider/koen-bouwman": 7,
     "rider/diego-uriarte": 2,
     "rider/jarno-widar": 30,
     "rider/felix-gall": 32,
     "rider/sepp-kuss": 12,
-    "rider/enric-mas": 102,
+    "rider/enric-mas": 107,
     "rider/primoz-roglic": 25,
     "rider/mattias-skjelmose-jensen": 10,
     "rider/richard-carapaz": 21,
@@ -33,11 +33,11 @@
     "rider/lorenzo-fortunato": 13,
     "rider/paul-double": 4,
     "rider/ivan-rami-sosa": 16,
-    "rider/jordi-meeus": 40,
-    "rider/vincenzo-albanese": 25,
+    "rider/jordi-meeus": 50,
+    "rider/vincenzo-albanese": 28,
     "rider/alessandro-romele": 58,
-    "rider/alberto-dainese": 4,
-    "rider/vito-braet": 3,
+    "rider/alberto-dainese": 6,
+    "rider/vito-braet": 15,
     "rider/david-gonzalez-lopez": 2,
     "rider/bruno-armirail": 1,
     "rider/pavel-sivakov": 14,
@@ -46,7 +46,7 @@
     "rider/clement-berthet": 8,
     "rider/patrick-konrad": 3,
     "rider/jose-manuel-diaz": 6,
-    "rider/santiago-buitrago": 102,
+    "rider/santiago-buitrago": 105,
     "rider/stefan-kung": 6,
     "rider/gijs-leemreize": 4,
     "rider/thomas-gloag": 1,
@@ -63,11 +63,11 @@
     "rider/valentin-paret-peintre": 25,
     "rider/andreas-kron": 14,
     "rider/marcel-camprubi": 1,
-    "rider/magnus-cort-nielsen": 26,
+    "rider/magnus-cort-nielsen": 34,
     "rider/thibau-nys": 24,
     "rider/xabier-mikel-azparren-irurzun": 5,
     "rider/fabian-weiss": 8,
-    "rider/jasha-sutterlin": 4,
+    "rider/jasha-sutterlin": 7,
     "rider/michael-gogl": 8,
     "rider/enzo-paleni": 2,
     "rider/ivan-cobo": 1,
@@ -76,7 +76,7 @@
     "rider/urko-berrade": 20,
     "rider/mauri-vansevenant": 8,
     "rider/joao-almeida": 4,
-    "rider/kevin-vermaerke": 26,
+    "rider/kevin-vermaerke": 36,
     "rider/pello-bilbao": 1,
     "rider/luke-tuckwell": 1,
     "rider/simon-dalby": 2,
@@ -88,7 +88,8 @@
     "rider/alessandro-covi": 5,
     "rider/henok-mulubrhan": 3,
     "rider/ivo-oliveira": 1,
-    "rider/rudy-porter": 1
+    "rider/rudy-porter": 1,
+    "rider/roland-thalmann": 1
   },
   "stages_processed": [
     1,
@@ -104,7 +105,8 @@
     12,
     13,
     14,
-    15
+    15,
+    16
   ],
   "stage_history": {
     "1": {
@@ -355,6 +357,23 @@
       "rider/enric-mas": 5,
       "rider/santiago-buitrago": 3,
       "rider/oscar-onley": 2
+    },
+    "16": {
+      "rider/matthew-brennan": 20,
+      "rider/bryan-coquard": 16,
+      "rider/vito-braet": 12,
+      "rider/jordi-meeus": 10,
+      "rider/magnus-cort-nielsen": 8,
+      "rider/wout-van-aert": 7,
+      "rider/hugo-hofstetter": 4,
+      "rider/vincenzo-albanese": 3,
+      "rider/alberto-dainese": 2,
+      "rider/kevin-vermaerke": 10,
+      "rider/jasha-sutterlin": 3,
+      "rider/roland-thalmann": 1,
+      "rider/enric-mas": 5,
+      "rider/santiago-buitrago": 3,
+      "rider/oscar-onley": 2
     }
   },
   "team_stage_history": {
@@ -553,6 +572,20 @@
       "Maarten": 32,
       "Peter": 36,
       "Tamara": 46
+    },
+    "16": {
+      "Monique": 20,
+      "Angelo": 29,
+      "Jeroen": 40,
+      "Claudia": 58,
+      "Bent": 17,
+      "Jaap": 52,
+      "Sjoukje": 34,
+      "Erwin": 34,
+      "Bram": 66,
+      "Maarten": 57,
+      "Peter": 47,
+      "Tamara": 37
     }
   },
   "leaderboard_history": {
@@ -751,6 +784,20 @@
       "Maarten": 907,
       "Peter": 688,
       "Tamara": 877
+    },
+    "16": {
+      "Monique": 717,
+      "Angelo": 874,
+      "Jeroen": 802,
+      "Claudia": 863,
+      "Bent": 767,
+      "Jaap": 837,
+      "Sjoukje": 859,
+      "Erwin": 773,
+      "Bram": 825,
+      "Maarten": 964,
+      "Peter": 735,
+      "Tamara": 914
     }
   },
   "stage_results": {
@@ -2454,6 +2501,70 @@
       "sprint_leader": "rider/wout-van-aert",
       "youth_leader": "rider/oscar-onley",
       "most_aggressive_rider": "rider/andreas-leknessund",
+      "jersey_takeovers": []
+    },
+    "16": {
+      "stage_finish": [
+        {
+          "rank": 1,
+          "rider_url": "rider/matthew-brennan"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/bryan-coquard"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/vito-braet"
+        },
+        {
+          "rank": 4,
+          "rider_url": "rider/jordi-meeus"
+        },
+        {
+          "rank": 5,
+          "rider_url": "rider/magnus-cort-nielsen"
+        },
+        {
+          "rank": 6,
+          "rider_url": "rider/wout-van-aert"
+        },
+        {
+          "rank": 7,
+          "rider_url": "rider/hugo-hofstetter"
+        },
+        {
+          "rank": 8,
+          "rider_url": "rider/vincenzo-albanese"
+        },
+        {
+          "rank": 9,
+          "rider_url": "rider/alberto-dainese"
+        }
+      ],
+      "intermediate_sprint": [
+        {
+          "rank": 1,
+          "rider_url": "rider/kevin-vermaerke"
+        },
+        {
+          "rank": 2,
+          "rider_url": "rider/jasha-sutterlin"
+        },
+        {
+          "rank": 3,
+          "rider_url": "rider/roland-thalmann"
+        }
+      ],
+      "intermediate_sprint_location": {
+        "name": "Villarrasa",
+        "distance_km": 114.5
+      },
+      "gc_leader": "rider/enric-mas",
+      "kom_leader": "rider/santiago-buitrago",
+      "sprint_leader": "rider/wout-van-aert",
+      "youth_leader": "rider/oscar-onley",
+      "most_aggressive_rider": "rider/kevin-vermaerke",
       "jersey_takeovers": []
     }
   },
