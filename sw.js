@@ -1,4 +1,4 @@
-const CACHE_VERSION = "lc-2da17f1c8efc";
+const CACHE_VERSION = "lc-0e7ae3005276";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const DATA_CACHE = `${CACHE_VERSION}-data`;
 
