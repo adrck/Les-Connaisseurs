@@ -962,18 +962,23 @@ body.gt-tdf .jersey-chip--leader {
 
 body.gt-tdf .scoring-table th.col-mountain {
     background-color: #FFFFFF;
-    background-image: radial-gradient(var(--tdfmont) 34%, transparent 36%);
-    background-size: 12px 12px;
+    background-image:
+        radial-gradient(var(--tdfmont) 34%, transparent 36%),
+        radial-gradient(var(--tdfmont) 34%, transparent 36%);
+    background-size: 22px 22px;
+    background-position: 0 0, 11px 11px;
     color: var(--tinta);
 }
 
 body.gt-tdf .jersey-chip--mountain {
     background-color: #FFFFFF;
-    background-image: radial-gradient(var(--tdfmont) 34%, transparent 36%);
-    background-size: 16px 16px;
+    background-image:
+        radial-gradient(var(--tdfmont) 34%, transparent 36%),
+        radial-gradient(var(--tdfmont) 34%, transparent 36%);
+    background-size: 30px 30px;
+    background-position: 0 0, 15px 15px;
     color: var(--tinta);
 }
-
 body.gt-tdf .scoring-table th.col-sprint,
 body.gt-tdf .jersey-chip--sprint {
     background: var(--tdfsprint);
