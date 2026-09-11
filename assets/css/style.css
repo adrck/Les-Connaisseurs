@@ -1017,15 +1017,21 @@ body.gt-gdi .jersey-chip--young {
 
 body.gt-lav .scoring-table th.col-mountain {
     background-color: #FFFFFF;
-    background-image: radial-gradient(var(--azul-lunares) 38%, transparent 40%);
-    background-size: 21px 21px;
+    background-image:
+        radial-gradient(var(--azul-lunares) 38%, transparent 40%),
+        radial-gradient(var(--azul-lunares) 38%, transparent 40%);
+    background-size: 34px 34px;
+    background-position: 0 0, 17px 17px;
     color: var(--tinta);
 }
 
 body.gt-lav .jersey-chip--mountain {
     background-color: #FFFFFF;
-    background-image: radial-gradient(var(--azul-lunares) 38%, transparent 40%);
-    background-size: 28px 28px;
+    background-image:
+        radial-gradient(var(--azul-lunares) 38%, transparent 40%),
+        radial-gradient(var(--azul-lunares) 38%, transparent 40%);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
     color: var(--tinta);
 }
 
