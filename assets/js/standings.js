@@ -6,6 +6,7 @@ let stageHistory = {};
 let stageResults = {};
 let stageOrder = [];
 let teamFinalPoints = {};
+let finalStandings = null;
 
 // Points tables — mirror pages/rules.html. If the scoring rules ever
 // change there, update the matching values here too.
@@ -19,6 +20,13 @@ const CLIMB_POINTS = {
     "4": [1]
 };
 const JERSEY_POINTS = { leader: 5, mountain: 3, sprint: 2, young: 2 };
+const FINAL_CLASSIFICATION_POINTS = {
+    gc: { 1: 50, 2: 40, 3: 30, 4: 25, 5: 20, 6: 15, 7: 10, 8: 8, 9: 6, 10: 4 },
+    kom: { 1: 15, 2: 10, 3: 5 },
+    sprint: { 1: 10, 2: 5, 3: 3 },
+    youth: { 1: 10, 2: 5, 3: 3 }
+};
+const FINAL_CLASSIFICATION_LABELS = { gc: "Leider", kom: "Berg", sprint: "Sprint", youth: "Jongeren" };
 const TAKEOVER_POINTS = 3;
 const AGGRESSIVE_POINTS = 5;
 
@@ -68,6 +76,7 @@ async function loadResults() {
 
         leaderboardHistory = results.leaderboard_history || {};
         teamFinalPoints = results.team_final_points || {};
+        finalStandings = results.final_standings || null;
         stageHistory = results.stage_history || {};
         stageResults = results.stage_results || {};
         stageOrder = Object.keys(leaderboardHistory)
@@ -349,9 +358,28 @@ function renderStageBreakdown(stage) {
 
     const parts = [];
 
-    const stagePoints = stageHistory[stage];
-    if (stagePoints && Object.keys(stagePoints).length) {
-        parts.push(buildTotalScorePerRiderSection(stagePoints, data));
+    // The final classification bonus (final_standings, from `main.py
+    // finalize`) isn't tied to any one stage's stage_history - it's a
+    // one-off award for the race's final GC/KOM/Sprint/Youth top finishers
+    // - so it's only merged into the rider breakdown when viewing the
+    // very last stage, never when browsing earlier ones.
+    const isFinalStageView = stage === stageOrder[stageOrder.length - 1];
+    const finalStandingsForView = isFinalStageView ? finalStandings : null;
+
+    const stagePoints = { ...(stageHistory[stage] || {}) };
+    if (finalStandingsForView) {
+        Object.entries(finalStandingsForView).forEach(([classification, riders]) => {
+            const table = FINAL_CLASSIFICATION_POINTS[classification] || {};
+            (riders || []).forEach((riderUrl, idx) => {
+                const points = table[idx + 1];
+                if (riderUrl && points !== undefined) {
+                    stagePoints[riderUrl] = (stagePoints[riderUrl] || 0) + points;
+                }
+            });
+        });
+    }
+    if (Object.keys(stagePoints).length) {
+        parts.push(buildTotalScorePerRiderSection(stagePoints, data, finalStandingsForView));
     }
 
     parts.push(buildRankTableSection(
@@ -408,7 +436,7 @@ function renderStageBreakdown(stage) {
 // used to build the category tables elsewhere in this file. This never
 // needs its own copy of the points tables or scoring logic to keep in
 // sync - it's just indexing the same data by rider instead of by rank.
-function buildRiderStageEvents(riderUrl, data) {
+function buildRiderStageEvents(riderUrl, data, finalStandings) {
 
     const events = [];
 
@@ -459,17 +487,32 @@ function buildRiderStageEvents(riderUrl, data) {
         events.push({ label: "Meest aanvallende renner", detail: null, points: AGGRESSIVE_POINTS });
     }
 
+    if (finalStandings) {
+        Object.entries(finalStandings).forEach(([classification, riders]) => {
+            const rank = (riders || []).indexOf(riderUrl) + 1;
+            if (rank === 0) return;
+            const points = (FINAL_CLASSIFICATION_POINTS[classification] || {})[rank];
+            if (points === undefined) return;
+            const label = FINAL_CLASSIFICATION_LABELS[classification] || classification;
+            events.push({
+                label: "Eindklassement bonus",
+                detail: `${label} — ${rank}e plaats`,
+                points
+            });
+        });
+    }
+
     return events;
 
 }
 
-function buildTotalScorePerRiderSection(stagePoints, data) {
+function buildTotalScorePerRiderSection(stagePoints, data, finalStandings) {
 
     const rows = Object.entries(stagePoints)
         .sort((a, b) => b[1] - a[1])
         .map(([riderUrl, points], index) => {
 
-            const events = buildRiderStageEvents(riderUrl, data);
+            const events = buildRiderStageEvents(riderUrl, data, finalStandings);
             // Striped by logical rider row, not raw DOM position - each
             // rider now spans two <tr>s (summary + hidden detail), so the
             // usual tr:nth-child(even) rule would stripe those in pairs

@@ -1144,7 +1144,7 @@
         }
       ],
       "intermediate_sprint_location": {
-        "name": "Gréoux-les-Bains",
+        "name": "Gr\u00e9oux-les-Bains",
         "distance_km": 166.2
       },
       "climbs": [
@@ -1407,7 +1407,7 @@
               "rider_url": "rider/harold-tejada"
             }
           ],
-          "name": "Puerto de Paüls",
+          "name": "Puerto de Pa\u00fcls",
           "distance_km": 148.4
         }
       ],
@@ -1476,7 +1476,7 @@
         }
       ],
       "intermediate_sprint_location": {
-        "name": "Benicàssim",
+        "name": "Benic\u00e0ssim",
         "distance_km": 120.1
       },
       "climbs": [
@@ -1702,7 +1702,7 @@
               "rider_url": "rider/wout-van-aert"
             }
           ],
-          "name": "Aramón Valdelinares",
+          "name": "Aram\u00f3n Valdelinares",
           "distance_km": 149.8
         }
       ],
@@ -1894,7 +1894,7 @@
               "rider_url": "rider/alexey-lutsenko"
             }
           ],
-          "name": "Puerto de Tàrbena",
+          "name": "Puerto de T\u00e0rbena",
           "distance_km": 36.7
         },
         {
@@ -2060,7 +2060,7 @@
         }
       ],
       "intermediate_sprint_location": {
-        "name": "Hellín",
+        "name": "Hell\u00edn",
         "distance_km": 125.0
       },
       "climbs": [
@@ -2091,7 +2091,7 @@
               "rider_url": "rider/jasha-sutterlin"
             }
           ],
-          "name": "Puerto de Aýna",
+          "name": "Puerto de A\u00fdna",
           "distance_km": 86.3
         },
         {
@@ -2298,7 +2298,7 @@
               "rider_url": "rider/santiago-buitrago"
             }
           ],
-          "name": "Alto de Cóbdar",
+          "name": "Alto de C\u00f3bdar",
           "distance_km": 57.5
         },
         {
@@ -2317,7 +2317,7 @@
               "rider_url": "rider/pello-bilbao"
             }
           ],
-          "name": "Collado García",
+          "name": "Collado Garc\u00eda",
           "distance_km": 86.4
         },
         {
@@ -2430,7 +2430,7 @@
         }
       ],
       "intermediate_sprint_location": {
-        "name": "Tocón",
+        "name": "Toc\u00f3n",
         "distance_km": 145.0
       },
       "climbs": [
@@ -2564,7 +2564,7 @@
         }
       ],
       "intermediate_sprint_location": {
-        "name": "Castillo de Locubín",
+        "name": "Castillo de Locub\u00edn",
         "distance_km": 123.6
       },
       "climbs": [
@@ -2603,7 +2603,7 @@
               "rider_url": "rider/clement-berthet"
             }
           ],
-          "name": "Puerto de Locubín",
+          "name": "Puerto de Locub\u00edn",
           "distance_km": 133.2
         },
         {
@@ -2698,7 +2698,7 @@
         }
       ],
       "intermediate_sprint_location": {
-        "name": "Santa María de Trassierra",
+        "name": "Santa Mar\u00eda de Trassierra",
         "distance_km": 78.5
       },
       "climbs": [
@@ -2858,7 +2858,7 @@
         }
       ],
       "intermediate_sprint_location": {
-        "name": "San José de la Rinconada",
+        "name": "San Jos\u00e9 de la Rinconada",
         "distance_km": 165.0
       },
       "gc_leader": "rider/enric-mas",
@@ -3036,7 +3036,7 @@
               "rider_url": "rider/thomas-gloag"
             }
           ],
-          "name": "Peñas Blancas",
+          "name": "Pe\u00f1as Blancas",
           "distance_km": 210.8
         }
       ],
@@ -3339,5 +3339,34 @@
     "Peter": 165,
     "Tamara": 230
   },
-  "final_processed": true
+  "final_processed": true,
+  "final_standings": {
+    "gc": [
+      "rider/enric-mas",
+      "rider/primoz-roglic",
+      "rider/felix-gall",
+      "rider/richard-carapaz",
+      "rider/sepp-kuss",
+      "rider/oscar-onley",
+      "rider/jakob-omrzel",
+      "rider/clement-berthet",
+      "rider/cristian-rodriguez",
+      "rider/harold-tejada"
+    ],
+    "kom": [
+      "rider/santiago-buitrago",
+      "rider/wout-van-aert",
+      "rider/andreas-leknessund"
+    ],
+    "sprint": [
+      "rider/wout-van-aert",
+      "rider/matthew-brennan",
+      "rider/alessandro-romele"
+    ],
+    "youth": [
+      "rider/oscar-onley",
+      "rider/jakob-omrzel",
+      "rider/leo-bisiaux"
+    ]
+  }
 }
