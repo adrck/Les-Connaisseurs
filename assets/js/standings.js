@@ -5,6 +5,7 @@ let leaderboardHistory = {};
 let stageHistory = {};
 let stageResults = {};
 let stageOrder = [];
+let teamFinalPoints = {};
 
 // Points tables — mirror pages/rules.html. If the scoring rules ever
 // change there, update the matching values here too.
@@ -66,6 +67,7 @@ async function loadResults() {
         const results = await response.json();
 
         leaderboardHistory = results.leaderboard_history || {};
+        teamFinalPoints = results.team_final_points || {};
         stageHistory = results.stage_history || {};
         stageResults = results.stage_results || {};
         stageOrder = Object.keys(leaderboardHistory)
@@ -179,7 +181,16 @@ function handleParticipantLinkClick(event) {
 
 function displayLeaderboard(stage) {
 
-    const leaderboard = leaderboardHistory[stage] || {};
+    // The final classification bonus (team_final_points, from `main.py
+    // finalize`) isn't part of leaderboardHistory - it's a one-off award
+    // applied once at the very end of the race - so it's only merged in
+    // when displaying the latest stage, not when browsing earlier ones.
+    const leaderboard = { ...(leaderboardHistory[stage] || {}) };
+    if (stage === stageOrder[stageOrder.length - 1]) {
+        Object.entries(teamFinalPoints).forEach(([player, bonus]) => {
+            leaderboard[player] = (leaderboard[player] || 0) + bonus;
+        });
+    }
 
     const stageIndex = stageOrder.indexOf(stage);
     const previousStage = stageIndex > 0 ? stageOrder[stageIndex - 1] : null;

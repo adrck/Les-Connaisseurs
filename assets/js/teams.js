@@ -129,8 +129,16 @@ async function initTeams() {
             : null;
 
         const teamTotals = latestStage && state.leaderboard_history
-            ? (state.leaderboard_history[latestStage] || {})
+            ? { ...(state.leaderboard_history[latestStage] || {}) }
             : {};
+
+        // Final classification bonus (team_final_points, from `main.py
+        // finalize`) is a one-off award stored separately from
+        // leaderboard_history - add it in here so team totals match what
+        // `python main.py leaderboard` reports after the race is over.
+        Object.entries(state.team_final_points || {}).forEach(([team, bonus]) => {
+            teamTotals[team] = (teamTotals[team] || 0) + bonus;
+        });
 
         const teamsResponse = await fetch(TEAMS_DATA_URL);
 
