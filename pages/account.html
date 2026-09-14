@@ -4,43 +4,57 @@
     <p>Bezig met laden...</p>
 </div>
 
-<div id="account-logged-out" class="card" style="display:none;">
+<div id="account-logged-out" style="display:none;">
 
-    <h3>Account aanmaken</h3>
-    <p>Nieuw hier? Maak een account aan met je e-mailadres en een zelfgekozen wachtwoord.</p>
+    <div class="account-tabs" role="tablist">
+        <button type="button" class="account-tab account-tab--active" id="tab-login" role="tab" aria-selected="true" aria-controls="panel-login">Inloggen</button>
+        <button type="button" class="account-tab" id="tab-signup" role="tab" aria-selected="false" aria-controls="panel-signup">Aanmelden</button>
+    </div>
 
-    <form id="signup-form">
-        <div class="form-group">
-            <label for="signup-email">E-mailadres</label>
-            <input type="email" id="signup-email" name="email" required autocomplete="email">
+    <div class="card account-tab-card">
+
+        <div id="panel-login" role="tabpanel" aria-labelledby="tab-login">
+
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-email">E-mailadres</label>
+                    <input type="email" id="login-email" name="email" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Wachtwoord</label>
+                    <input type="password" id="login-password" name="password" required autocomplete="current-password">
+                </div>
+                <p id="login-message" class="form-message"></p>
+                <button type="submit" id="login-btn">Inloggen</button>
+            </form>
+
+            <p style="margin-top:14px;">
+                <a href="#" id="forgot-password-link">Wachtwoord vergeten?</a>
+            </p>
+            <p id="forgot-password-message" class="form-message"></p>
+
         </div>
-        <div class="form-group">
-            <label for="signup-password">Wachtwoord <span class="field-hint">(minimaal 6 tekens)</span></label>
-            <input type="password" id="signup-password" name="password" required minlength="6" autocomplete="new-password">
-        </div>
-        <p id="signup-message" class="form-message"></p>
-        <button type="submit" id="signup-btn">Account aanmaken</button>
-    </form>
 
-    <h3 style="margin-top:28px;">Al een account?</h3>
+        <div id="panel-signup" role="tabpanel" aria-labelledby="tab-signup" style="display:none;">
 
-    <form id="login-form">
-        <div class="form-group">
-            <label for="login-email">E-mailadres</label>
-            <input type="email" id="login-email" name="email" required autocomplete="email">
-        </div>
-        <div class="form-group">
-            <label for="login-password">Wachtwoord</label>
-            <input type="password" id="login-password" name="password" required autocomplete="current-password">
-        </div>
-        <p id="login-message" class="form-message"></p>
-        <button type="submit" id="login-btn">Inloggen</button>
-    </form>
+            <p>Nieuw hier? Maak een account aan met je e-mailadres en een zelfgekozen wachtwoord.</p>
 
-    <p style="margin-top:14px;">
-        <a href="#" id="forgot-password-link">Wachtwoord vergeten?</a>
-    </p>
-    <p id="forgot-password-message" class="form-message"></p>
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="signup-email">E-mailadres</label>
+                    <input type="email" id="signup-email" name="email" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Wachtwoord <span class="field-hint">(minimaal 6 tekens)</span></label>
+                    <input type="password" id="signup-password" name="password" required minlength="6" autocomplete="new-password">
+                </div>
+                <p id="signup-message" class="form-message"></p>
+                <button type="submit" id="signup-btn">Account aanmaken</button>
+            </form>
+
+        </div>
+
+    </div>
 
 </div>
 

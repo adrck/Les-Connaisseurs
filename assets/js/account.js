@@ -13,11 +13,15 @@ async function initAccount() {
     const loginForm = document.getElementById("login-form");
     const forgotLink = document.getElementById("forgot-password-link");
     const claimForm = document.getElementById("claim-form");
+    const tabLogin = document.getElementById("tab-login");
+    const tabSignup = document.getElementById("tab-signup");
 
     signupForm.addEventListener("submit", handleSignup);
     loginForm.addEventListener("submit", handleLogin);
     forgotLink.addEventListener("click", handleForgotPassword);
     claimForm.addEventListener("submit", handleClaim);
+    tabLogin.addEventListener("click", () => switchAccountTab("login"));
+    tabSignup.addEventListener("click", () => switchAccountTab("signup"));
 
     await render();
 
@@ -26,6 +30,26 @@ async function initAccount() {
     window.supabaseClient.auth.onAuthStateChange(() => {
         render();
     });
+
+}
+
+// Switches between the "Inloggen" and "Aanmelden" tabs on the logged-out
+// view - both forms stay in the DOM the whole time (only their panel's
+// display toggles), so nothing here needs to touch form state, and any
+// message already showing in one panel is preserved if the person
+// switches away and back.
+function switchAccountTab(tab) {
+
+    const isLogin = tab === "login";
+
+    document.getElementById("panel-login").style.display = isLogin ? "" : "none";
+    document.getElementById("panel-signup").style.display = isLogin ? "none" : "";
+
+    document.getElementById("tab-login").classList.toggle("account-tab--active", isLogin);
+    document.getElementById("tab-login").setAttribute("aria-selected", isLogin ? "true" : "false");
+
+    document.getElementById("tab-signup").classList.toggle("account-tab--active", !isLogin);
+    document.getElementById("tab-signup").setAttribute("aria-selected", isLogin ? "false" : "true");
 
 }
 

@@ -1268,3 +1268,40 @@ tr.rider-breakdown-row {
     margin: 6px 0;
     min-height: 0;
 }
+
+/* ---------- Account page: Inloggen / Aanmelden tabs ---------- */
+
+.account-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: -1px;
+}
+
+.account-tab {
+    flex: 1;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: 13px;
+    padding: 12px 0;
+    border: none;
+    border-radius: 8px 8px 0 0;
+    cursor: pointer;
+    background: var(--papel-oscuro);
+    color: #6b6459;
+    font-weight: 600;
+}
+
+.account-tab:hover {
+    background: #DFD3B4;
+}
+
+.account-tab--active,
+.account-tab--active:hover {
+    background: white;
+    color: var(--rojo);
+}
+
+.account-tab-card {
+    border-radius: 0 10px 10px 10px;
+}
