@@ -144,15 +144,31 @@ async function initForm() {
             }
 
             if (!entriesOpen) {
-                const notice = document.createElement("p");
-                notice.className = "form-message";
-                notice.style.color = "var(--oro)";
-                notice.style.fontWeight = "bold";
-                notice.textContent =
-                    `Inschrijvingen zijn gesloten — er kunnen geen nieuwe teams meer worden ` +
-                    `aangemeld. Je kunt nog tot ${MAX_SWAPS}x wisselen tussen je actieve team en je ` +
-                    `wisselrenners (met een oplopende puntenaftrek per wissel).`;
-                document.querySelector(".rider-picker").insertAdjacentElement("beforebegin", notice);
+                // Idempotency guard: initForm() is only ever supposed to
+                // run once per real page visit, but a stable id lets this
+                // insert survive safely even if something outside this
+                // file somehow triggers a second run (loadPage("enter")
+                // called twice, a duplicated event listener elsewhere,
+                // etc.) - without this, each run would append its own
+                // copy of the notice, since document.createElement()
+                // always makes a brand new node regardless of how many
+                // already exist. (Real-world trigger found and fixed
+                // 2026-09-14: account.js was re-attaching a click listener
+                // on "Ga naar Mijn Team" every render() call instead of
+                // once - see account.js. This guard is a second, unrelated
+                // layer of protection, not a substitute for that fix.)
+                if (!document.getElementById("entries-closed-notice")) {
+                    const notice = document.createElement("p");
+                    notice.id = "entries-closed-notice";
+                    notice.className = "form-message";
+                    notice.style.color = "var(--oro)";
+                    notice.style.fontWeight = "bold";
+                    notice.textContent =
+                        `Inschrijvingen zijn gesloten — er kunnen geen nieuwe teams meer worden ` +
+                        `aangemeld. Je kunt nog tot ${MAX_SWAPS}x wisselen tussen je actieve team en je ` +
+                        `wisselrenners (met een oplopende puntenaftrek per wissel).`;
+                    document.querySelector(".rider-picker").insertAdjacentElement("beforebegin", notice);
+                }
 
                 // No rider outside the 23 already on this team may be added
                 // once entries are closed, and a rider can no longer be

@@ -15,6 +15,18 @@ async function initAccount() {
     const claimForm = document.getElementById("claim-form");
     const tabLogin = document.getElementById("tab-login");
     const tabSignup = document.getElementById("tab-signup");
+    // These two are static elements toggled via their parent's display,
+    // never recreated - unlike the fields above, they used to be wired up
+    // INSIDE render() instead of here, which ran every time render() ran
+    // (including once from handleLogin() and again from the
+    // onAuthStateChange listener below firing for that same sign-in - two
+    // render() calls per login, each stacking another click listener on
+    // top of the last). A single click would then fire loadPage("enter")
+    // twice, running form.js's whole init twice and duplicating the
+    // "entries closed" notice it inserts. Attaching once here, like every
+    // other listener on this page, fixes that at the source.
+    const gotoTeam = document.getElementById("account-goto-team");
+    const gotoTeamNew = document.getElementById("account-goto-team-new");
 
     signupForm.addEventListener("submit", handleSignup);
     loginForm.addEventListener("submit", handleLogin);
@@ -22,6 +34,14 @@ async function initAccount() {
     claimForm.addEventListener("submit", handleClaim);
     tabLogin.addEventListener("click", () => switchAccountTab("login"));
     tabSignup.addEventListener("click", () => switchAccountTab("signup"));
+    gotoTeam.addEventListener("click", (event) => {
+        event.preventDefault();
+        loadPage("enter");
+    });
+    gotoTeamNew.addEventListener("click", (event) => {
+        event.preventDefault();
+        loadPage("enter");
+    });
 
     await render();
 
@@ -106,17 +126,9 @@ async function render() {
             `Jouw team: ${team.player_name}`;
         document.getElementById("account-team-line").style.color = "#2e7d32";
         document.getElementById("account-team-line").style.fontWeight = "bold";
-        document.getElementById("account-goto-team").addEventListener("click", (event) => {
-            event.preventDefault();
-            loadPage("enter");
-        });
     } else {
         hasTeamEl.style.display = "none";
         noTeamEl.style.display = "";
-        document.getElementById("account-goto-team-new").addEventListener("click", (event) => {
-            event.preventDefault();
-            loadPage("enter");
-        });
     }
 
 }
