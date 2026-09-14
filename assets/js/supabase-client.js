@@ -5,20 +5,19 @@
 // supabase-config.js (SUPABASE_URL/SUPABASE_ANON_KEY) and the Supabase
 // JS CDN script both being loaded before this file - see index.html.
 
-// TEMPORARY DIAGNOSTIC - remove once the signup-confirmation redirect
-// shape is confirmed. Writes the raw hash/search/full URL to localStorage
-// BEFORE createClient() runs (and therefore before the SDK gets any
-// chance to parse/strip it) - localStorage persists across the page load
-// and across tabs on this site, so you don't need DevTools open at the
-// moment the confirmation link opens (which it won't be, since Gmail
-// opens the link in a new tab). Open DevTools any time afterward, on any
-// tab on this site, and run:
-//     localStorage.getItem('__diag_hash')
-//     localStorage.getItem('__diag_search')
-//     localStorage.getItem('__diag_href')
-window.localStorage.setItem("__diag_hash", window.location.hash);
-window.localStorage.setItem("__diag_search", window.location.search);
-window.localStorage.setItem("__diag_href", window.location.href);
+// Captured BEFORE createClient() runs, not just before any other of our
+// own code - confirmed via a live diagnostic that createClient() itself
+// (its internal detectSessionInUrl handling) can strip type=signup out of
+// the hash synchronously, before the very next line of this script even
+// runs. Password recovery's equivalent check further down (still placed
+// after createClient()) gets away with checking the URL live because it
+// has a second path - the "PASSWORD_RECOVERY" auth event still fires as a
+// fallback even once the hash is gone. Signup confirmation has no such
+// event to fall back on (supabase-js only fires a generic "SIGNED_IN"),
+// so capturing this as a plain boolean up here, before createClient() has
+// any chance to touch the URL, is the only reliable way to catch it.
+const isSignupConfirmationRedirect =
+    /type=signup/.test(window.location.hash) || /type=signup/.test(window.location.search);
 
 window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -32,7 +31,12 @@ window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 // to set a new password. Checking the URL directly, synchronously, right
 // here - before anything else runs - sidesteps that unreliability
 // entirely, and also wins the race against the SDK's own known behavior
-// of sometimes clearing the URL hash before its event fires.
+// of sometimes clearing the URL hash before its event fires. NOTE: unlike
+// the signup check above, this one is intentionally left checking the URL
+// live (after createClient()) rather than refactored to the pre-capture
+// pattern - it's already confirmed working end-to-end in production via
+// its PASSWORD_RECOVERY event fallback, so it's left exactly as tested
+// rather than restructured without a concrete reason to touch it.
 function isPasswordRecoveryRedirect() {
     return /type=recovery/.test(window.location.hash) || /type=recovery/.test(window.location.search);
 }
@@ -58,20 +62,15 @@ if (isPasswordRecoveryRedirect()) {
 // falls through to (usually home, since the auth hash fragment isn't a
 // real page name - see main.js's pageFromHash()) with no acknowledgment
 // beyond the small "Ingelogd als..." line in the account bar - easy to
-// miss, no clear "yes, that worked" moment. ASSUMPTION, not yet verified
-// against a real confirmation email from this project's Supabase setup:
-// this expects "type=signup" in the redirect URL, mirroring the
-// already-confirmed-working "type=recovery" case above. Check this by
-// signing up a fresh test account and inspecting location.hash in the
-// browser console right after clicking the email link, before assuming
-// this fires correctly in production.
-function isSignupConfirmationRedirect() {
-    return /type=signup/.test(window.location.hash) || /type=signup/.test(window.location.search);
-}
-
-if (isSignupConfirmationRedirect()) {
-    // Same synchronous-flag pattern as password recovery above - main.js's
-    // window.onload checks this before doing its normal loadPage("home").
+// miss, no clear "yes, that worked" moment. CONFIRMED against a real
+// confirmation email from this project's Supabase setup (2026-09-14):
+// the redirect hash does carry "...&token_type=bearer&type=signup" -
+// the earlier assumption was correct in shape, the bug was purely in
+// checking too late (see isSignupConfirmationRedirect above, captured
+// before createClient() for exactly this reason).
+if (isSignupConfirmationRedirect) {
+    // Set immediately, synchronously - main.js's window.onload checks
+    // this before doing its normal loadPage("home").
     window.__signupConfirmationActive = true;
     // renderSignupConfirmation is defined further down this file; hoisted,
     // same as renderPasswordRecoveryForm above.
