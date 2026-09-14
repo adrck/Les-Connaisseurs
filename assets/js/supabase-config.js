@@ -9,5 +9,5 @@
 // key bypasses row-level security entirely. It's only ever used locally
 // when running scripts/migrate_existing_teams.py once.
 
-const SUPABASE_URL = "https://YOUR-PROJECT-REF.supabase.co";
-const SUPABASE_ANON_KEY = "YOUR-ANON-PUBLIC-KEY";
+const SUPABASE_URL = "https://jpnuxomhyrwikqccbfic.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpwbnV4b21oeXJ3aWtxY2NiZmljIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgxOTE0NjgsImV4cCI6MjEwMzc2NzQ2OH0.hUcQF6ttGhjwc7nf5Sw-fa6KBZKX6Ijx8p-LNeXWOrg";
