@@ -140,6 +140,15 @@ window.addEventListener("hashchange", handleHashNavigation);
 // redirect's hash happens to fall through to.
 window.onload = function () {
 
+    // TEMPORARY CHECKPOINT DIAGNOSTIC - see matching comment in
+    // supabase-client.js. Records what the flag actually was, right at
+    // the moment onload checks it, in case supabase-client.js's
+    // synchronous code somehow hasn't run yet by this point.
+    window.localStorage.setItem(
+        "__diag_step5_onload_flag",
+        "passwordRecovery=" + window.__passwordRecoveryActive + " signupConfirmation=" + window.__signupConfirmationActive
+    );
+
     if (window.__passwordRecoveryActive) return;
     if (window.__signupConfirmationActive) return;
 
