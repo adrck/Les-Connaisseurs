@@ -7,6 +7,36 @@
 
 window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// Detects a password-recovery redirect directly from the URL, rather than
+// relying solely on supabase-js's own "PASSWORD_RECOVERY" auth event.
+// That event has a well-documented history of being unreliable - in
+// practice it sometimes never fires at all, with only a plain
+// "SIGNED_IN" firing instead (see supabase/gotrue-js#349 and
+// supabase#3360 upstream), which is exactly what would otherwise happen
+// here: the person lands on the site already logged in, with no prompt
+// to set a new password. Checking the URL directly, synchronously, right
+// here - before anything else runs - sidesteps that unreliability
+// entirely, and also wins the race against the SDK's own known behavior
+// of sometimes clearing the URL hash before its event fires.
+function isPasswordRecoveryRedirect() {
+    return /type=recovery/.test(window.location.hash) || /type=recovery/.test(window.location.search);
+}
+
+if (isPasswordRecoveryRedirect()) {
+    // Set immediately, synchronously - main.js's window.onload (which may
+    // run before or after this, depending on load timing) checks this
+    // flag before doing its normal loadPage("home").
+    window.__passwordRecoveryActive = true;
+    // Render immediately too, rather than waiting for the (unreliable)
+    // PASSWORD_RECOVERY event - renderPasswordRecoveryForm is defined
+    // further down this same file, but function declarations are
+    // hoisted, so calling it here works fine. The onAuthStateChange
+    // handler below still also calls it on a real PASSWORD_RECOVERY
+    // event, as a redundant fallback - calling this twice is harmless,
+    // it just re-renders the same form.
+    renderPasswordRecoveryForm();
+}
+
 function renderAccountBar(session) {
 
     const bar = document.getElementById("account-bar-status");
