@@ -1,12 +1,21 @@
 (function () {
 "use strict";
 
-// Same Apps Script deployment used by the entry form (form.js).
-// It needs a doGet() handler that returns the submitted teams as JSON:
+// Tier-2 rewrite: team rosters now come from Supabase (public.teams,
+// readable by anyone per supabase/schema.sql's RLS policy) instead of the
+// Apps Script's doGet(). Column names are aliased in the select so the
+// shape coming back is identical to what this file always expected:
 // [{ "playerName": "Monique", "firstName": "Ellen", "riders": ["Tadej Pogačar", "Jonas Vingegaard", ...] }, ...]
-// See README.md for the doGet() snippet to add on the Apps Script side.
-const TEAMS_DATA_URL =
-    "https://script.google.com/macros/s/AKfycbw389djdf27sw6uPJaIzZROgydiK5lC9kf2tBJYdrIPN7ujDna-9IZppaheXWshRefa/exec?action=teams";
+// - no changes needed anywhere else in this file.
+async function fetchTeamsFromSupabase() {
+    const { data, error } = await window.supabaseClient
+        .from("teams")
+        .select("playerName:player_name, firstName:first_name, riders");
+    if (error) {
+        throw error;
+    }
+    return data || [];
+}
 
 // Team rosters (from the Apps Script / Sheet) store rider names in
 // startlist convention: "SURNAME Firstname" - surname in caps, sometimes
@@ -36,11 +45,7 @@ function reorderLastnameFirst(rawName) {
 // scoring, kept in sync here since this file does its own separate
 // slug lookup for the Teams page.
 const SLUG_ALIASES = {
-    "rider/mattias-skjelmose": "rider/mattias-skjelmose-jensen",
-    "rider/david-gonzalez": "rider/david-gonzalez-lopez",
-    "rider/ivan-ramiro-sosa": "rider/ivan-rami-sosa",
-    "rider/magnus-cort": "rider/magnus-cort-nielsen",
-    "rider/xabier-mikel-azparren": "rider/xabier-mikel-azparren-irurzun"
+    "rider/mattias-skjelmose": "rider/mattias-skjelmose-jensen"
 };
 
 // Minimal escape for interpolating a value into a double-quoted HTML
@@ -96,8 +101,10 @@ async function initTeams() {
         const settings = settingsResponse.ok ? await settingsResponse.json() : {};
 
         if (isEntriesOpen(settings)) {
-            const teamsResponse = await fetch(TEAMS_DATA_URL);
-            const teams = teamsResponse.ok ? await teamsResponse.json() : [];
+            const teams = await fetchTeamsFromSupabase().catch(error => {
+                console.error(error);
+                return [];
+            });
             renderEntryCounter(Array.isArray(teams) ? teams.length : 0);
             return;
         }
@@ -129,24 +136,10 @@ async function initTeams() {
             : null;
 
         const teamTotals = latestStage && state.leaderboard_history
-            ? { ...(state.leaderboard_history[latestStage] || {}) }
+            ? (state.leaderboard_history[latestStage] || {})
             : {};
 
-        // Final classification bonus (team_final_points, from `main.py
-        // finalize`) is a one-off award stored separately from
-        // leaderboard_history - add it in here so team totals match what
-        // `python main.py leaderboard` reports after the race is over.
-        Object.entries(state.team_final_points || {}).forEach(([team, bonus]) => {
-            teamTotals[team] = (teamTotals[team] || 0) + bonus;
-        });
-
-        const teamsResponse = await fetch(TEAMS_DATA_URL);
-
-        if (!teamsResponse.ok) {
-            throw new Error("Kan de ingediende teams niet laden");
-        }
-
-        const teams = await teamsResponse.json();
+        const teams = await fetchTeamsFromSupabase();
 
         renderTeams(teams, riderPoints, teamTotals, settings.teamSize || 20, stageHistory, abandonedRiders);
         renderRiderOwnership(teams, riderPoints, abandonedRiders);
@@ -154,9 +147,9 @@ async function initTeams() {
 
     } catch (error) {
         container.innerHTML = `
-            <p>Team rosters aren't available yet.</p>
-            <p>Check that the Apps Script deployment has a <code>doGet()</code>
-            handler set up (see README.md).</p>
+            <p>Team rosters aren't available right now.</p>
+            <p>Check that assets/js/supabase-config.js has the right project URL and
+            anon key (see SETUP_GUIDE.md).</p>
         `;
         console.error(error);
     }

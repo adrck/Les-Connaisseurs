@@ -40,14 +40,35 @@ h1, h2, h3, h4 {
     color: var(--tinta);
 }
 
+/* ---------- Account bar ---------- */
+
+/* Deliberately separate from the image-mapped header nav below (whose
+   click regions are hand-tuned percentages against header.jpg) so this
+   never has to touch that fragile coordinate system. Plain text bar,
+   same font/colors as the rest of the site. */
+
+.account-bar {
+    background: var(--tinta);
+    color: #eee;
+    font-size: 13px;
+    padding: 6px 16px;
+    text-align: right;
+}
+
+.account-bar a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.account-bar a:hover {
+    color: var(--oro);
+}
+
 /* ---------- Header ---------- */
 
 header {
     background: #000;
     line-height: 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
 }
 
 .site-header-wrap {
@@ -979,6 +1000,7 @@ body.gt-tdf .jersey-chip--mountain {
     background-position: 0 0, 15px 15px;
     color: var(--tinta);
 }
+
 body.gt-tdf .scoring-table th.col-sprint,
 body.gt-tdf .jersey-chip--sprint {
     background: var(--tdfsprint);

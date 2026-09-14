@@ -16,20 +16,15 @@
 
 <link rel="stylesheet" href="assets/css/style.css">
 
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#C8102E">
-<link rel="icon" href="assets/img/icon-192.png" type="image/png">
-<link rel="apple-touch-icon" href="assets/img/icon-180.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Connaisseurs">
-
 <script data-goatcounter="https://drck.goatcounter.com/count" data-goatcounter-settings='{"no_onload": true}' async src="//gc.zgo.at/count.js"></script>
 
 </head>
 
 <body>
+
+<div class="account-bar" id="account-bar">
+    <span id="account-bar-status">&nbsp;</span>
+</div>
 
 <header>
 
@@ -72,6 +67,7 @@
     <a href="#" data-page-link="enter" onclick="loadPage('enter'); closeMobileMenu(); return false;">Mijn Team</a>
     <a href="#" data-page-link="standings" onclick="loadPage('standings'); closeMobileMenu(); return false;">Stand</a>
     <a href="#" data-page-link="teams" onclick="loadPage('teams'); closeMobileMenu(); return false;">Teams</a>
+    <a href="#" data-page-link="account" onclick="loadPage('account'); closeMobileMenu(); return false;">Mijn account</a>
     <a href="#" data-page-link="contact" onclick="loadPage('contact'); closeMobileMenu(); return false;">Contact</a>
 
 </nav>
@@ -90,17 +86,10 @@ Les Connaisseurs 2026
 
 </footer>
 
+<script src="https://unpkg.com/@supabase/supabase-js@2.112.0/dist/umd/supabase.js"></script>
+<script src="assets/js/supabase-config.js"></script>
+<script src="assets/js/supabase-client.js"></script>
 <script src="assets/js/main.js"></script>
-
-<script>
-if ("serviceWorker" in navigator) {
-    window.addEventListener("load", function () {
-        navigator.serviceWorker.register("sw.js").catch(function (err) {
-            console.error("Service worker registration failed:", err);
-        });
-    });
-}
-</script>
 
 </body>
 

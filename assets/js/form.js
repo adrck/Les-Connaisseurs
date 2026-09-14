@@ -1,8 +1,14 @@
 (function () {
 "use strict";
 
-const APPS_SCRIPT_URL =
-    "https://script.google.com/macros/s/AKfycbw389djdf27sw6uPJaIzZROgydiK5lC9kf2tBJYdrIPN7ujDna-9IZppaheXWshRefa/exec";
+// Tier-2 rewrite: team storage moved from the Google Apps Script + Sheet
+// to Supabase (see supabase/schema.sql). Identity is now a real logged-in
+// session (window.supabaseClient, set up in supabase-client.js) instead
+// of a teamnaam+PIN lookup - the PIN field and the Apps Script lookup/
+// submit calls are gone. Claiming an old pre-migration team by its old
+// teamnaam+PIN is a one-time flow on the account page (account.js), not
+// here - by the time someone reaches this page, either they already have
+// a team row (loaded below) or they're starting a brand new one.
 
 let TEAM_SIZE = 20;
 let BENCH_SIZE = 3;
@@ -10,12 +16,25 @@ let MAX_SWAPS = 3;
 let EXPECTED_RIDER_COUNT = null;
 let entriesOpen = true;
 
+// Best-effort inference of "the stage a swap made right now should be
+// tagged with", read from data/state.json's stages_processed (the same
+// field teams.js already uses to find "the latest scored stage" - see
+// its `latestStage` calculation). This assumes a swap made now applies
+// starting the NEXT stage that hasn't been scored yet. The previous
+// Apps Script backend calculated this server-side and its exact logic
+// was never visible to this rewrite - ASSUMPTION, please verify against
+// a couple of real swaps before trusting this for scoring. See
+// SETUP_GUIDE.md's "Things to double-check before trusting this with
+// real swaps" section.
+let CURRENT_STAGE = 1;
+
 let riders = [];
 let selectedRiders = []; // array of rider names, in order: first TEAM_SIZE = active, rest = bench
-let isExistingTeam = false; // becomes true once a matching name+PIN is found
-let lastLookupKey = ""; // "name|pin" for the most recently completed lookup
+let isExistingTeam = false;
+let teamRowId = null;
+let existingSwaps = []; // swaps already on the loaded team row, kept as-is and appended to
 let originalActiveSet = null; // Set of active rider names as loaded, once entriesOpen is false
-let swapsUsedSoFar = 0; // swaps already used in earlier sessions, from the lookup response
+let swapsUsedSoFar = 0;
 let openSwapPickerFor = null; // name of the active rider whose "wissel" picker is currently expanded, or null
 
 function totalSize() {
@@ -35,15 +54,62 @@ function effectiveSwapsThisEdit() {
     return count;
 }
 
+// Pairs up riders who left the active set with riders who newly entered
+// it, to build {stage, swap_out, swap_in} entries in the same shape
+// teams.json already used. Order of pairing is arbitrary among this
+// edit's changes (the count is what matters for the cost/limit rules).
+function buildNewSwapEntries() {
+    if (!originalActiveSet) return [];
+    const currentActive = new Set(selectedRiders.slice(0, TEAM_SIZE));
+
+    const outs = [];
+    originalActiveSet.forEach(name => {
+        if (!currentActive.has(name)) outs.push(name);
+    });
+
+    const ins = [];
+    currentActive.forEach(name => {
+        if (!originalActiveSet.has(name)) ins.push(name);
+    });
+
+    const entries = [];
+    for (let i = 0; i < outs.length; i++) {
+        entries.push({
+            stage: CURRENT_STAGE,
+            swap_out: outs[i],
+            swap_in: ins[i] !== undefined ? ins[i] : null
+        });
+    }
+    return entries;
+}
+
 async function initForm() {
+    const gateEl = document.getElementById("enter-gate");
+    const contentEl = document.getElementById("enter-content");
     const form = document.getElementById("team-form");
 
     if (!form) return;
 
+    const { data: { session } } = await window.supabaseClient.auth.getSession();
+
+    if (!session) {
+        gateEl.style.display = "";
+        contentEl.style.display = "none";
+        document.getElementById("enter-gate-link").addEventListener("click", (event) => {
+            event.preventDefault();
+            loadPage("account");
+        });
+        return;
+    }
+
+    gateEl.style.display = "none";
+    contentEl.style.display = "";
+
     try {
-        const [settingsResponse, ridersResponse] = await Promise.all([
+        const [settingsResponse, ridersResponse, stateResponse] = await Promise.all([
             fetch("data/settings.json"),
-            fetch("data/riders.json")
+            fetch("data/riders.json"),
+            fetch("data/state.json")
         ]);
 
         if (settingsResponse.ok) {
@@ -84,8 +150,7 @@ async function initForm() {
                 notice.style.fontWeight = "bold";
                 notice.textContent =
                     `Inschrijvingen zijn gesloten — er kunnen geen nieuwe teams meer worden ` +
-                    `aangemeld. Vul je Teamnaam + PIN in om je bestaande team te laden: je kunt ` +
-                    `dan nog tot ${MAX_SWAPS}x wisselen tussen je actieve team en je ` +
+                    `aangemeld. Je kunt nog tot ${MAX_SWAPS}x wisselen tussen je actieve team en je ` +
                     `wisselrenners (met een oplopende puntenaftrek per wissel).`;
                 document.querySelector(".rider-picker").insertAdjacentElement("beforebegin", notice);
 
@@ -103,6 +168,17 @@ async function initForm() {
 
                 const pickerEl = document.querySelector(".rider-picker");
                 if (pickerEl) pickerEl.classList.add("rider-picker--closed");
+            }
+        }
+
+        if (stateResponse.ok) {
+            try {
+                const state = await stateResponse.json();
+                if (Array.isArray(state.stages_processed) && state.stages_processed.length) {
+                    CURRENT_STAGE = Math.max(...state.stages_processed) + 1;
+                }
+            } catch (error) {
+                console.error("Kon data/state.json niet lezen voor het bepalen van de huidige etappe:", error);
             }
         }
 
@@ -130,6 +206,8 @@ async function initForm() {
             headingCount.textContent = totalSize();
         }
 
+        await loadExistingTeam(session);
+
         renderAvailableList();
         renderSelectedList();
         validateForm();
@@ -141,14 +219,6 @@ async function initForm() {
         document
             .getElementById("player-name")
             .addEventListener("input", validateForm);
-
-        document
-            .getElementById("player-pin")
-            .addEventListener("input", validateForm);
-
-        document
-            .getElementById("player-pin")
-            .addEventListener("blur", maybeLookupTeam);
 
         document
             .getElementById("rider-search-input")
@@ -164,10 +234,6 @@ async function initForm() {
     }
 }
 
-function getPinValue() {
-    return document.getElementById("player-pin").value.trim();
-}
-
 function getFirstNameValue() {
     return document.getElementById("player-firstname").value.trim();
 }
@@ -176,90 +242,59 @@ function getNameValue() {
     return document.getElementById("player-name").value.trim();
 }
 
-// Automatically checks for an existing team once both name and a valid
-// 4-digit PIN are present. Runs on blur of the PIN field so it doesn't
-// fire on every keystroke.
-async function maybeLookupTeam() {
+// Loads the current user's team row, if they already have one. Replaces
+// the old name+PIN lookup entirely - identity is the session now, so
+// there's nothing to "look up", just a single row (or none) to fetch.
+async function loadExistingTeam(session) {
 
-    const playerName = getNameValue();
-    const pin = getPinValue();
     const lookupMessage = document.getElementById("lookup-message");
 
-    if (playerName === "" || !/^[0-9]{4}$/.test(pin)) {
-        return;
-    }
+    const { data: team, error } = await window.supabaseClient
+        .from("teams")
+        .select("id, first_name, player_name, riders, swaps")
+        .eq("user_id", session.user.id)
+        .maybeSingle();
 
-    const key = playerName.toLowerCase() + "|" + pin;
-    if (key === lastLookupKey) {
-        return; // already looked this exact combination up
-    }
-
-    lookupMessage.style.color = "#555";
-    lookupMessage.style.fontWeight = "normal";
-    lookupMessage.textContent = "Controleer of er al een team bestaat...";
-
-    try {
-
-        const response = await fetch(APPS_SCRIPT_URL, {
-            method: "POST",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify({ action: "lookup", playerName, pin })
-        });
-
-        const result = await response.json();
-        lastLookupKey = key;
-
-        if (!result.success) {
-
-            isExistingTeam = false;
-            lookupMessage.style.color = "#c62828";
-            lookupMessage.style.fontWeight = "bold";
-            lookupMessage.textContent = result.error ||
-                "Er bestaat al een team met deze naam. Controleer de PIN, of gebruik een andere naam.";
-
-        } else if (result.exists) {
-
-            isExistingTeam = true;
-            swapsUsedSoFar = result.swapsUsed || 0;
-
-            document.getElementById("player-firstname").value = result.firstName || "";
-            selectedRiders = Array.isArray(result.riders) ? result.riders.slice(0, totalSize()) : [];
-            originalActiveSet = entriesOpen ? null : new Set(selectedRiders.slice(0, TEAM_SIZE));
-            openSwapPickerFor = null;
-
-            renderAvailableList();
-            renderSelectedList();
-
-            lookupMessage.style.color = "#2e7d32";
-            lookupMessage.style.fontWeight = "bold";
-            lookupMessage.textContent = entriesOpen
-                ? "Bestaand team is geladen — maak je wijziging en kies Update team."
-                : `Bestaand team is geladen. Je hebt ${Math.max(0, MAX_SWAPS - swapsUsedSoFar)} van ` +
-                  `de ${MAX_SWAPS} wissels nog over. Verplaats renners met de pijltjes om een ` +
-                  `wisselrenner actief te maken (of andersom).`;
-
-        } else {
-
-            isExistingTeam = false;
-            originalActiveSet = null;
-            lookupMessage.style.color = entriesOpen ? "#555" : "#c62828";
-            lookupMessage.style.fontWeight = entriesOpen ? "normal" : "bold";
-            lookupMessage.textContent = entriesOpen
-                ? "Nieuw team — Kies hieronder je renners."
-                : "Geen team gevonden met deze naam + PIN. Inschrijvingen zijn gesloten, dus er kan geen nieuw team meer worden aangemeld.";
-
-        }
-
-        validateForm();
-
-    } catch (error) {
-
+    if (error) {
         console.error(error);
         lookupMessage.style.color = "#c62828";
         lookupMessage.style.fontWeight = "bold";
-        lookupMessage.textContent = "Couldn't check for an existing team. You can still fill in the form below.";
-
+        lookupMessage.textContent = "Kon je team niet laden. Probeer de pagina te verversen.";
+        return;
     }
+
+    if (!team) {
+        isExistingTeam = false;
+        teamRowId = null;
+        existingSwaps = [];
+        originalActiveSet = null;
+
+        lookupMessage.style.color = entriesOpen ? "#555" : "#c62828";
+        lookupMessage.style.fontWeight = entriesOpen ? "normal" : "bold";
+        lookupMessage.textContent = entriesOpen
+            ? "Nieuw team — Kies hieronder je renners."
+            : "Je hebt nog geen team, en inschrijvingen zijn gesloten. Er kan geen nieuw team meer worden aangemeld.";
+        return;
+    }
+
+    isExistingTeam = true;
+    teamRowId = team.id;
+    existingSwaps = Array.isArray(team.swaps) ? team.swaps : [];
+    swapsUsedSoFar = existingSwaps.length;
+
+    document.getElementById("player-firstname").value = team.first_name || "";
+    document.getElementById("player-name").value = team.player_name || "";
+    selectedRiders = Array.isArray(team.riders) ? team.riders.slice(0, totalSize()) : [];
+    originalActiveSet = entriesOpen ? null : new Set(selectedRiders.slice(0, TEAM_SIZE));
+    openSwapPickerFor = null;
+
+    lookupMessage.style.color = "#2e7d32";
+    lookupMessage.style.fontWeight = "bold";
+    lookupMessage.textContent = entriesOpen
+        ? "Jouw team is geladen — pas het aan en kies Update team."
+        : `Jouw team is geladen. Je hebt ${Math.max(0, MAX_SWAPS - swapsUsedSoFar)} van ` +
+          `de ${MAX_SWAPS} wissels nog over. Verplaats renners met de pijltjes om een ` +
+          `wisselrenner actief te maken (of andersom).`;
 
 }
 
@@ -543,12 +578,10 @@ function validateForm() {
 
     const firstName = getFirstNameValue();
     const playerName = getNameValue();
-    const pin = getPinValue();
 
     const valid =
         firstName !== "" &&
         playerName !== "" &&
-        /^[0-9]{4}$/.test(pin) &&
         selectedRiders.length > 0;
 
     submitButton.disabled = !valid;
@@ -622,6 +655,8 @@ async function submitForm(event) {
         }
     }
 
+    let newSwapEntries = [];
+
     if (!entriesOpen) {
         const effectiveSwaps = effectiveSwapsThisEdit();
         const remaining = MAX_SWAPS - swapsUsedSoFar - effectiveSwaps;
@@ -636,7 +671,7 @@ async function submitForm(event) {
 
         if (effectiveSwaps > 0) {
             // Indicative only - the actual point deduction is calculated
-            // server-side (scoring.py), this is just so the player knows
+            // by the scoring pipeline, this is just so the player knows
             // roughly what to expect before confirming.
             const costTable = [5, 10, 15];
             let cost = 0;
@@ -653,15 +688,10 @@ async function submitForm(event) {
             if (!proceed) {
                 return;
             }
+
+            newSwapEntries = buildNewSwapEntries();
         }
     }
-
-    const submission = {
-        firstName: getFirstNameValue(),
-        playerName: getNameValue(),
-        pin: getPinValue(),
-        riders: selectedRiders
-    };
 
     const submitButton = document.getElementById("submit-btn");
     const formMessage = document.getElementById("form-message");
@@ -669,32 +699,48 @@ async function submitForm(event) {
     submitButton.disabled = true;
     submitButton.textContent = wasUpdate ? "Updating..." : "Submitting...";
 
+    const { data: { session } } = await window.supabaseClient.auth.getSession();
+
+    if (!session) {
+        alert("Je sessie is verlopen. Log opnieuw in.");
+        submitButton.disabled = false;
+        validateForm();
+        return;
+    }
+
+    const rowData = {
+        first_name: getFirstNameValue(),
+        player_name: getNameValue(),
+        riders: selectedRiders
+    };
+
     try {
 
-        const response = await fetch(APPS_SCRIPT_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "text/plain;charset=utf-8"
-            },
-            body: JSON.stringify(submission)
-        });
+        let error;
 
-        const result = await response.json();
+        if (wasUpdate) {
+            rowData.swaps = existingSwaps.concat(newSwapEntries);
+            ({ error } = await window.supabaseClient
+                .from("teams")
+                .update(rowData)
+                .eq("id", teamRowId));
+        } else {
+            rowData.swaps = [];
+            rowData.user_id = session.user.id;
+            rowData.claimed = true;
+            ({ error } = await window.supabaseClient
+                .from("teams")
+                .insert(rowData));
+        }
 
-        if (result.success) {
+        if (!error) {
 
             alert(wasUpdate
-                ? (result.message || "Jouw team is succesvol bijgewerkt!")
+                ? "Jouw team is succesvol bijgewerkt!"
                 : "Jouw team is succesvol ingediend!");
 
-            document.getElementById("team-form").reset();
-            selectedRiders = [];
-            isExistingTeam = false;
-            lastLookupKey = "";
-            originalActiveSet = null;
-            swapsUsedSoFar = 0;
+            await loadExistingTeam(session);
             openSwapPickerFor = null;
-            document.getElementById("lookup-message").textContent = "";
             const swapEl = document.getElementById("swap-counter");
             if (swapEl) swapEl.textContent = "";
             renderAvailableList();
@@ -702,7 +748,10 @@ async function submitForm(event) {
 
         } else {
 
-            alert(result.error || "Indienen mislukt.");
+            console.error(error);
+            formMessage.style.color = "#c62828";
+            formMessage.style.fontWeight = "bold";
+            formMessage.textContent = error.message || "Indienen mislukt.";
 
         }
 

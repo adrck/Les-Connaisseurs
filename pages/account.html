@@ -1,0 +1,84 @@
+<h2>Mijn account</h2>
+
+<div id="account-loading">
+    <p>Bezig met laden...</p>
+</div>
+
+<div id="account-logged-out" class="card" style="display:none;">
+
+    <h3>Account aanmaken</h3>
+    <p>Nieuw hier? Maak een account aan met je e-mailadres en een zelfgekozen wachtwoord.</p>
+
+    <form id="signup-form">
+        <div class="form-group">
+            <label for="signup-email">E-mailadres</label>
+            <input type="email" id="signup-email" name="email" required autocomplete="email">
+        </div>
+        <div class="form-group">
+            <label for="signup-password">Wachtwoord <span class="field-hint">(minimaal 6 tekens)</span></label>
+            <input type="password" id="signup-password" name="password" required minlength="6" autocomplete="new-password">
+        </div>
+        <p id="signup-message" class="form-message"></p>
+        <button type="submit" id="signup-btn">Account aanmaken</button>
+    </form>
+
+    <h3 style="margin-top:28px;">Al een account?</h3>
+
+    <form id="login-form">
+        <div class="form-group">
+            <label for="login-email">E-mailadres</label>
+            <input type="email" id="login-email" name="email" required autocomplete="email">
+        </div>
+        <div class="form-group">
+            <label for="login-password">Wachtwoord</label>
+            <input type="password" id="login-password" name="password" required autocomplete="current-password">
+        </div>
+        <p id="login-message" class="form-message"></p>
+        <button type="submit" id="login-btn">Inloggen</button>
+    </form>
+
+    <p style="margin-top:14px;">
+        <a href="#" id="forgot-password-link">Wachtwoord vergeten?</a>
+    </p>
+    <p id="forgot-password-message" class="form-message"></p>
+
+</div>
+
+<div id="account-logged-in" class="card" style="display:none;">
+
+    <p id="account-email-line"></p>
+
+    <div id="account-has-team" style="display:none;">
+        <p id="account-team-line" class="form-message"></p>
+        <p><a href="#" id="account-goto-team">Ga naar Mijn Team &rarr;</a></p>
+    </div>
+
+    <div id="account-no-team" style="display:none;">
+
+        <h3>Had je al een team van vroeger?</h3>
+        <p>
+            Als je vroeger (voor deze accounts bestonden) al een team had aangemeld met een
+            teamnaam + PIN, kun je dat hier eenmalig aan je nieuwe account koppelen. Daarna
+            werkt de teamnaam/PIN niet meer - je logt voortaan gewoon in met je account.
+        </p>
+
+        <form id="claim-form">
+            <div class="form-group">
+                <label for="claim-player-name">Teamnaam (van vroeger)</label>
+                <input type="text" id="claim-player-name" name="playerName" required>
+            </div>
+            <div class="form-group">
+                <label for="claim-pin">Team PIN</label>
+                <input type="text" id="claim-pin" name="pin" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="off" required>
+            </div>
+            <p id="claim-message" class="form-message"></p>
+            <button type="submit" id="claim-btn">Team koppelen</button>
+        </form>
+
+        <h3 style="margin-top:28px;">Of begin een nieuw team</h3>
+        <p>Geen oud team om te koppelen? Ga direct naar Mijn Team om er een samen te stellen.</p>
+        <p><a href="#" id="account-goto-team-new">Ga naar Mijn Team &rarr;</a></p>
+
+    </div>
+
+</div>
