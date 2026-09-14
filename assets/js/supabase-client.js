@@ -5,6 +5,21 @@
 // supabase-config.js (SUPABASE_URL/SUPABASE_ANON_KEY) and the Supabase
 // JS CDN script both being loaded before this file - see index.html.
 
+// TEMPORARY DIAGNOSTIC - remove once the signup-confirmation redirect
+// shape is confirmed. Writes the raw hash/search/full URL to localStorage
+// BEFORE createClient() runs (and therefore before the SDK gets any
+// chance to parse/strip it) - localStorage persists across the page load
+// and across tabs on this site, so you don't need DevTools open at the
+// moment the confirmation link opens (which it won't be, since Gmail
+// opens the link in a new tab). Open DevTools any time afterward, on any
+// tab on this site, and run:
+//     localStorage.getItem('__diag_hash')
+//     localStorage.getItem('__diag_search')
+//     localStorage.getItem('__diag_href')
+window.localStorage.setItem("__diag_hash", window.location.hash);
+window.localStorage.setItem("__diag_search", window.location.search);
+window.localStorage.setItem("__diag_href", window.location.href);
+
 window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Detects a password-recovery redirect directly from the URL, rather than
