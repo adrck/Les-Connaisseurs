@@ -45,7 +45,11 @@ function reorderLastnameFirst(rawName) {
 // scoring, kept in sync here since this file does its own separate
 // slug lookup for the Teams page.
 const SLUG_ALIASES = {
-    "rider/mattias-skjelmose": "rider/mattias-skjelmose-jensen"
+    "rider/mattias-skjelmose": "rider/mattias-skjelmose-jensen",
+    "rider/david-gonzalez": "rider/david-gonzalez-lopez",
+    "rider/ivan-ramiro-sosa": "rider/ivan-rami-sosa",
+    "rider/magnus-cort": "rider/magnus-cort-nielsen",
+    "rider/xabier-mikel-azparren": "rider/xabier-mikel-azparren-irurzun"
 };
 
 // Minimal escape for interpolating a value into a double-quoted HTML
@@ -136,8 +140,16 @@ async function initTeams() {
             : null;
 
         const teamTotals = latestStage && state.leaderboard_history
-            ? (state.leaderboard_history[latestStage] || {})
+            ? { ...(state.leaderboard_history[latestStage] || {}) }
             : {};
+
+        // Final classification bonus (team_final_points, from `main.py
+        // finalize`) is a one-off award stored separately from
+        // leaderboard_history - add it in here so team totals match what
+        // `python main.py leaderboard` reports after the race is over.
+        Object.entries(state.team_final_points || {}).forEach(([team, bonus]) => {
+            teamTotals[team] = (teamTotals[team] || 0) + bonus;
+        });
 
         const teams = await fetchTeamsFromSupabase();
 
