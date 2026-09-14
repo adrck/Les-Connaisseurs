@@ -37,6 +37,32 @@ if (isPasswordRecoveryRedirect()) {
     renderPasswordRecoveryForm();
 }
 
+// Same idea as isPasswordRecoveryRedirect() above, for the OTHER email
+// link Supabase sends: the signup confirmation link. Without this, a
+// freshly confirmed participant just lands on whatever page the hash
+// falls through to (usually home, since the auth hash fragment isn't a
+// real page name - see main.js's pageFromHash()) with no acknowledgment
+// beyond the small "Ingelogd als..." line in the account bar - easy to
+// miss, no clear "yes, that worked" moment. ASSUMPTION, not yet verified
+// against a real confirmation email from this project's Supabase setup:
+// this expects "type=signup" in the redirect URL, mirroring the
+// already-confirmed-working "type=recovery" case above. Check this by
+// signing up a fresh test account and inspecting location.hash in the
+// browser console right after clicking the email link, before assuming
+// this fires correctly in production.
+function isSignupConfirmationRedirect() {
+    return /type=signup/.test(window.location.hash) || /type=signup/.test(window.location.search);
+}
+
+if (isSignupConfirmationRedirect()) {
+    // Same synchronous-flag pattern as password recovery above - main.js's
+    // window.onload checks this before doing its normal loadPage("home").
+    window.__signupConfirmationActive = true;
+    // renderSignupConfirmation is defined further down this file; hoisted,
+    // same as renderPasswordRecoveryForm above.
+    renderSignupConfirmation();
+}
+
 function renderAccountBar(session) {
 
     const bar = document.getElementById("account-bar-status");
@@ -168,6 +194,48 @@ async function handlePasswordRecoverySubmit(event) {
     document.getElementById("recovery-goto-home").addEventListener("click", (clickEvent) => {
         clickEvent.preventDefault();
         loadPage("home");
+    });
+
+}
+
+// Completes the signup-confirmation flow: shows an explicit "yes, that
+// worked" message instead of silently dropping the person on the
+// homepage already logged in. Takes over #content directly (rather than
+// going through loadPage()), same reasoning as renderPasswordRecoveryForm
+// above - works no matter which page the confirmation link happens to
+// land on, and regardless of whether main.js's initial loadPage("home")
+// has already run (see the window.__signupConfirmationActive guard in
+// main.js).
+function renderSignupConfirmation() {
+
+    const content = document.getElementById("content");
+    if (!content) return;
+
+    content.innerHTML = `
+        <h2>Mijn account</h2>
+        <div class="card">
+            <p style="color:#2e7d32; font-weight:bold;">Je e-mailadres is bevestigd — je bent nu ingelogd!</p>
+            <p>Ga je team samenstellen, of bekijk eerst je accountgegevens.</p>
+            <p><a href="#" id="signup-confirm-goto-team">Ga naar Mijn Team &rarr;</a></p>
+            <p><a href="#" id="signup-confirm-goto-account">Ga naar Mijn account &rarr;</a></p>
+        </div>
+    `;
+
+    document.body.className = "page-account";
+
+    // Either link clears the flag and hands off to a normal loadPage()
+    // navigation - from this point on the app behaves exactly as if the
+    // person had just clicked "Mijn account" or "Mijn Team" from the nav.
+    document.getElementById("signup-confirm-goto-team").addEventListener("click", (event) => {
+        event.preventDefault();
+        window.__signupConfirmationActive = false;
+        loadPage("enter");
+    });
+
+    document.getElementById("signup-confirm-goto-account").addEventListener("click", (event) => {
+        event.preventDefault();
+        window.__signupConfirmationActive = false;
+        loadPage("account");
     });
 
 }

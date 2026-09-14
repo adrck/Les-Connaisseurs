@@ -133,13 +133,15 @@ window.addEventListener("hashchange", handleHashNavigation);
 // Load the page the URL points at when the site opens - the shared hash
 // route if one's present (so a bookmarked/shared #teams link lands
 // directly on Teams), Home otherwise. Skipped entirely if a password-
-// reset link just landed us here with a recovery form already showing
-// (see supabase-client.js's PASSWORD_RECOVERY handling) - without this
-// guard, this would immediately overwrite that form with whatever page
-// the hash happens to point at.
+// reset or signup-confirmation link just landed us here with its own
+// message already showing (see supabase-client.js's PASSWORD_RECOVERY
+// and signup-confirmation handling) - without this guard, this would
+// immediately overwrite that message with whatever page the auth
+// redirect's hash happens to fall through to.
 window.onload = function () {
 
     if (window.__passwordRecoveryActive) return;
+    if (window.__signupConfirmationActive) return;
 
     loadPage(pageFromHash(), { pushHistory: false });
 
