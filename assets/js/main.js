@@ -12,6 +12,19 @@ let currentPage = null;
 
 async function loadPage(page, options = {}) {
 
+    // TEMPORARY DIAGNOSTIC - confirms or rules out whether something
+    // (most likely a stray "hashchange" event, see handleHashNavigation
+    // below) is calling loadPage("home") and overwriting the signup-
+    // confirmation/password-recovery takeover screens right after they
+    // render. Remove once resolved. Check via:
+    //     localStorage.getItem('__diag_loadpage_calls')
+    try {
+        const prior = window.localStorage.getItem("__diag_loadpage_calls") || "[]";
+        const calls = JSON.parse(prior);
+        calls.push({ page, pushHistory: options.pushHistory, at: Date.now() });
+        window.localStorage.setItem("__diag_loadpage_calls", JSON.stringify(calls));
+    } catch (e) { /* diagnostic only, never let this break real navigation */ }
+
     const { pushHistory = true } = options;
 
     if (!VALID_PAGES.includes(page)) {
@@ -120,7 +133,19 @@ function pageFromHash() {
 // already running (pushState-driven navigation, i.e. clicking a nav link,
 // never fires either of these events, so there's no risk of loadPage()
 // re-running twice for the same click).
+//
+// Guarded against firing while a password-recovery or signup-confirmation
+// takeover screen is showing (see supabase-client.js) - those screens
+// deliberately skip loadPage() when they render, so currentPage is still
+// null/stale at that point. If the Supabase SDK's own URL cleanup ever
+// clears location.hash via a direct assignment (rather than
+// history.replaceState, which does NOT fire this event), that produces a
+// real "hashchange" event with nothing to compare currentPage against -
+// which would otherwise look exactly like "the user navigated to home"
+// and load straight over whichever takeover screen just rendered, before
+// the person ever gets to see it.
 function handleHashNavigation() {
+    if (window.__passwordRecoveryActive || window.__signupConfirmationActive) return;
     const target = pageFromHash();
     if (target !== currentPage) {
         loadPage(target, { pushHistory: false });
