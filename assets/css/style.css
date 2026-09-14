@@ -1,7 +1,7 @@
 /* ---------- Global ---------- */
 
 :root {
-    --rojo: #C8102E;        /* La Roja — leader's jersey */
+    --rojo: #C8102E;        /* La Roja â€” leader's jersey */
     --rojo-oscuro: #94081F;
     --oro: #E3A100;         /* sun-baked hills / Spanish gold */
     --verde: #2F6F4E;       /* points jersey */
@@ -10,7 +10,7 @@
     --tdflead: #FFD100;       /* Tdf yellow jersey */
     --tdfsprint: #00a93c;     /* Tdf green jersey */
     --tdfyoung: #FFFFFF;      /* Tdf young riders jersey */
-    --tdfmont: #E4002B;       /* Tdf mountain jersey — dot color for the polka-dot pattern (see .jersey-chip--mountain / th.col-mountain under body.gt-tdf). Swap this if you'd like a different dot color. */
+    --tdfmont: #E4002B;       /* Tdf mountain jersey â€” dot color for the polka-dot pattern (see .jersey-chip--mountain / th.col-mountain under body.gt-tdf). Swap this if you'd like a different dot color. */
     --girolead: #FF286E;      /* Giro pink jersey */
     --girosprint: #8E1959;    /* Giro sprint riders jersey */
     --giromont: #73BEEF;      /* Giro mountain jersey */
@@ -1245,4 +1245,26 @@ tr.rider-breakdown-row {
 .rider-overview-table th:nth-child(4),
 .rider-overview-table td:nth-child(4) {
     text-align: right;
+}
+
+/* ---------- Account page: tighter form spacing ---------- */
+
+/* The global button/.form-message spacing (30px above every button,
+   plus a message paragraph with its own margin and reserved min-height)
+   is sized for the long "Mijn Team" form. On the account page's short
+   2-field login/signup/claim forms, that same spacing reads as a big gap
+   of empty space between the password field and its submit button - this
+   tightens just these three forms without changing spacing anywhere
+   else on the site. */
+#signup-form button,
+#login-form button,
+#claim-form button {
+    margin-top: 12px;
+}
+
+#signup-form .form-message,
+#login-form .form-message,
+#claim-form .form-message {
+    margin: 6px 0;
+    min-height: 0;
 }
