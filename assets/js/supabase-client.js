@@ -19,6 +19,19 @@
 const isSignupConfirmationRedirect =
     /type=signup/.test(window.location.hash) || /type=signup/.test(window.location.search);
 
+// TEMPORARY CHECKPOINT DIAGNOSTIC - the previous fix (capturing this
+// boolean before createClient()) is confirmed deployed and correct, but
+// the confirmation message still isn't showing. Rather than guess again,
+// this logs a marker at each step of the actual execution path so we can
+// see exactly how far it gets. Remove once resolved. Check afterward via
+// DevTools, any tab on the site:
+//     localStorage.getItem('__diag_step1_captured')
+//     localStorage.getItem('__diag_step2_ifentered')
+//     localStorage.getItem('__diag_step3_renderstart')
+//     localStorage.getItem('__diag_step4_contentfound')
+//     localStorage.getItem('__diag_step5_onload_flag')
+window.localStorage.setItem("__diag_step1_captured", String(isSignupConfirmationRedirect));
+
 window.supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Detects a password-recovery redirect directly from the URL, rather than
@@ -72,6 +85,7 @@ if (isSignupConfirmationRedirect) {
     // Set immediately, synchronously - main.js's window.onload checks
     // this before doing its normal loadPage("home").
     window.__signupConfirmationActive = true;
+    window.localStorage.setItem("__diag_step2_ifentered", "true, flag set to " + window.__signupConfirmationActive);
     // renderSignupConfirmation is defined further down this file; hoisted,
     // same as renderPasswordRecoveryForm above.
     renderSignupConfirmation();
@@ -222,7 +236,10 @@ async function handlePasswordRecoverySubmit(event) {
 // main.js).
 function renderSignupConfirmation() {
 
+    window.localStorage.setItem("__diag_step3_renderstart", "true");
+
     const content = document.getElementById("content");
+    window.localStorage.setItem("__diag_step4_contentfound", content ? "found" : "NULL - element missing");
     if (!content) return;
 
     content.innerHTML = `
