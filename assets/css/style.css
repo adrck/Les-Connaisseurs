@@ -840,6 +840,57 @@ th.sortable:hover {
     margin-bottom: 20px;
 }
 
+/* Season selector - sits next to the "Klassement" heading rather than
+   stacked full-width above it like the etappe selector below. Uses its
+   own compact sizing instead of the global label/select defaults (full
+   width, block display, bold label) which are tuned for actual forms
+   (signup/login/claim), not a quick inline filter next to a heading. */
+.results-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+}
+
+.results-header h2 {
+    margin: 0;
+}
+
+.season-select-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.season-select-group label {
+    display: inline;
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+#season-select {
+    width: auto;
+    max-width: 180px;
+    padding: 6px 10px;
+    margin-top: 0;
+    font-size: 14px;
+}
+
+@media (max-width: 700px) {
+
+    .results-header {
+        justify-content: flex-start;
+    }
+
+    #season-select {
+        max-width: none;
+    }
+
+}
+
 /* ---------- Homepage: hero image ---------- */
 
 .home-hero-wrap {
