@@ -1,22 +1,49 @@
 <section id="results">
     <h2>Klassement</h2>
 
-    <label for="stage-select">Klassement na etappe:</label>
-    <select id="stage-select"></select>
+    <label for="season-select">Seizoen:</label>
+    <select id="season-select">
+        <option value="current">Huidig</option>
+    </select>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Plaats</th>
-                <th>Team</th>
-                <th>Punten</th>
-                <th>+/- vs vorige etappe</th>
-            </tr>
-        </thead>
+    <div id="current-season-view">
 
-        <tbody id="leaderboard-body">
-        </tbody>
-    </table>
+        <label for="stage-select">Klassement na etappe:</label>
+        <select id="stage-select"></select>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Plaats</th>
+                    <th>Team</th>
+                    <th>Punten</th>
+                    <th>+/- vs vorige etappe</th>
+                </tr>
+            </thead>
+
+            <tbody id="leaderboard-body">
+            </tbody>
+        </table>
+
+    </div>
+
+    <div id="archived-season-view" style="display:none;">
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Plaats</th>
+                    <th>Team</th>
+                    <th>Punten</th>
+                </tr>
+            </thead>
+
+            <tbody id="archived-leaderboard-body">
+            </tbody>
+        </table>
+
+    </div>
+
 </section>
 
 <div class="card scoring-card" id="stage-breakdown-card">

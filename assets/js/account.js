@@ -98,6 +98,11 @@ async function render() {
     document.getElementById("account-email-line").textContent =
         `Ingelogd als ${session.user.email}`;
 
+    // Independent of the team-status fetch below (and its own error
+    // handling) - a problem loading current-team status shouldn't also
+    // hide someone's history, and vice versa.
+    loadHistory(session);
+
     const { data: team, error } = await window.supabaseClient
         .from("teams")
         .select("id, player_name, claimed")
@@ -130,6 +135,93 @@ async function render() {
         hasTeamEl.style.display = "none";
         noTeamEl.style.display = "";
     }
+
+}
+
+// Grand tour codes match the gt-tdf/gt-lav/gt-gdi body-class convention
+// already used for jersey colors (see style.css) - reused here for
+// display names. Sort order for tours within the same season_year uses
+// the REVERSE of their real calendar order (Vuelta -> Tour -> Giro),
+// since the page's whole principle is "most recent first" - the most
+// recently finished tour of a season should lead, consistent with
+// season_year itself also sorting newest-first.
+const GRAND_TOUR_NAMES = { tdf: "Tour de France", lav: "Vuelta a España", gdi: "Giro d'Italia" };
+const GRAND_TOUR_CALENDAR_ORDER = { gdi: 1, tdf: 2, lav: 3 };
+
+// Shows every past season this account has an archived result for (see
+// public.season_archive - populated by scripts/archive_season.py after
+// each grand tour concludes). Independent of whether the account
+// currently has a live team - someone could have history from a prior
+// season with no team entered yet this season, or vice versa.
+//
+// Deliberately does NOT try to split each season's roster into active/
+// bench: season_archive only stores the flat rider list, not the
+// team_size that was in effect when that season was archived. Since
+// team_size lives in data/settings.json and isn't itself versioned
+// per-season, assuming today's value applied to a past season could
+// silently mis-split an old roster if that setting is ever changed in
+// the future - showing the full list, unsplit, is always correct
+// regardless.
+async function loadHistory(session) {
+
+    const historyEl = document.getElementById("account-history");
+    const listEl = document.getElementById("account-history-list");
+    if (!historyEl || !listEl) return;
+
+    const { data: rows, error } = await window.supabaseClient
+        .from("season_archive")
+        .select("grand_tour, season_year, final_rank, final_points, riders, swaps")
+        .eq("user_id", session.user.id);
+
+    if (!historyEl.isConnected) return; // navigated away while awaiting
+
+    if (error) {
+        console.error(error);
+        historyEl.style.display = "none";
+        return;
+    }
+
+    if (!rows || rows.length === 0) {
+        historyEl.style.display = "none";
+        return;
+    }
+
+    const sorted = rows.slice().sort((a, b) => {
+        if (b.season_year !== a.season_year) return b.season_year - a.season_year;
+        return (GRAND_TOUR_CALENDAR_ORDER[b.grand_tour] || 0) - (GRAND_TOUR_CALENDAR_ORDER[a.grand_tour] || 0);
+    });
+
+    listEl.innerHTML = sorted.map(row => {
+
+        const tourName = GRAND_TOUR_NAMES[row.grand_tour] || row.grand_tour;
+        const rankLabel = row.final_rank != null ? `${row.final_rank}e plaats` : "geen eindklassement";
+        const pointsLabel = row.final_points != null ? ` - ${row.final_points} pts` : "";
+
+        const riders = Array.isArray(row.riders) ? row.riders : [];
+        const swaps = Array.isArray(row.swaps) ? row.swaps : [];
+
+        const riderRows = riders.map(name => `<li>${name}</li>`).join("");
+
+        const swapsBlock = swaps.length ? `
+            <div class="team-bench-heading">Wissels</div>
+            <ul class="team-riders team-riders--bench">
+                ${swaps.map(s => `<li>Etappe ${s.stage}: ${s.swap_out} &rarr; ${s.swap_in}</li>`).join("")}
+            </ul>
+        ` : "";
+
+        return `
+            <div class="team-card">
+                <h3>${tourName} ${row.season_year} <span class="team-total">${rankLabel}${pointsLabel}</span></h3>
+                <ul class="team-riders">
+                    ${riderRows}
+                </ul>
+                ${swapsBlock}
+            </div>
+        `;
+
+    }).join("");
+
+    historyEl.style.display = "";
 
 }
 

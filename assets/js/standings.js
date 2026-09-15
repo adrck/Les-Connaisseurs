@@ -30,6 +30,22 @@ const FINAL_CLASSIFICATION_LABELS = { gc: "Leider", kom: "Berg", sprint: "Sprint
 const TAKEOVER_POINTS = 3;
 const AGGRESSIVE_POINTS = 5;
 
+// Grand tour codes match the gt-tdf/gt-lav/gt-gdi body-class convention
+// already used for jersey colors, and the same names/ordering
+// pages/account.html's "Jouw geschiedenis" section uses - kept in sync
+// by hand between the two files (neither can import from the other in
+// this plain-script setup).
+const GRAND_TOUR_NAMES = { tdf: "Tour de France", lav: "Vuelta a España", gdi: "Giro d'Italia" };
+const GRAND_TOUR_CALENDAR_ORDER = { gdi: 1, tdf: 2, lav: 3 };
+
+// Cache of already-fetched archived-season rows, keyed by
+// "grandTour:seasonYear" - avoids a fresh Supabase round-trip every time
+// someone flips back and forth between seasons in the dropdown within
+// the same page visit. Never invalidated within a page load, since an
+// already-archived season's final_points/final_rank aren't expected to
+// change while someone is browsing.
+const archivedSeasonCache = {};
+
 // Jerseys as they appear in a stage's raw result JSON, mapped to the
 // jersey-chip--* CSS suffix and Dutch label used on the Rules page.
 const JERSEY_FIELDS = [
@@ -86,6 +102,7 @@ async function loadResults() {
         setupStageSelect();
         setupLeaderboardCaption();
         await setupJerseyTheme();
+        await loadSeasonOptions();
 
         const latestStage = stageOrder[stageOrder.length - 1];
         displayLeaderboard(latestStage);
@@ -127,6 +144,181 @@ async function setupJerseyTheme() {
     } catch (error) {
         console.error(error);
     }
+
+}
+
+// Populates the season dropdown with "Huidig" plus one option per
+// distinct (grand_tour, season_year) already archived in
+// public.season_archive - publicly readable, same as the live team
+// data, so this works whether or not the visitor is logged in. Self-
+// contained try/catch (same pattern as setupJerseyTheme above) so a
+// Supabase hiccup here can never take down the live leaderboard, which
+// has already loaded successfully from state.json by the time this runs.
+async function loadSeasonOptions() {
+
+    const seasonSelect = document.getElementById("season-select");
+    if (!seasonSelect || !window.supabaseClient) return;
+
+    try {
+
+        const { data, error } = await window.supabaseClient
+            .from("season_archive")
+            .select("grand_tour, season_year");
+
+        if (error || !data || data.length === 0) return;
+
+        const seen = new Set();
+        const seasons = [];
+        data.forEach(row => {
+            const key = `${row.grand_tour}:${row.season_year}`;
+            if (seen.has(key)) return;
+            seen.add(key);
+            seasons.push({ grand_tour: row.grand_tour, season_year: row.season_year });
+        });
+
+        // Most recent first, same convention as pages/account.html's
+        // "Jouw geschiedenis" - season_year descending, and within a
+        // shared year, the most recently FINISHED tour first (reverse
+        // calendar order: Vuelta, then Tour, then Giro).
+        seasons.sort((a, b) => {
+            if (b.season_year !== a.season_year) return b.season_year - a.season_year;
+            return (GRAND_TOUR_CALENDAR_ORDER[b.grand_tour] || 0) - (GRAND_TOUR_CALENDAR_ORDER[a.grand_tour] || 0);
+        });
+
+        const optionsHtml = seasons.map(s => {
+            const label = `${GRAND_TOUR_NAMES[s.grand_tour] || s.grand_tour} ${s.season_year}`;
+            return `<option value="${s.grand_tour}:${s.season_year}">${escapeHtml(label)}</option>`;
+        }).join("");
+
+        seasonSelect.insertAdjacentHTML("beforeend", optionsHtml);
+        seasonSelect.addEventListener("change", handleSeasonChange);
+
+    } catch (error) {
+        console.error(error);
+    }
+
+}
+
+function showCurrentSeasonView() {
+
+    const currentView = document.getElementById("current-season-view");
+    const archivedView = document.getElementById("archived-season-view");
+    const breakdownCard = document.getElementById("stage-breakdown-card");
+
+    if (currentView) currentView.style.display = "";
+    if (archivedView) archivedView.style.display = "none";
+    if (breakdownCard) breakdownCard.style.display = "";
+
+    // Re-render from the already-loaded state.json data in memory - no
+    // re-fetch needed, this is exactly what loadResults() itself does on
+    // first load.
+    const stageSelect = document.getElementById("stage-select");
+    const stage = stageSelect ? Number(stageSelect.value) : stageOrder[stageOrder.length - 1];
+    displayLeaderboard(stage);
+    renderStageBreakdown(stage);
+
+}
+
+function showArchivedSeasonView() {
+
+    const currentView = document.getElementById("current-season-view");
+    const archivedView = document.getElementById("archived-season-view");
+    const breakdownCard = document.getElementById("stage-breakdown-card");
+
+    // No stage-by-stage detail exists for an archived season -
+    // season_archive only ever stored the final snapshot - so the whole
+    // breakdown card is hidden, not just emptied, rather than showing a
+    // "no data" message that would look like a bug for every past season.
+    if (currentView) currentView.style.display = "none";
+    if (archivedView) archivedView.style.display = "";
+    if (breakdownCard) breakdownCard.style.display = "none";
+
+}
+
+async function handleSeasonChange() {
+
+    const seasonSelect = document.getElementById("season-select");
+    if (!seasonSelect) return;
+
+    const value = seasonSelect.value;
+
+    if (value === "current") {
+        showCurrentSeasonView();
+        return;
+    }
+
+    const [grandTour, seasonYearStr] = value.split(":");
+    const seasonYear = Number(seasonYearStr);
+
+    showArchivedSeasonView();
+    await renderArchivedSeason(grandTour, seasonYear);
+
+}
+
+// Renders the final standings for one past (grand_tour, season_year) -
+// rank, team, points only, no stage detail (none was ever archived).
+// Shows team.player_name (the full team name, e.g. "Team Quersos"), NOT
+// the first_name/override key the live leaderboard displays elsewhere on
+// this page - that key convention (see teams.js's teamTotalsKey()) exists
+// for matching against state.json, not for display, and replicating it
+// here would mean a fourth hand-synced copy of TEAM_KEY_OVERRIDES for a
+// purely cosmetic choice. player_name is what the Teams page already
+// shows, and is more identifiable a year later than a bare first name.
+async function renderArchivedSeason(grandTour, seasonYear) {
+
+    const tbody = document.getElementById("archived-leaderboard-body");
+    if (!tbody || !window.supabaseClient) return;
+
+    const cacheKey = `${grandTour}:${seasonYear}`;
+
+    let rows = archivedSeasonCache[cacheKey];
+
+    if (!rows) {
+        try {
+            const { data, error } = await window.supabaseClient
+                .from("season_archive")
+                .select("player_name, final_points, final_rank")
+                .eq("grand_tour", grandTour)
+                .eq("season_year", seasonYear);
+
+            if (error) {
+                console.error(error);
+                tbody.innerHTML = `<tr><td colspan="3">Resultaten konden niet geladen worden.</td></tr>`;
+                return;
+            }
+
+            rows = data || [];
+            archivedSeasonCache[cacheKey] = rows;
+
+        } catch (error) {
+            console.error(error);
+            tbody.innerHTML = `<tr><td colspan="3">Resultaten konden niet geladen worden.</td></tr>`;
+            return;
+        }
+    }
+
+    if (rows.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="3">Geen resultaten gevonden voor dit seizoen.</td></tr>`;
+        return;
+    }
+
+    // Ranked teams first (by their stored final_rank, ascending), any
+    // unranked ones (final_rank left null - see archive_season.py's own
+    // "never fabricate a rank" rule) after, in no particular order.
+    const sorted = rows.slice().sort((a, b) => {
+        if (a.final_rank === null && b.final_rank === null) return 0;
+        if (a.final_rank === null) return 1;
+        if (b.final_rank === null) return -1;
+        return a.final_rank - b.final_rank;
+    });
+
+    tbody.innerHTML = sorted.map(row => `
+        <tr>
+            <td>${row.final_rank !== null ? row.final_rank : "—"}</td>
+            <td>${escapeHtml(row.player_name)}</td>
+            <td>${row.final_points !== null ? row.final_points : "—"}</td>
+        </tr>
+    `).join("");
 
 }
 
