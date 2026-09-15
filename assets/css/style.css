@@ -66,12 +66,26 @@ h1, h2, h3, h4 {
 
 /* ---------- Header ---------- */
 
-header {
-    background: #000;
-    line-height: 0;
+/* ---------- Sticky header group (account bar + header, stuck together) ---------- */
+
+/* Wraps .account-bar and <header> so they stick as one unit - previously
+   only <header> was sticky, which meant the account bar (sitting above
+   it in the DOM) scrolled out of view immediately and stayed hidden
+   until scrolling all the way back to the top. Sticking the WRAPPER
+   instead of each element separately avoids needing to know either
+   element's exact rendered height (which pure-CSS stacked sticky
+   positioning would otherwise require, to stop the header overlapping
+   the account bar) - children just keep their natural stacking order
+   inside it. */
+#site-header-group {
     position: sticky;
     top: 0;
     z-index: 100;
+}
+
+header {
+    background: #000;
+    line-height: 0;
 }
 
 .site-header-wrap {
